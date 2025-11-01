@@ -10,7 +10,7 @@ export const Layout = ({ children }: LayoutProps) => {
 
   const navItems = [
     { href: "/clients", label: "Clients" },
-    { href: "/", label: "Opportunities" },
+    { href: "/opportunities", label: "Opportunities" },
     { href: "/emails", label: "Emails" },
   ];
 
