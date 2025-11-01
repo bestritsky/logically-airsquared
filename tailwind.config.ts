@@ -13,7 +13,22 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'SF Pro Display', '-apple-system', 'sans-serif'],
+        mono: ['Courier New', 'Courier', 'Monaco', 'monospace'],
+        heading: ['Inter', 'SF Pro Display', '-apple-system', 'sans-serif'],
+      },
       colors: {
+        coral: {
+          DEFAULT: 'hsl(14, 100%, 61%)',
+          dark: 'hsl(14, 84%, 45%)',
+        },
+        cream: 'hsl(43, 47%, 94%)',
+        status: {
+          red: 'hsl(0, 100%, 50%)',
+          yellow: 'hsl(45, 100%, 50%)',
+          green: 'hsl(120, 100%, 40%)',
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
