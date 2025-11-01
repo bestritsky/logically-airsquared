@@ -3,6 +3,37 @@ import { Target, TrendingUp, XCircle } from "lucide-react";
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
+      {/* Navigation Menu */}
+      <nav className="bg-card border-b border-border">
+        <div className="container mx-auto px-4 max-w-6xl">
+          <div className="flex items-center justify-between h-16">
+            <div className="font-heading font-bold text-foreground text-lg">
+              The AI Maestro
+            </div>
+            <div className="flex gap-1">
+              <a 
+                href="#clients" 
+                className="px-4 py-2 font-heading font-medium text-foreground hover:bg-primary hover:text-white rounded-lg transition-all"
+              >
+                Clients
+              </a>
+              <a 
+                href="#opportunities" 
+                className="px-4 py-2 font-heading font-medium text-foreground hover:bg-primary hover:text-white rounded-lg transition-all"
+              >
+                Opportunities
+              </a>
+              <a 
+                href="#emails" 
+                className="px-4 py-2 font-heading font-medium text-foreground hover:bg-primary hover:text-white rounded-lg transition-all"
+              >
+                Emails
+              </a>
+            </div>
+          </div>
+        </div>
+      </nav>
+
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Header */}
         <header className="bg-gradient-to-br from-primary to-coral-dark rounded-lg p-8 mb-8 shadow-sm">
