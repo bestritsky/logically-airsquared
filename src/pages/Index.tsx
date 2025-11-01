@@ -14,7 +14,7 @@ const Index = () => {
           
           <div className="font-mono text-sm text-white/80 mb-2">$ orchestrating_intelligence.exe</div>
           <h1 className="text-3xl md:text-4xl font-heading font-bold text-white mb-2">
-            THE AI MAESTRO → CLIENT ENGAGEMENT
+            GASTON COUNTY → CLIENT ENGAGEMENT
           </h1>
           <h2 className="text-2xl md:text-3xl font-heading font-bold text-white mb-4">
             IMMEDIATE ACTION PLAN
