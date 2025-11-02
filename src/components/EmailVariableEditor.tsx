@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { EmailTemplate } from "@/data/emailTemplates";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -60,6 +61,13 @@ export const EmailVariableEditor = ({
     
     onVariablesChange({ ...variables, ...quickFillData });
   };
+
+  // Auto-fill when campaignData is available
+  useEffect(() => {
+    if (campaignData && Object.keys(variables).length === 0) {
+      handleQuickFill();
+    }
+  }, [campaignData]);
 
   const renderInput = (variable: typeof template.variables[0]) => {
     const value = variables[variable.key] || "";
