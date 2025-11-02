@@ -349,10 +349,12 @@ const Emails = () => {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button disabled onClick={() => setTemplateLibraryOpen(true)}>
-                    <Plus className="w-4 h-4 mr-2" />
-                    Create Campaign
-                  </Button>
+                  <span>
+                    <Button disabled onClick={() => setTemplateLibraryOpen(true)}>
+                      <Plus className="w-4 h-4 mr-2" />
+                      Create Campaign
+                    </Button>
+                  </span>
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>Coming Soon. Use Copy Email button and integrate into your own email.</p>
