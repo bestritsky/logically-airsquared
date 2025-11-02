@@ -387,6 +387,251 @@ export const mecklenburgIntelligence = {
         </AccordionContent>
       </AccordionItem>
 
+      {/* Organizational Attachment Style */}
+      <AccordionItem value="attachment-style" className="border rounded-lg px-4">
+        <AccordionTrigger className="text-xl font-semibold">
+          Organizational Attachment Style - Understanding Relationship Patterns
+        </AccordionTrigger>
+        <AccordionContent className="space-y-4 pt-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Assessment: SECURE ATTACHMENT with CAUTIOUS elements</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <h4 className="font-semibold text-sm mb-2">Secure Attachment Indicators:</h4>
+                <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                  <li>Comfortable with long-term partnerships and commitments</li>
+                  <li>Able to maintain relationships through challenges</li>
+                  <li>Not excessively controlling or micromanaging of partners</li>
+                  <li>Communicates clearly about expectations and concerns</li>
+                  <li>Values mutually beneficial relationships</li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-sm mb-2">Cautious Elements:</h4>
+                <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                  <li>Takes time to develop trust with new partners</li>
+                  <li>Requires evidence and validation before commitment</li>
+                  <li>Maintains boundaries and process requirements</li>
+                  <li>Doesn't rush into partnerships without thorough evaluation</li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-sm mb-2">Practical Implications:</h4>
+                
+                <div className="mb-3">
+                  <p className="font-medium text-sm mb-1">For New Partners:</p>
+                  <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                    <li>Expect slow trust-building process</li>
+                    <li>Demonstrate reliability through small commitments before seeking large ones</li>
+                    <li>Accept that evaluation and validation are part of trust development</li>
+                    <li>Don't interpret deliberate pace as rejection—it's security-building</li>
+                  </ul>
+                </div>
+
+                <div className="mb-3">
+                  <p className="font-medium text-sm mb-1">For Existing Partners:</p>
+                  <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                    <li>Leverage established trust for expanded collaboration</li>
+                    <li>Maintain consistent communication and follow-through</li>
+                    <li>Understand that past performance creates advantage for future proposals</li>
+                    <li>Relationship equity is real and valuable</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-sm mb-2">Attachment-Based Strategy:</h4>
+                <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                  <li><strong>Initial Contact:</strong> Focus on learning their needs, not pitching solutions</li>
+                  <li><strong>Early Relationship:</strong> Deliver on small commitments flawlessly</li>
+                  <li><strong>Growing Partnership:</strong> Gradually increase scope and complexity</li>
+                  <li><strong>Mature Relationship:</strong> Leverage trust for innovative or complex initiatives</li>
+                </ul>
+              </div>
+            </CardContent>
+          </Card>
+        </AccordionContent>
+      </AccordionItem>
+
+      {/* Size, Scale & Scope */}
+      <AccordionItem value="size-scale" className="border rounded-lg px-4">
+        <AccordionTrigger className="text-xl font-semibold">
+          Size, Scale & Scope - Understanding the Organization
+        </AccordionTrigger>
+        <AccordionContent className="space-y-4 pt-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Organizational Dimensions</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <h4 className="font-semibold text-sm mb-2">Geographic Scope:</h4>
+                <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                  <li><strong>Mecklenburg County, North Carolina</strong> - 523 square miles</li>
+                  <li><strong>Includes</strong> - City of Charlotte (largest city in NC) and 6 surrounding municipalities</li>
+                  <li><strong>Population Served</strong> - 1.1-1.2 million residents (growing rapidly)</li>
+                  <li><strong>Regional Position</strong> - Largest county in NC, anchors Charlotte-Concord-Gastonia MSA (2.8M people)</li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-sm mb-2">Organizational Scale:</h4>
+                <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                  <li><strong>Budget</strong> - $2.5 billion annual operating budget (FY2025/FY2026)</li>
+                  <li><strong>Employees</strong> - 6,000+ full-time employees across all departments</li>
+                  <li><strong>Service Scope</strong> - Health & Human Services, Public Safety, Parks & Recreation, Land Use & Environmental Services, Economic Development, Library, Tax Collection, Property Assessment, Criminal Justice Services, Public Health, Community Support Services, and more</li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-sm mb-2">Financial Strength:</h4>
+                <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                  <li><strong>Bond Rating</strong> - AAA from major rating agencies (rare for counties)</li>
+                  <li><strong>Fund Balance</strong> - $96M+ above policy minimum (fiscal 2025)</li>
+                  <li><strong>Tax Base</strong> - Property tax rate 49.27 cents per $100 assessed valuation (FY2026 recommended)</li>
+                  <li><strong>Revenue Sources</strong> - Property tax, sales tax, federal/state grants, fees for services</li>
+                  <li><strong>Financial Recognition</strong> - Distinguished Budget Award 34+ consecutive years</li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-sm mb-2">Comparative Context:</h4>
+                <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                  <li>Among largest 50-75 county governments in United States by population and budget</li>
+                  <li>Charlotte-Mecklenburg is major economic hub of Southeast US</li>
+                  <li>Regional economic engine with significant corporate headquarters presence</li>
+                  <li>Growing more rapidly than most large US counties</li>
+                </ul>
+              </div>
+            </CardContent>
+          </Card>
+        </AccordionContent>
+      </AccordionItem>
+
+      {/* Leadership Transition */}
+      <AccordionItem value="leadership-transition" className="border rounded-lg px-4">
+        <AccordionTrigger className="text-xl font-semibold">
+          Recent Transitions & Change Dynamics - Critical Intelligence
+        </AccordionTrigger>
+        <AccordionContent className="space-y-4 pt-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Leadership Transition: Dena Diorio → Mike Bryant (2024-2025)</CardTitle>
+              <CardDescription>Most significant recent change creating opportunities and constraints for external partners</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <h4 className="font-semibold text-sm mb-2">Dena Diorio Tenure (2014-2025): The Context</h4>
+                <p className="text-sm text-muted-foreground mb-2">Dena Diorio served as County Manager for 11 years, one of the longer tenures in major US counties. Her leadership established the current organizational culture.</p>
+                
+                <div className="mb-3">
+                  <p className="font-medium text-sm mb-1">Diorio's Legacy:</p>
+                  <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                    <li>First female County Manager in organization history (groundbreaker identity)</li>
+                    <li>Maintained AAA bond rating through multiple crises (financial strength culture)</li>
+                    <li>Created MECK Pre-K universal preschool (progressive policy innovation)</li>
+                    <li>Established strategic planning and performance management framework (data-driven culture)</li>
+                    <li>Navigated COVID-19, cyber attack, natural disasters (crisis management competence)</li>
+                    <li>Built reputation as one of Charlotte's most admired CEOs (external recognition)</li>
+                    <li>Created culture of accountability and transparency (governance values)</li>
+                    <li>Improved economic mobility ranking from 50/50 to 38/50 in national study (measurable impact)</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <p className="font-medium text-sm mb-1">What Diorio Established:</p>
+                  <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                    <li>Professional management culture</li>
+                    <li>Board-Manager collaborative relationship</li>
+                    <li>Performance measurement obsession</li>
+                    <li>Progressive policy positioning</li>
+                    <li>National best practice engagement</li>
+                    <li>Equity focus in budget and programs</li>
+                    <li>Strategic planning discipline</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-sm mb-2">Mike Bryant Transition (April 2025 appointed, June 2025 sworn in)</h4>
+                
+                <div className="mb-3">
+                  <p className="font-medium text-sm mb-1">Selection Process:</p>
+                  <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                    <li>Nationwide search conducted</li>
+                    <li>All finalists were internal employees</li>
+                    <li>Board unanimously selected Bryant</li>
+                    <li>Emphasizes internal promotion culture strength</li>
+                  </ul>
+                </div>
+
+                <div className="mb-3">
+                  <p className="font-medium text-sm mb-1">Bryant Background:</p>
+                  <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                    <li>22 years with Mecklenburg County (joined 2003 as budget analyst)</li>
+                    <li>Career progression: Budget Analyst → Budget Director (2014) → Deputy County Manager (2020) → County Manager (2025)</li>
+                    <li>Education: NC Central University (BA, MPA) - local HBCU connection</li>
+                    <li>Previous experience: City of Durham, Duke University, Granville County, NC Governor's Office (30+ years public service total)</li>
+                    <li>Expertise: Budget, finance, operations (deep financial acumen)</li>
+                    <li>Awards: Jack Vogt Lifetime Achievement Award, Community Building Initiative Leaders Under 40</li>
+                    <li>Leadership roles: GFOA Executive Board President, NFBPA Southern Piedmont Chapter President</li>
+                  </ul>
+                </div>
+
+                <div className="mb-3">
+                  <p className="font-medium text-sm mb-1">Bryant's First Moves Signal Strategic Intent - 100-Day Executive Team Restructuring:</p>
+                  <ol className="text-sm space-y-1 list-decimal list-inside text-muted-foreground">
+                    <li><strong>Removed</strong> - Anthony Trotman (10-year Deputy County Manager for Health & Human Services)</li>
+                    <li><strong>Brought In Externally</strong> - Michelle Attreed (30-year Prince William County veteran, CFO expertise) as Deputy County Manager for Financial Services</li>
+                    <li><strong>Brought In Externally</strong> - Dr. Kimm Campbell (returning to Mecklenburg from Broward County FL) as Deputy County Manager for Health & Human Services</li>
+                    <li><strong>Retained</strong> - Dr. Leslie Johnson (24-year veteran, since 2001) as Deputy County Manager for Sustainable Communities</li>
+                    <li><strong>Retained</strong> - Derrick Ramos (8-year veteran, former DOE official) as Deputy County Manager/Chief of Staff</li>
+                    <li><strong>Created New Position</strong> - Assistant County Manager for Upward Mobility Strategy (Economic Development/Workforce Development focus)</li>
+                  </ol>
+                </div>
+
+                <div className="mb-3">
+                  <p className="font-medium text-sm mb-1">Analysis of Bryant's Team Architecture - What It Tells Us:</p>
+                  <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                    <li>Bryant values external perspectives (hired two outsiders) but not at expense of institutional knowledge (kept two veterans)</li>
+                    <li>He's willing to make difficult personnel decisions (Trotman removal despite 10-year tenure)</li>
+                    <li>Financial expertise is priority (brought in Attreed with extensive CFO experience, his own budget background)</li>
+                    <li>Health & Human Services needed fresh leadership (Campbell returns with big-county experience)</li>
+                    <li>Upward mobility focus signals Board priority emphasis</li>
+                    <li>Building HIS team for HIS vision, not just continuing Diorio's approach</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <p className="font-medium text-sm mb-1">What It Means for Partners:</p>
+                  <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                    <li>Bryant is more open to external input than pure internal promotion might suggest</li>
+                    <li>However, he's still fundamentally an insider with deep institutional loyalty</li>
+                    <li>First 1-2 years will balance continuity with establishing distinct identity</li>
+                    <li>External partners should acknowledge both Diorio's foundation and Bryant's evolution</li>
+                    <li>Window exists for new partnerships if framed as enabling Bryant's vision</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-sm mb-2">Implication for Partner Timing:</h4>
+                <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                  <li><strong>Year 1 (FY2026: July 2025-June 2026)</strong> - Proving credibility, maintaining stability, careful risk management</li>
+                  <li><strong>Year 2 (FY2027)</strong> - More confident in authority, willing to pursue larger initiatives</li>
+                  <li><strong>Year 3+</strong> - Fully established, able to pursue transformational changes</li>
+                </ul>
+                <p className="mt-2 text-sm font-medium">Optimal window for new partnership pitches: <strong>Late Year 1 / Early Year 2</strong> - Bryant has proven himself but is receptive to ideas that help establish his distinct legacy.</p>
+              </div>
+            </CardContent>
+          </Card>
+        </AccordionContent>
+      </AccordionItem>
+
       {/* Leadership Personas */}
       <AccordionItem value="leadership" className="border rounded-lg px-4">
         <AccordionTrigger className="text-xl font-semibold">
