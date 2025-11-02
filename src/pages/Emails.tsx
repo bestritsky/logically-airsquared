@@ -483,18 +483,27 @@ const Emails = () => {
                 All
               </button>
               {statusOptions.map((status) => (
-                <button
-                  key={status}
-                  onClick={() => setSelectedFilter(status)}
-                  className={cn(
-                    "px-4 py-2 rounded-lg font-heading font-medium transition-all text-sm",
-                    selectedFilter === status
-                      ? "bg-primary text-white shadow-md"
-                      : "bg-card text-foreground hover:bg-primary/10 border border-border"
-                  )}
-                >
-                  {status}
-                </button>
+                <TooltipProvider key={status} delayDuration={0}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button
+                        onClick={() => setSelectedFilter(status)}
+                        className={cn(
+                          "px-4 py-2 rounded-lg font-heading font-medium transition-all text-sm opacity-50 cursor-not-allowed",
+                          selectedFilter === status
+                            ? "bg-primary text-white shadow-md"
+                            : "bg-card text-foreground hover:bg-primary/10 border border-border"
+                        )}
+                        disabled
+                      >
+                        {status}
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Coming Soon.</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               ))}
             </div>
           </div>
