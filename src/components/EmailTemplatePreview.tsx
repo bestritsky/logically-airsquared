@@ -108,10 +108,10 @@ export const EmailTemplatePreview = ({
             </ScrollArea>
           </div>
 
-          {/* Live Preview */}
+          {/* Live Editable Preview */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="font-heading font-semibold text-foreground">Live Preview</h3>
+              <h3 className="font-heading font-semibold text-foreground">Live Editable Preview</h3>
               <Button
                 variant="outline"
                 size="sm"
