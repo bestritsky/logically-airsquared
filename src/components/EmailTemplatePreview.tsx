@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import { EmailTemplate, InfluencePrinciple } from "@/data/emailTemplates";
 import { EmailVariableEditor } from "./EmailVariableEditor";
 import { Copy, Check } from "lucide-react";
@@ -26,13 +29,21 @@ export const EmailTemplatePreview = ({
 }: EmailTemplatePreviewProps) => {
   const [variables, setVariables] = useState<Record<string, string>>({});
   const [copied, setCopied] = useState(false);
+  const [editedSubject, setEditedSubject] = useState("");
+  const [editedBody, setEditedBody] = useState("");
 
   const substituteVariables = (text: string, vars: Record<string, string>) => {
     return text.replace(/\{(\w+)\}/g, (match, key) => vars[key] || match);
   };
 
-  const generatedSubject = substituteVariables(template.subject, variables);
-  const generatedBody = substituteVariables(template.body, variables);
+  // Update edited fields when variables change
+  useEffect(() => {
+    setEditedSubject(substituteVariables(template.subject, variables));
+    setEditedBody(substituteVariables(template.body, variables));
+  }, [variables, template]);
+
+  const generatedSubject = editedSubject;
+  const generatedBody = editedBody;
 
   const getPrincipleBadgeClass = (principle: InfluencePrinciple) => {
     const classes: Record<InfluencePrinciple, string> = {
@@ -119,17 +130,29 @@ export const EmailTemplatePreview = ({
             <ScrollArea className="h-[calc(95vh-280px)]">
               <div className="border rounded-lg p-6 bg-card space-y-4">
                 <div>
-                  <p className="text-xs font-medium text-muted-foreground mb-2">Subject:</p>
-                  <p className="font-medium text-foreground">{generatedSubject}</p>
+                  <Label htmlFor="subject" className="text-xs font-medium text-muted-foreground mb-2">
+                    Subject:
+                  </Label>
+                  <Input
+                    id="subject"
+                    value={editedSubject}
+                    onChange={(e) => setEditedSubject(e.target.value)}
+                    className="font-medium mt-2"
+                  />
                 </div>
                 
                 <Separator />
                 
                 <div>
-                  <p className="text-xs font-medium text-muted-foreground mb-2">Body:</p>
-                  <div className="whitespace-pre-wrap text-sm text-foreground">
-                    {generatedBody}
-                  </div>
+                  <Label htmlFor="body" className="text-xs font-medium text-muted-foreground mb-2">
+                    Body:
+                  </Label>
+                  <Textarea
+                    id="body"
+                    value={editedBody}
+                    onChange={(e) => setEditedBody(e.target.value)}
+                    className="min-h-[400px] text-sm mt-2 whitespace-pre-wrap"
+                  />
                 </div>
               </div>
             </ScrollArea>
