@@ -346,7 +346,9 @@ const Clients = () => {
                         <DropdownMenuItem onClick={() => window.open(`/opportunities?client=${client.id}`, '_blank')}>
                           Opportunities
                         </DropdownMenuItem>
-                        <DropdownMenuItem>Emails</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => window.open(`/emails?client=${client.id}`, '_blank')}>
+                          Emails
+                        </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </td>

@@ -1,4 +1,5 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -251,6 +252,8 @@ const campaignData: EmailCampaign[] = [
 ];
 
 const Emails = () => {
+  const [searchParams] = useSearchParams();
+  const clientParam = searchParams.get("client");
   const [selectedFilter, setSelectedFilter] = useState<string>("all");
   const [selectedClient, setSelectedClient] = useState<string>("all");
   const [templateLibraryOpen, setTemplateLibraryOpen] = useState(false);
@@ -266,6 +269,17 @@ const Emails = () => {
       });
     return [{ id: 0, name: "All Clients" }, ...uniqueClients];
   }, []);
+
+  // Handle client filter from URL parameter
+  useEffect(() => {
+    if (clientParam) {
+      const clientId = parseInt(clientParam);
+      const client = clients.find(c => c.id === clientId);
+      if (client && client.name !== "All Clients") {
+        setSelectedClient(client.name);
+      }
+    }
+  }, [clientParam, clients]);
 
   // Filter campaigns
   const filteredCampaigns = useMemo(() => {
