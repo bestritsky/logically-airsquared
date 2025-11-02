@@ -583,6 +583,423 @@ const ClientDetails = () => {
             </AccordionContent>
           </AccordionItem>
 
+          {/* Power Dynamics */}
+          <AccordionItem value="power-dynamics" className="border rounded-lg px-4">
+            <AccordionTrigger className="text-xl font-semibold">
+              Power Dynamics & Team Analysis
+            </AccordionTrigger>
+            <AccordionContent className="space-y-4 pt-4">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Formal Authority Hierarchy</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="font-mono text-xs bg-muted/30 p-4 rounded">
+                    <div className="font-semibold mb-2">Board of Commissioners (7 elected officials)</div>
+                    <div className="ml-4 space-y-1">
+                      <div>├── Chairman: Chad Brown (Riverbend Township)</div>
+                      <div>├── Vice-Chair: Cathy Cloninger (Dallas Township)</div>
+                      <div>└── 5 Additional Commissioners (by township)</div>
+                    </div>
+                    <div className="mt-3 mb-2">↓ (Appoints)</div>
+                    <div className="font-semibold mb-2">County Manager: Matthew Rhoten</div>
+                    <div className="ml-4 space-y-1">
+                      <div>├── Deputy County Manager: Vincent Wong</div>
+                      <div>├── Assistant County Manager: Steve Eaton</div>
+                      <div>├── Assistant County Manager: Brian Sciba</div>
+                      <div>├── Executive Director of Capital Projects: Ray Maxwell</div>
+                      <div>├── Executive Director of Intergovernmental Relations: Justin Amos</div>
+                      <div>├── Communications Director: Adam Gaub</div>
+                      <div>├── Financial & Management Services Director: Scott Attaway</div>
+                      <div>├── Process Improvement Director: Janet Schafer</div>
+                      <div>└── Human Resources Director: Amia Massey</div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Informal Influence Networks (The Real Power)</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <h4 className="font-semibold text-sm mb-3">Tier 1 Influencers (Can Kill or Greenlight Major Initiatives):</h4>
+                    <div className="space-y-3">
+                      <div className="p-3 border rounded bg-red-50 dark:bg-red-950/20">
+                        <div className="flex justify-between items-start mb-2">
+                          <span className="font-medium text-sm">Matt Rhoten (County Manager)</span>
+                          <Badge className="bg-red-600">95% Influence</Badge>
+                        </div>
+                        <p className="text-xs text-muted-foreground mb-1"><strong>Why:</strong> Controls staff recommendations, budget analysis, operational execution</p>
+                        <p className="text-xs text-muted-foreground mb-1"><strong>How:</strong> Shapes what reaches Board, frames options, provides technical analysis</p>
+                        <p className="text-xs text-muted-foreground"><strong>Weakness:</strong> Politically dependent on Board Chairman</p>
+                      </div>
+
+                      <div className="p-3 border rounded bg-red-50 dark:bg-red-950/20">
+                        <div className="flex justify-between items-start mb-2">
+                          <span className="font-medium text-sm">Chad Brown (Board Chairman)</span>
+                          <Badge className="bg-red-600">90% Influence</Badge>
+                        </div>
+                        <p className="text-xs text-muted-foreground mb-1"><strong>Why:</strong> Sets Board agenda, controls meeting flow, politically powerful</p>
+                        <p className="text-xs text-muted-foreground mb-1"><strong>How:</strong> Coalition-building among Commissioners, public messaging, political pressure</p>
+                        <p className="text-xs text-muted-foreground"><strong>Weakness:</strong> Needs County Manager for technical expertise</p>
+                      </div>
+
+                      <div className="p-3 border rounded bg-red-50 dark:bg-red-950/20">
+                        <div className="flex justify-between items-start mb-2">
+                          <span className="font-medium text-sm">Scott Attaway (Financial Director)</span>
+                          <Badge className="bg-red-600">85% Influence</Badge>
+                        </div>
+                        <p className="text-xs text-muted-foreground mb-1"><strong>Why:</strong> Financial gatekeeping, budget analysis controls feasibility</p>
+                        <p className="text-xs text-muted-foreground mb-1"><strong>How:</strong> "Numbers don't work" ends most proposals</p>
+                        <p className="text-xs text-muted-foreground"><strong>Weakness:</strong> Reports to County Manager</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold text-sm mb-3">Tier 2 Influencers (Significant but Not Absolute):</h4>
+                    <div className="space-y-2">
+                      <div className="flex justify-between items-center p-2 bg-muted/50 rounded">
+                        <span className="text-sm">Vincent Wong (Deputy County Manager)</span>
+                        <Badge variant="outline">70%</Badge>
+                      </div>
+                      <div className="flex justify-between items-center p-2 bg-muted/50 rounded">
+                        <span className="text-sm">Justin Amos (Intergovernmental Relations)</span>
+                        <Badge variant="outline">65%</Badge>
+                      </div>
+                      <div className="flex justify-between items-center p-2 bg-muted/50 rounded">
+                        <span className="text-sm">Adam Gaub (Communications Director)</span>
+                        <Badge variant="outline">60%</Badge>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Decision-Making Coalition Patterns</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="border-l-4 border-primary pl-3 py-2">
+                    <h4 className="font-semibold text-sm mb-1">Pattern 1: The Standard Approval Process (70% of decisions)</h4>
+                    <p className="text-xs text-muted-foreground mb-2">Timeline: 3-6 months</p>
+                    <ol className="text-xs space-y-1 list-decimal list-inside text-muted-foreground">
+                      <li>County Manager staff analyzes proposal</li>
+                      <li>Financial Director reviews budget implications</li>
+                      <li>Executive team consensus-building</li>
+                      <li>County Manager recommendation to Board</li>
+                      <li>Board Chairman pre-meeting alignment</li>
+                      <li>Board discussion and vote (usually unanimous)</li>
+                    </ol>
+                    <p className="text-xs mt-2"><strong>Success Factors:</strong> Fiscal neutrality, staff consensus, political safety</p>
+                  </div>
+
+                  <div className="border-l-4 border-green-600 pl-3 py-2">
+                    <h4 className="font-semibold text-sm mb-1">Pattern 2: The Fast-Track Process (15% - grants, time-sensitive)</h4>
+                    <p className="text-xs text-muted-foreground mb-2">Timeline: 2-4 weeks</p>
+                    <ol className="text-xs space-y-1 list-decimal list-inside text-muted-foreground">
+                      <li>Grant opportunity identified by Intergovernmental Relations</li>
+                      <li>County Manager quick assessment</li>
+                      <li>Board Chairman informal approval</li>
+                      <li>Board ratification at next meeting</li>
+                    </ol>
+                    <p className="text-xs mt-2"><strong>Success Factors:</strong> External funding, clear benefit, no controversy</p>
+                  </div>
+
+                  <div className="border-l-4 border-orange-600 pl-3 py-2">
+                    <h4 className="font-semibold text-sm mb-1">Pattern 3: The Political Process (10% - controversial)</h4>
+                    <p className="text-xs text-muted-foreground mb-2">Timeline: 1-6 months</p>
+                    <ol className="text-xs space-y-1 list-decimal list-inside text-muted-foreground">
+                      <li>Issue surfaces publicly or through political pressure</li>
+                      <li>Board Chairman drives response</li>
+                      <li>County Manager provides options</li>
+                      <li>Commissioner coalition-building</li>
+                      <li>Public hearings if required</li>
+                      <li>Board vote (may not be unanimous)</li>
+                    </ol>
+                    <p className="text-xs mt-2"><strong>Success Factors:</strong> Political alignment, constituent pressure, media support</p>
+                  </div>
+
+                  <div className="border-l-4 border-red-600 pl-3 py-2">
+                    <h4 className="font-semibold text-sm mb-1">Pattern 4: Death by Delay (5% - politically dangerous)</h4>
+                    <p className="text-xs text-muted-foreground mb-2">Timeline: Indefinite</p>
+                    <ol className="text-xs space-y-1 list-decimal list-inside text-muted-foreground">
+                      <li>Proposal submitted</li>
+                      <li>County Manager "needs more analysis"</li>
+                      <li>Financial Director finds budget concerns</li>
+                      <li>Executive team raises implementation issues</li>
+                      <li>Proposal tabled indefinitely</li>
+                      <li>Quietly killed without formal rejection</li>
+                    </ol>
+                    <p className="text-xs mt-2"><strong>Warning Signs:</strong> Multiple requests for additional information, delayed meetings, non-responsive communications</p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Strategic Implications of Power Dynamics</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="space-y-2">
+                    <div className="p-3 bg-primary/10 border border-primary/30 rounded">
+                      <h4 className="font-semibold text-sm mb-1">1. The Two-Person Approval</h4>
+                      <p className="text-xs text-muted-foreground">
+                        Every major initiative requires approval from both County Manager Matt Rhoten (technical/operational) 
+                        AND Board Chairman Chad Brown (political/fiscal). If you don't have both, you don't have approval.
+                      </p>
+                    </div>
+
+                    <div className="p-3 bg-primary/10 border border-primary/30 rounded">
+                      <h4 className="font-semibold text-sm mb-1">2. The Financial Veto</h4>
+                      <p className="text-xs text-muted-foreground">
+                        Scott Attaway has effective veto power. If he says "the numbers don't work," you're done unless 
+                        you fundamentally restructure the proposal.
+                      </p>
+                    </div>
+
+                    <div className="p-3 bg-primary/10 border border-primary/30 rounded">
+                      <h4 className="font-semibold text-sm mb-1">3. The Grant Pathway</h4>
+                      <p className="text-xs text-muted-foreground">
+                        Justin Amos can fast-track proposals if external funding is available. This bypasses normal fiscal constraints.
+                      </p>
+                    </div>
+
+                    <div className="p-3 bg-primary/10 border border-primary/30 rounded">
+                      <h4 className="font-semibold text-sm mb-1">4. The Communications Amplifier</h4>
+                      <p className="text-xs text-muted-foreground">
+                        Adam Gaub can build public support that creates political pressure. However, he can't overcome 
+                        financial or political opposition—only amplify existing support.
+                      </p>
+                    </div>
+
+                    <div className="p-3 bg-primary/10 border border-primary/30 rounded">
+                      <h4 className="font-semibold text-sm mb-1">5. The Succession Uncertainty</h4>
+                      <p className="text-xs text-muted-foreground">
+                        If Matt Rhoten departs (35% probability within 5 years), power dynamics completely realign. 
+                        Build relationships with all potential successors (Wong, Eaton, Sciba).
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* Behavioral Predictions */}
+          <AccordionItem value="behavioral-predictions" className="border rounded-lg px-4">
+            <AccordionTrigger className="text-xl font-semibold">
+              Behavioral Predictions (40+ Specific Forecasts)
+            </AccordionTrigger>
+            <AccordionContent className="space-y-4 pt-4">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Fiscal Behavior Predictions</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="border-l-4 border-green-600 pl-3 py-2">
+                    <div className="flex justify-between items-start mb-1">
+                      <h4 className="font-semibold text-sm">Tax Rate Maintenance</h4>
+                      <Badge className="bg-green-600">90% Probability</Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground mb-1"><strong>Behavior:</strong> Board will NOT raise property tax rate in next 3 years</p>
+                    <p className="text-xs text-muted-foreground mb-1"><strong>Timeline:</strong> FY 2026-2028</p>
+                    <p className="text-xs text-muted-foreground"><strong>Evidence:</strong> 59.9 cent rate maintained since revaluation; Chairman's political identity tied to low taxes</p>
+                  </div>
+
+                  <div className="border-l-4 border-orange-600 pl-3 py-2">
+                    <div className="flex justify-between items-start mb-1">
+                      <h4 className="font-semibold text-sm">Crisis-Forced Tax Increase</h4>
+                      <Badge className="bg-orange-600">45% Probability</Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground mb-1"><strong>Behavior:</strong> If major infrastructure failure occurs, Board will raise taxes but frame as "forced by circumstances"</p>
+                    <p className="text-xs text-muted-foreground mb-1"><strong>Timeline:</strong> 5-10 years</p>
+                    <p className="text-xs text-muted-foreground"><strong>Trigger:</strong> School building failure, bond rating downgrade, inability to finance essential services</p>
+                  </div>
+
+                  <div className="border-l-4 border-green-600 pl-3 py-2">
+                    <div className="flex justify-between items-start mb-1">
+                      <h4 className="font-semibold text-sm">Grant Pursuit Intensification</h4>
+                      <Badge className="bg-green-600">85% Probability</Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground mb-1"><strong>Behavior:</strong> County will increasingly pursue grant funding to avoid local fiscal commitments</p>
+                    <p className="text-xs text-muted-foreground mb-1"><strong>Timeline:</strong> Already occurring, will intensify</p>
+                    <p className="text-xs text-muted-foreground"><strong>Validation:</strong> Track grant applications and awards annually</p>
+                  </div>
+
+                  <div className="border-l-4 border-yellow-600 pl-3 py-2">
+                    <div className="flex justify-between items-start mb-1">
+                      <h4 className="font-semibold text-sm">Capital Project Delays</h4>
+                      <Badge className="bg-yellow-600">75% Probability</Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground mb-1"><strong>Behavior:</strong> Non-emergency capital projects will continue to be deferred</p>
+                    <p className="text-xs text-muted-foreground mb-1"><strong>Timeline:</strong> Next 3-5 years</p>
+                    <p className="text-xs text-muted-foreground"><strong>Evidence:</strong> $600M+ school facility backlog; capital budget constraints</p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Organizational Behavior Predictions</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="border-l-4 border-green-600 pl-3 py-2">
+                    <div className="flex justify-between items-start mb-1">
+                      <h4 className="font-semibold text-sm">Internal Promotion Continuation</h4>
+                      <Badge className="bg-green-600">85% Probability</Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground mb-1"><strong>Behavior:</strong> All senior executive positions will continue to be filled through internal promotion</p>
+                    <p className="text-xs text-muted-foreground"><strong>Evidence:</strong> 5+ year pattern; cultural commitment; County Manager is ultimate example</p>
+                  </div>
+
+                  <div className="border-l-4 border-orange-600 pl-3 py-2">
+                    <div className="flex justify-between items-start mb-1">
+                      <h4 className="font-semibold text-sm">Rhoten Departure Within 5 Years</h4>
+                      <Badge className="bg-orange-600">35% Probability</Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground mb-1"><strong>Behavior:</strong> Matt Rhoten will pursue higher-profile role (larger county, state position, private sector)</p>
+                    <p className="text-xs text-muted-foreground mb-1"><strong>Timeline:</strong> 3-5 years</p>
+                    <p className="text-xs text-muted-foreground"><strong>Evidence:</strong> Harvard program, dissertation, teaching role, ambitious career trajectory</p>
+                  </div>
+
+                  <div className="border-l-4 border-green-600 pl-3 py-2">
+                    <div className="flex justify-between items-start mb-1">
+                      <h4 className="font-semibold text-sm">Innovation in Communications Only</h4>
+                      <Badge className="bg-green-600">90% Probability</Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground mb-1"><strong>Behavior:</strong> County will continue to be innovative in communications/marketing but conservative operationally</p>
+                    <p className="text-xs text-muted-foreground"><strong>Evidence:</strong> Award-winning podcast, innovative video vs. conservative operational approaches</p>
+                  </div>
+
+                  <div className="border-l-4 border-green-600 pl-3 py-2">
+                    <div className="flex justify-between items-start mb-1">
+                      <h4 className="font-semibold text-sm">Risk-Averse Decision-Making</h4>
+                      <Badge className="bg-green-600">85% Probability</Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground mb-1"><strong>Behavior:</strong> Organization will continue to avoid initiatives with meaningful implementation risk</p>
+                    <p className="text-xs text-muted-foreground"><strong>Evidence:</strong> Conservative culture, political risk avoidance, fiscal constraints</p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Political Behavior Predictions</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="border-l-4 border-green-600 pl-3 py-2">
+                    <div className="flex justify-between items-start mb-1">
+                      <h4 className="font-semibold text-sm">Republican Board Majority Maintenance</h4>
+                      <Badge className="bg-green-600">85% Probability</Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground mb-1"><strong>Behavior:</strong> Board will remain Republican-controlled through 2028 elections</p>
+                    <p className="text-xs text-muted-foreground"><strong>Evidence:</strong> Gaston County is conservative-leaning; current 7-0 Republican Board</p>
+                  </div>
+
+                  <div className="border-l-4 border-yellow-600 pl-3 py-2">
+                    <div className="flex justify-between items-start mb-1">
+                      <h4 className="font-semibold text-sm">Chad Brown Departure for State Politics</h4>
+                      <Badge className="bg-yellow-600">55% Probability</Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground mb-1"><strong>Behavior:</strong> Chairman Brown will pursue another statewide office within 4 years</p>
+                    <p className="text-xs text-muted-foreground mb-1"><strong>Timeline:</strong> 2026 or 2028 elections</p>
+                    <p className="text-xs text-muted-foreground"><strong>Evidence:</strong> 2024 Secretary of State run; using County role as platform</p>
+                  </div>
+
+                  <div className="border-l-4 border-green-600 pl-3 py-2">
+                    <div className="flex justify-between items-start mb-1">
+                      <h4 className="font-semibold text-sm">Defensive Response to Criticism</h4>
+                      <Badge className="bg-green-600">80% Probability</Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground mb-1"><strong>Behavior:</strong> Leadership will respond defensively to public criticism challenging "model of excellence" narrative</p>
+                    <p className="text-xs text-muted-foreground"><strong>Evidence:</strong> Organizational culture, reputation investment, communications sophistication</p>
+                  </div>
+
+                  <div className="border-l-4 border-yellow-600 pl-3 py-2">
+                    <div className="flex justify-between items-start mb-1">
+                      <h4 className="font-semibold text-sm">Political Risk Avoidance</h4>
+                      <Badge className="bg-yellow-600">75% Probability</Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground mb-1"><strong>Behavior:</strong> Controversial initiatives will be delayed or killed regardless of merit if politically risky</p>
+                    <p className="text-xs text-muted-foreground"><strong>Evidence:</strong> Conservative Board, election cycles, risk-averse culture</p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Temporal Behavior Predictions</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="border-l-4 border-green-600 pl-3 py-2">
+                    <div className="flex justify-between items-start mb-1">
+                      <h4 className="font-semibold text-sm">Summer Slow-Down</h4>
+                      <Badge className="bg-green-600">85% Probability</Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground mb-1"><strong>Behavior:</strong> Decision-making will slow significantly June-August</p>
+                    <p className="text-xs text-muted-foreground"><strong>Evidence:</strong> Government sector norms, vacation schedules, fiscal year transition</p>
+                  </div>
+
+                  <div className="border-l-4 border-green-600 pl-3 py-2">
+                    <div className="flex justify-between items-start mb-1">
+                      <h4 className="font-semibold text-sm">Budget Season Bandwidth Limitation</h4>
+                      <Badge className="bg-green-600">80% Probability</Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground mb-1"><strong>Behavior:</strong> New initiatives face severe bandwidth constraints November-June (budget season)</p>
+                    <p className="text-xs text-muted-foreground"><strong>Evidence:</strong> Budget process begins November, adoption in June</p>
+                  </div>
+
+                  <div className="border-l-4 border-yellow-600 pl-3 py-2">
+                    <div className="flex justify-between items-start mb-1">
+                      <h4 className="font-semibold text-sm">Post-Election Political Caution</h4>
+                      <Badge className="bg-yellow-600">75% Probability</Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground mb-1"><strong>Behavior:</strong> Politically sensitive decisions avoided in months before elections</p>
+                    <p className="text-xs text-muted-foreground mb-1"><strong>Timeline:</strong> 6 months before elections (2026, 2028)</p>
+                    <p className="text-xs text-muted-foreground"><strong>Evidence:</strong> Political risk-aversion, Commissioner election concerns</p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Early Warning Indicators</CardTitle>
+                  <CardDescription>Signs your proposal may be in trouble</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  <div className="p-2 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded">
+                    <p className="text-xs font-medium mb-1">🚨 Extended Silence</p>
+                    <p className="text-xs text-muted-foreground"><strong>Means:</strong> Proposal in "death by delay" pattern | <strong>Response:</strong> Request direct feedback</p>
+                  </div>
+
+                  <div className="p-2 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded">
+                    <p className="text-xs font-medium mb-1">🚨 Repeated Information Requests</p>
+                    <p className="text-xs text-muted-foreground"><strong>Means:</strong> Building case against OR seeking to understand | <strong>Response:</strong> Provide info quickly; ask if concerns exist</p>
+                  </div>
+
+                  <div className="p-2 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded">
+                    <p className="text-xs font-medium mb-1">🚨 Financial Director Concerns</p>
+                    <p className="text-xs text-muted-foreground"><strong>Means:</strong> Fatal unless addressed immediately | <strong>Response:</strong> Meet with Attaway directly to resolve</p>
+                  </div>
+
+                  <div className="p-2 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded">
+                    <p className="text-xs font-medium mb-1">🚨 County Manager Non-Committal</p>
+                    <p className="text-xs text-muted-foreground"><strong>Means:</strong> Not convinced or politically dangerous | <strong>Response:</strong> Ask "What needs to change for you to support this?"</p>
+                  </div>
+
+                  <div className="p-2 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded">
+                    <p className="text-xs font-medium mb-1">🚨 Chairman Not Returning Calls</p>
+                    <p className="text-xs text-muted-foreground"><strong>Means:</strong> Politically problematic | <strong>Response:</strong> Reassess political framing; build constituent support</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </AccordionContent>
+          </AccordionItem>
+
           {/* Engagement Strategy */}
           <AccordionItem value="engagement-strategy" className="border rounded-lg px-4">
             <AccordionTrigger className="text-xl font-semibold">
