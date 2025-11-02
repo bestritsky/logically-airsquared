@@ -357,7 +357,7 @@ const Emails = () => {
                   </span>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Coming Soon. Use Copy Email button and integrate into your own email.</p>
+                  <p>Coming Soon. Select Email in the table and select email template to use. Use Copy Email button and integrate into your own email.</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
