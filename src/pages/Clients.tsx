@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -181,6 +182,7 @@ const clientData: Client[] = [
 ];
 
 const Clients = () => {
+  const navigate = useNavigate();
   const [selectedSector, setSelectedSector] = useState<string>("all");
 
   const sectors = ["all", "Government", "Healthcare", "Financial", "Other"];
@@ -341,7 +343,9 @@ const Clients = () => {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem>Details</DropdownMenuItem>
-                        <DropdownMenuItem>Opportunities</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate(`/opportunities?client=${client.id}`)}>
+                          Opportunities
+                        </DropdownMenuItem>
                         <DropdownMenuItem>Emails</DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>

@@ -1,4 +1,5 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -675,7 +676,15 @@ const opportunityData: Opportunity[] = [
 ];
 
 const Opportunities = () => {
+  const [searchParams] = useSearchParams();
+  const clientParam = searchParams.get("client");
   const [selectedClientId, setSelectedClientId] = useState<string>("all");
+
+  useEffect(() => {
+    if (clientParam) {
+      setSelectedClientId(clientParam);
+    }
+  }, [clientParam]);
 
   const clients = [
     { id: 1, name: "Mecklenburg County", tier: 1 },
