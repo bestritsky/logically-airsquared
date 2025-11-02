@@ -139,8 +139,13 @@ export const EmailTemplateLibrary = ({
                             Why This Works
                           </Button>
                         </TooltipTrigger>
-                        <TooltipContent className="max-w-sm">
-                          <p className="text-sm">{template.whenToUse}</p>
+                        <TooltipContent className="max-w-md p-4">
+                          <div className="space-y-2">
+                            <p className="text-sm font-semibold">Psychology:</p>
+                            <p className="text-sm">{template.psychologyExplanation}</p>
+                            <p className="text-sm font-semibold mt-2">When to Use:</p>
+                            <p className="text-sm">{template.whenToUse}</p>
+                          </div>
                         </TooltipContent>
                       </Tooltip>
                     </TooltipProvider>
