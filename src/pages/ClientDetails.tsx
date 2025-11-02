@@ -58,14 +58,44 @@ const ClientDetails = () => {
             <AccordionContent className="space-y-4 pt-4">
               <Card>
                 <CardHeader>
-                  <CardTitle>The Winning Formula</CardTitle>
+                  <CardTitle>Understanding Gaston County Government: A Strategic Analysis</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <p className="text-sm leading-relaxed">
-                    Gaston County Government is a <strong>professionally-run, fiscally conservative, Republican-dominated local government</strong> that has successfully positioned itself as a "model of excellence" through sophisticated communications while maintaining the <strong>lowest tax rate since 1970</strong>.
-                  </p>
+                  <div className="prose prose-sm max-w-none">
+                    <p className="text-sm leading-relaxed">
+                      Gaston County Government represents a fascinating study in modern conservative governance—a professionally managed, Republican-controlled local government that has masterfully balanced fiscal discipline with operational excellence while projecting an image of innovation that sometimes exceeds its operational reality. Understanding this organization requires looking beyond the polished communications and recognizing the deep structural dynamics that drive decision-making.
+                    </p>
+
+                    <p className="text-sm leading-relaxed">
+                      At its core, Gaston County has staked its entire political identity on maintaining the <strong>lowest tax rate since 1970</strong>—currently 59.9 cents per $100 of assessed value. This is not merely a fiscal policy choice; it is the foundation of their brand, the measure by which leadership success is judged, and the non-negotiable constraint that shapes every strategic decision. Chairman Chad Brown and the five-member Republican Board of Commissioners have built their political careers on this achievement, and they will defend it against virtually any challenge. This tax rate commitment creates both predictability and rigidity: proposals that require new county funding face nearly insurmountable obstacles, while grant-funded or revenue-positive initiatives find a receptive audience.
+                    </p>
+
+                    <p className="text-sm leading-relaxed">
+                      The organization's internal culture reveals an interesting paradox. Every senior executive over the past five years has been promoted from within, creating a talent development system that County Manager Matt Rhoten—who himself rose from intern to the top position—proudly champions. This internal promotion culture fosters loyalty and institutional knowledge, but it also creates dangerous insularity. External ideas, no matter how sound, face unconscious "not invented here" resistance. The organization values what it already knows and trusts its own people far more than outside expertise.
+                    </p>
+
+                    <p className="text-sm leading-relaxed">
+                      Perhaps most striking is the sophisticated communications operation led by Adam Gaub, an award-winning former investigative journalist who has built a nationally recognized communications program. Their true crime documentary series "Gaston Unsolved" won national awards, their podcast reached top rankings, and their social media presence rivals much larger jurisdictions. However, this creates a subtle but significant risk: their communications capabilities have outpaced their operational capacity. They have built a "model of excellence" narrative that sets expectations their day-to-day operations sometimes struggle to meet. When the polished exterior meets operational reality—particularly during crisis—the reputational damage is amplified precisely because the expectations were so high.
+                    </p>
+
+                    <p className="text-sm leading-relaxed">
+                      The financial constraints are real and growing. With an estimated $600 million in deferred school facility needs alone and political commitments preventing tax increases, the county is "absorbing" increased costs through efficiency gains and reallocation. This approach works in the short term but is fundamentally unsustainable. Our analysis suggests a 65% probability of reaching a crisis point within 5-10 years, likely triggered by either a bond rating downgrade, major infrastructure failure, or loss of a competitive economic development opportunity due to infrastructure constraints. When that moment arrives, leadership will face an impossible choice between their political brand (low taxes) and service delivery reality.
+                    </p>
+
+                    <p className="text-sm leading-relaxed">
+                      Leadership succession presents another vulnerability. Matt Rhoten, despite his deep institutional knowledge, is clearly ambitious. His recent completion of Harvard Kennedy School's executive program, successful dissertation defense, and adjunct professor role at UNC Charlotte all signal preparation for larger opportunities. We assess only a 35% probability he remains in the County Manager position for another decade. Yet no visible succession planning exists, and the internal promotion culture means his replacement will likely come from the existing assistant county manager pool—perpetuating rather than disrupting the insularity.
+                    </p>
+
+                    <p className="text-sm leading-relaxed">
+                      For those seeking to engage with Gaston County Government, success requires understanding their decision architecture. Economic development proposals that are grant-funded or revenue-positive enjoy 75-80% success probability. Communications and publicity collaborations—where they excel and take pride—achieve 80-90% success rates. However, technology and innovation initiatives requiring county resources face only 35-45% success probability due to cultural resistance despite their rhetorical support for innovation. The key is not whether your proposal has merit, but whether it fits their operational, financial, and political constraints.
+                    </p>
+
+                    <p className="text-sm leading-relaxed">
+                      The winning formula is clear: lead with fiscal responsibility, frame proposals as proven best practices from peer jurisdictions, provide comprehensive risk mitigation, and be patient with their methodical 4-8 month decision cycles. Those who understand and respect these organizational dynamics can find willing partners. Those who ignore them will encounter polite resistance that never quite crystallizes into clear rejection—just endless delays and requests for additional information.
+                    </p>
+                  </div>
                   
-                  <div className="space-y-3">
+                  <div className="space-y-3 mt-6">
                     <h4 className="font-semibold text-sm">Success Probability by Engagement Type:</h4>
                     <div className="space-y-2">
                       <div className="flex justify-between items-center p-2 bg-muted/50 rounded">
