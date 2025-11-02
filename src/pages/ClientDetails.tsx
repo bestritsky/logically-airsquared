@@ -1109,6 +1109,384 @@ const ClientDetails = () => {
             </AccordionContent>
           </AccordionItem>
 
+          {/* Final Synthesis & Action Plan */}
+          <AccordionItem value="action-plan" className="border rounded-lg px-4">
+            <AccordionTrigger className="text-xl font-semibold">
+              Final Synthesis & Action Plan
+            </AccordionTrigger>
+            <AccordionContent className="space-y-4 pt-4">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Complete Picture: One-Paragraph Synthesis</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="prose prose-sm max-w-none">
+                    <p className="text-sm leading-relaxed">
+                      Gaston County Government is a professionally managed, fiscally conservative, Republican-dominated local government 
+                      that has successfully maintained the lowest property tax rate since 1970 while building a sophisticated communications 
+                      capability that positions them as a "model of excellence"—but beneath this polished exterior lies a risk-averse, 
+                      internally-focused organization facing significant structural challenges around infrastructure financing ($600M+ 
+                      deferred school facilities alone), leadership succession (County Manager likely to depart within 5 years), and 
+                      innovation capacity (internal promotion culture creates insularity and groupthink). Success requires understanding 
+                      that fiscal neutrality is non-negotiable, peer jurisdiction validation is mandatory, the County Manager-Board Chairman 
+                      relationship is the organizational center of gravity, and decision cycles of 4-8 months are normal and necessary—with 
+                      the highest probability of success coming from grant-funded initiatives that advance economic development, demonstrate 
+                      proven peer jurisdiction success, respect the internal promotion culture, and frame everything in conservative fiscal 
+                      language while accepting that genuine transformational change faces structural cultural barriers that only a major 
+                      crisis will overcome.
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <div className="grid md:grid-cols-2 gap-4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <CheckCircle2 className="h-5 w-5 text-green-600" />
+                      Strengths to Leverage
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <div className="border-l-4 border-green-600 pl-3 py-2">
+                      <h4 className="font-semibold text-sm mb-1">Communications Excellence</h4>
+                      <p className="text-xs text-muted-foreground mb-1">Award-winning podcast, innovative video series, sophisticated social media</p>
+                      <p className="text-xs"><strong>How to Leverage:</strong> Offer communications partnerships; recognize their leadership</p>
+                    </div>
+
+                    <div className="border-l-4 border-green-600 pl-3 py-2">
+                      <h4 className="font-semibold text-sm mb-1">Fiscal Discipline</h4>
+                      <p className="text-xs text-muted-foreground mb-1">59.9¢ tax rate (lowest since 1970), strong financial management</p>
+                      <p className="text-xs"><strong>How to Leverage:</strong> Frame proposals to reinforce fiscal responsibility; show cost savings</p>
+                    </div>
+
+                    <div className="border-l-4 border-green-600 pl-3 py-2">
+                      <h4 className="font-semibold text-sm mb-1">Economic Development Focus</h4>
+                      <p className="text-xs text-muted-foreground mb-1">Top Board priority, dedicated staff, business-friendly culture</p>
+                      <p className="text-xs"><strong>How to Leverage:</strong> Connect proposals to job creation; show economic benefits</p>
+                    </div>
+
+                    <div className="border-l-4 border-green-600 pl-3 py-2">
+                      <h4 className="font-semibold text-sm mb-1">Grant Procurement Capability</h4>
+                      <p className="text-xs text-muted-foreground mb-1">Successful track record securing external funding</p>
+                      <p className="text-xs"><strong>How to Leverage:</strong> Identify grant opportunities; help with applications</p>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <AlertTriangle className="h-5 w-5 text-orange-500" />
+                      Weaknesses to Navigate
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <div className="border-l-4 border-orange-600 pl-3 py-2">
+                      <h4 className="font-semibold text-sm mb-1">Infrastructure Financing Gap</h4>
+                      <p className="text-xs text-muted-foreground mb-1">$600M+ deferred school facilities, aging infrastructure</p>
+                      <p className="text-xs"><strong>Strategy:</strong> Bring creative financing; emphasize external funding; show long-term ROI</p>
+                    </div>
+
+                    <div className="border-l-4 border-orange-600 pl-3 py-2">
+                      <h4 className="font-semibold text-sm mb-1">Internal Promotion Insularity</h4>
+                      <p className="text-xs text-muted-foreground mb-1">Limited external perspectives, groupthink risks</p>
+                      <p className="text-xs"><strong>Strategy:</strong> Frame as supporting internal talent; show peer examples; never criticize</p>
+                    </div>
+
+                    <div className="border-l-4 border-orange-600 pl-3 py-2">
+                      <h4 className="font-semibold text-sm mb-1">Risk Aversion</h4>
+                      <p className="text-xs text-muted-foreground mb-1">Conservative culture, extended decision timelines</p>
+                      <p className="text-xs"><strong>Strategy:</strong> Start with pilots; extensive documentation; be patient with process</p>
+                    </div>
+
+                    <div className="border-l-4 border-orange-600 pl-3 py-2">
+                      <h4 className="font-semibold text-sm mb-1">Succession Vulnerability</h4>
+                      <p className="text-xs text-muted-foreground mb-1">County Manager likely to depart within 5 years</p>
+                      <p className="text-xs"><strong>Strategy:</strong> Build relationships with potential successors; don't over-depend on Rhoten</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Step-by-Step Engagement Strategy</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-3">
+                    <div className="border rounded p-3">
+                      <h4 className="font-semibold text-sm mb-2 flex items-center gap-2">
+                        <span className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center text-xs">1</span>
+                        Phase 1: Foundation Building (Months 1-3)
+                      </h4>
+                      <ul className="text-xs space-y-1 text-muted-foreground list-disc list-inside ml-6">
+                        <li>Research public documents (budgets, strategic plans, meeting minutes)</li>
+                        <li>Contact County Manager's office for introductory meeting</li>
+                        <li>Meet with key executives and attend Board meeting as observer</li>
+                        <li>Share best practices; establish as knowledgeable resource</li>
+                        <li>Identify potential grant opportunities</li>
+                      </ul>
+                    </div>
+
+                    <div className="border rounded p-3">
+                      <h4 className="font-semibold text-sm mb-2 flex items-center gap-2">
+                        <span className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center text-xs">2</span>
+                        Phase 2: Concept Development (Months 4-6)
+                      </h4>
+                      <ul className="text-xs space-y-1 text-muted-foreground list-disc list-inside ml-6">
+                        <li>Present initial concept informally to County Manager</li>
+                        <li>Gather peer jurisdiction examples based on feedback</li>
+                        <li>Develop preliminary financial analysis</li>
+                        <li>Meet with department heads to build support</li>
+                        <li>Ensure Financial Director sees financial soundness</li>
+                      </ul>
+                    </div>
+
+                    <div className="border rounded p-3">
+                      <h4 className="font-semibold text-sm mb-2 flex items-center gap-2">
+                        <span className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center text-xs">3</span>
+                        Phase 3: Formal Proposal (Months 7-9)
+                      </h4>
+                      <ul className="text-xs space-y-1 text-muted-foreground list-disc list-inside ml-6">
+                        <li>Create comprehensive written proposal with financial analysis</li>
+                        <li>Include peer examples, implementation plan, risk assessment</li>
+                        <li>Submit financial analysis to Financial Director Scott Attaway</li>
+                        <li>Submit complete proposal to County Manager</li>
+                        <li>Request feedback and timeline for decision</li>
+                      </ul>
+                    </div>
+
+                    <div className="border rounded p-3">
+                      <h4 className="font-semibold text-sm mb-2 flex items-center gap-2">
+                        <span className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center text-xs">4</span>
+                        Phase 4: Decision Process (Months 10-12)
+                      </h4>
+                      <ul className="text-xs space-y-1 text-muted-foreground list-disc list-inside ml-6">
+                        <li>Respond promptly to information requests</li>
+                        <li>County Manager reviews and briefs Board Chairman</li>
+                        <li>May be invited to present to Board</li>
+                        <li>Emphasize economic development and fiscal responsibility</li>
+                        <li>Board votes on proposal</li>
+                      </ul>
+                    </div>
+
+                    <div className="border rounded p-3">
+                      <h4 className="font-semibold text-sm mb-2 flex items-center gap-2">
+                        <span className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center text-xs">5</span>
+                        Phase 5: Implementation (If Approved)
+                      </h4>
+                      <ul className="text-xs space-y-1 text-muted-foreground list-disc list-inside ml-6">
+                        <li>Establish clear governance structure</li>
+                        <li>Meet all deliverable commitments in first 90 days</li>
+                        <li>Report regularly on progress and outcomes</li>
+                        <li>Build trust through performance</li>
+                        <li>Position for long-term partnership</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="bg-primary/10 border border-primary/30 rounded p-3 mt-4">
+                    <p className="text-xs font-semibold mb-1">Total Timeline:</p>
+                    <p className="text-xs text-muted-foreground">12-18 months from initial contact to implementation for major strategic initiatives</p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Probability of Success by Initiative Type</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2">
+                    <div className="grid grid-cols-12 gap-2 text-xs font-semibold border-b pb-2">
+                      <div className="col-span-4">Initiative Type</div>
+                      <div className="col-span-2">Success Rate</div>
+                      <div className="col-span-4">Key Success Factors</div>
+                      <div className="col-span-2">Timeline</div>
+                    </div>
+
+                    <div className="grid grid-cols-12 gap-2 text-xs py-2 border-b">
+                      <div className="col-span-4">Grant-Funded Program</div>
+                      <div className="col-span-2"><Badge className="bg-green-600">85-90%</Badge></div>
+                      <div className="col-span-4 text-muted-foreground">Grant secured, minimal match</div>
+                      <div className="col-span-2 text-muted-foreground">3-6 months</div>
+                    </div>
+
+                    <div className="grid grid-cols-12 gap-2 text-xs py-2 border-b">
+                      <div className="col-span-4">Communications Collaboration</div>
+                      <div className="col-span-2"><Badge className="bg-green-600">80-90%</Badge></div>
+                      <div className="col-span-4 text-muted-foreground">Quality storytelling</div>
+                      <div className="col-span-2 text-muted-foreground">1-3 months</div>
+                    </div>
+
+                    <div className="grid grid-cols-12 gap-2 text-xs py-2 border-b">
+                      <div className="col-span-4">Economic Development Partnership</div>
+                      <div className="col-span-2"><Badge className="bg-green-600">75-80%</Badge></div>
+                      <div className="col-span-4 text-muted-foreground">Revenue-positive, job-creating</div>
+                      <div className="col-span-2 text-muted-foreground">6-12 months</div>
+                    </div>
+
+                    <div className="grid grid-cols-12 gap-2 text-xs py-2 border-b">
+                      <div className="col-span-4">Infrastructure Solution</div>
+                      <div className="col-span-2"><Badge className="bg-green-600">70-80%</Badge></div>
+                      <div className="col-span-4 text-muted-foreground">External funding, ROI demonstrated</div>
+                      <div className="col-span-2 text-muted-foreground">6-12 months</div>
+                    </div>
+
+                    <div className="grid grid-cols-12 gap-2 text-xs py-2 border-b">
+                      <div className="col-span-4">Operational Partnership (County-Funded)</div>
+                      <div className="col-span-2"><Badge className="bg-yellow-600">45-55%</Badge></div>
+                      <div className="col-span-4 text-muted-foreground">Cost savings, peer validation</div>
+                      <div className="col-span-2 text-muted-foreground">6-12 months</div>
+                    </div>
+
+                    <div className="grid grid-cols-12 gap-2 text-xs py-2 border-b">
+                      <div className="col-span-4">Technology/Innovation Initiative</div>
+                      <div className="col-span-2"><Badge className="bg-orange-600">35-45%</Badge></div>
+                      <div className="col-span-4 text-muted-foreground">Proven elsewhere, pilot approach</div>
+                      <div className="col-span-2 text-muted-foreground">12-18 months</div>
+                    </div>
+
+                    <div className="grid grid-cols-12 gap-2 text-xs py-2">
+                      <div className="col-span-4">Policy/Governance Change</div>
+                      <div className="col-span-2"><Badge className="bg-red-600">20-30%</Badge></div>
+                      <div className="col-span-4 text-muted-foreground">Crisis-driven, overwhelming evidence</div>
+                      <div className="col-span-2 text-muted-foreground">12-24 months</div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>The Winning Formula: Final Recommendations</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="grid md:grid-cols-2 gap-3">
+                    <div className="p-3 border rounded bg-primary/5">
+                      <div className="flex justify-between items-start mb-2">
+                        <h4 className="font-semibold text-sm">1. Lead with Money</h4>
+                        <Badge variant="outline">30% of success</Badge>
+                      </div>
+                      <ul className="text-xs space-y-1 text-muted-foreground list-disc list-inside">
+                        <li>Demonstrate fiscal neutrality immediately</li>
+                        <li>Show external funding sources</li>
+                        <li>Conservative financial projections</li>
+                        <li>Clear ROI with timeline</li>
+                      </ul>
+                    </div>
+
+                    <div className="p-3 border rounded bg-primary/5">
+                      <div className="flex justify-between items-start mb-2">
+                        <h4 className="font-semibold text-sm">2. Validate with Peers</h4>
+                        <Badge variant="outline">20% of success</Badge>
+                      </div>
+                      <ul className="text-xs space-y-1 text-muted-foreground list-disc list-inside">
+                        <li>Document success in Republican-led counties</li>
+                        <li>Provide case studies with contacts</li>
+                        <li>Emphasize "proven best practice"</li>
+                        <li>Quantify peer outcomes</li>
+                      </ul>
+                    </div>
+
+                    <div className="p-3 border rounded bg-primary/5">
+                      <div className="flex justify-between items-start mb-2">
+                        <h4 className="font-semibold text-sm">3. Frame Conservatively</h4>
+                        <Badge variant="outline">15% of success</Badge>
+                      </div>
+                      <ul className="text-xs space-y-1 text-muted-foreground list-disc list-inside">
+                        <li>Use efficiency, fiscal responsibility language</li>
+                        <li>Connect to economic development</li>
+                        <li>Avoid progressive policy framing</li>
+                        <li>Emphasize taxpayer benefits</li>
+                      </ul>
+                    </div>
+
+                    <div className="p-3 border rounded bg-primary/5">
+                      <div className="flex justify-between items-start mb-2">
+                        <h4 className="font-semibold text-sm">4. Respect the Process</h4>
+                        <Badge variant="outline">15% of success</Badge>
+                      </div>
+                      <ul className="text-xs space-y-1 text-muted-foreground list-disc list-inside">
+                        <li>Allow 4-8 months for major decisions</li>
+                        <li>Follow chain of command</li>
+                        <li>Provide comprehensive documentation</li>
+                        <li>Be patient with methodical review</li>
+                      </ul>
+                    </div>
+
+                    <div className="p-3 border rounded bg-primary/5">
+                      <div className="flex justify-between items-start mb-2">
+                        <h4 className="font-semibold text-sm">5. Build Relationships</h4>
+                        <Badge variant="outline">10% of success</Badge>
+                      </div>
+                      <ul className="text-xs space-y-1 text-muted-foreground list-disc list-inside">
+                        <li>Invest in County Manager relationship</li>
+                        <li>Develop rapport with executive team</li>
+                        <li>Engage Communications Director</li>
+                        <li>Create internal champions</li>
+                      </ul>
+                    </div>
+
+                    <div className="p-3 border rounded bg-primary/5">
+                      <div className="flex justify-between items-start mb-2">
+                        <h4 className="font-semibold text-sm">6. Mitigate Risk</h4>
+                        <Badge variant="outline">5% of success</Badge>
+                      </div>
+                      <ul className="text-xs space-y-1 text-muted-foreground list-disc list-inside">
+                        <li>Thorough risk analysis</li>
+                        <li>Provide implementation support</li>
+                        <li>Offer pilot program option</li>
+                        <li>Reduce execution burden</li>
+                      </ul>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Conclusion & Critical Insights</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="prose prose-sm max-w-none">
+                    <p className="text-sm leading-relaxed">
+                      Gaston County Government is a <strong>professionally-run, fiscally disciplined organization with sophisticated 
+                      communications capabilities and genuine public service commitment</strong>—but one constrained by political commitments 
+                      to ultra-low taxes, internal promotion culture limiting external perspectives, and risk-averse conservatism preventing 
+                      bold innovation.
+                    </p>
+
+                    <p className="text-sm leading-relaxed">
+                      Success engaging them requires <strong>patience, fiscal discipline, peer validation, conservative framing, and respect 
+                      for their processes and expertise</strong>. Those who understand their culture, respect their constraints, bring external 
+                      resources, and frame proposals appropriately will find them to be <strong>effective, reliable partners</strong>. Those who 
+                      fight their culture, propose unfunded initiatives, or rush their process will find them to be <strong>immovable obstacles</strong>.
+                    </p>
+
+                    <p className="text-sm leading-relaxed">
+                      The organization is entering a <strong>critical 5-10 year period</strong> where infrastructure needs, leadership succession, 
+                      and fiscal constraints will force difficult decisions. Those positioned as solution providers during this period will have 
+                      <strong> maximum influence and opportunity</strong>.
+                    </p>
+                  </div>
+
+                  <div className="mt-4 p-4 bg-muted/30 border rounded">
+                    <p className="text-xs font-semibold mb-2">Remember:</p>
+                    <ul className="text-xs space-y-1 text-muted-foreground list-disc list-inside">
+                      <li>Fiscal neutrality is non-negotiable</li>
+                      <li>County Manager-Board Chairman relationship is the center of gravity</li>
+                      <li>4-8 month decision cycles are normal and necessary</li>
+                      <li>Grant-funded initiatives have highest success probability</li>
+                      <li>Genuine transformational change requires a major crisis</li>
+                    </ul>
+                  </div>
+                </CardContent>
+              </Card>
+            </AccordionContent>
+          </AccordionItem>
+
           {/* Stress Patterns */}
           <AccordionItem value="stress-patterns" className="border rounded-lg px-4">
             <AccordionTrigger className="text-xl font-semibold">
