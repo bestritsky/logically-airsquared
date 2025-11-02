@@ -101,7 +101,6 @@ export const EmailTemplatePreview = ({
                 variant="outline"
                 size="sm"
                 onClick={handleCopyToClipboard}
-                disabled={!hasAllRequiredVariables}
               >
                 {copied ? (
                   <>
@@ -135,11 +134,6 @@ export const EmailTemplatePreview = ({
               </div>
             </ScrollArea>
 
-            {!hasAllRequiredVariables && (
-              <p className="text-sm text-muted-foreground italic">
-                * Fill in all required fields to copy the email
-              </p>
-            )}
           </div>
         </div>
 
@@ -152,7 +146,6 @@ export const EmailTemplatePreview = ({
               toast.success("Template saved! (Campaign creation coming in Phase 3)");
               onOpenChange(false);
             }}
-            disabled={!hasAllRequiredVariables}
           >
             Save to Campaign
           </Button>
