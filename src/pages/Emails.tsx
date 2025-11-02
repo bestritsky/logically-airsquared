@@ -221,6 +221,7 @@ const Emails = () => {
   const [selectedFilter, setSelectedFilter] = useState<string>("all");
   const [selectedClient, setSelectedClient] = useState<string>("all");
   const [templateLibraryOpen, setTemplateLibraryOpen] = useState(false);
+  const [selectedCampaign, setSelectedCampaign] = useState<EmailCampaign | null>(null);
 
   // Get unique clients for filter
   const clients = useMemo(() => {
@@ -425,7 +426,11 @@ const Emails = () => {
               {filteredCampaigns.map((campaign, index) => (
                 <tr 
                   key={campaign.id}
-                  className="border-b border-border hover:bg-primary/5 transition-colors"
+                  className="border-b border-border hover:bg-primary/5 transition-colors cursor-pointer"
+                  onClick={() => {
+                    setSelectedCampaign(campaign);
+                    setTemplateLibraryOpen(true);
+                  }}
                 >
                   <td className="px-4 py-4">
                     <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
@@ -514,6 +519,9 @@ const Emails = () => {
       <EmailTemplateLibrary
         open={templateLibraryOpen}
         onOpenChange={setTemplateLibraryOpen}
+        preSelectedClient={selectedCampaign ? { id: selectedCampaign.clientId, name: selectedCampaign.clientName } : undefined}
+        preSelectedOpportunity={selectedCampaign ? { id: selectedCampaign.id, name: selectedCampaign.opportunityName || '' } : undefined}
+        campaignData={selectedCampaign || undefined}
       />
     </Layout>
   );

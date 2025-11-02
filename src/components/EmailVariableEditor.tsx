@@ -18,6 +18,7 @@ interface EmailVariableEditorProps {
   onVariablesChange: (variables: Record<string, string>) => void;
   preSelectedClient?: { id: number; name: string };
   preSelectedOpportunity?: { id: string; name: string };
+  campaignData?: any;
 }
 
 export const EmailVariableEditor = ({
@@ -26,6 +27,7 @@ export const EmailVariableEditor = ({
   onVariablesChange,
   preSelectedClient,
   preSelectedOpportunity,
+  campaignData,
 }: EmailVariableEditorProps) => {
   
   const handleVariableChange = (key: string, value: string) => {
@@ -35,18 +37,26 @@ export const EmailVariableEditor = ({
   const handleQuickFill = () => {
     const quickFillData: Record<string, string> = {};
     
-    if (preSelectedClient) {
-      quickFillData.client_name = preSelectedClient.name;
-    }
-    
-    if (preSelectedOpportunity) {
-      quickFillData.opportunity_name = preSelectedOpportunity.name;
+    // If campaignData is available, use all its fields
+    if (campaignData) {
+      quickFillData.client_name = campaignData.clientName;
+      quickFillData.opportunity_name = campaignData.opportunityName || '';
+      quickFillData.contact_name = campaignData.contactName;
+      quickFillData.email = campaignData.contactEmail;
+    } else {
+      // Fallback to preSelected values
+      if (preSelectedClient) {
+        quickFillData.client_name = preSelectedClient.name;
+      }
+      
+      if (preSelectedOpportunity) {
+        quickFillData.opportunity_name = preSelectedOpportunity.name;
+      }
     }
     
     // Add some default values for common fields
     quickFillData.your_name = "Sarah Johnson";
     quickFillData.your_title = "VP Marketing";
-    quickFillData.email = "sarah@dataart.com";
     
     onVariablesChange({ ...variables, ...quickFillData });
   };

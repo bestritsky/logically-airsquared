@@ -18,6 +18,7 @@ interface EmailTemplatePreviewProps {
   onOpenChange: (open: boolean) => void;
   preSelectedClient?: { id: number; name: string };
   preSelectedOpportunity?: { id: string; name: string };
+  campaignData?: any;
 }
 
 export const EmailTemplatePreview = ({
@@ -26,6 +27,7 @@ export const EmailTemplatePreview = ({
   onOpenChange,
   preSelectedClient,
   preSelectedOpportunity,
+  campaignData,
 }: EmailTemplatePreviewProps) => {
   const [variables, setVariables] = useState<Record<string, string>>({});
   const [copied, setCopied] = useState(false);
@@ -100,6 +102,7 @@ export const EmailTemplatePreview = ({
                 onVariablesChange={setVariables}
                 preSelectedClient={preSelectedClient}
                 preSelectedOpportunity={preSelectedOpportunity}
+                campaignData={campaignData}
               />
             </ScrollArea>
           </div>

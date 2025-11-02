@@ -17,6 +17,7 @@ interface EmailTemplateLibraryProps {
   onOpenChange: (open: boolean) => void;
   preSelectedClient?: { id: number; name: string };
   preSelectedOpportunity?: { id: string; name: string };
+  campaignData?: any;
 }
 
 export const EmailTemplateLibrary = ({
@@ -24,6 +25,7 @@ export const EmailTemplateLibrary = ({
   onOpenChange,
   preSelectedClient,
   preSelectedOpportunity,
+  campaignData,
 }: EmailTemplateLibraryProps) => {
   const [selectedTemplate, setSelectedTemplate] = useState<EmailTemplate | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -179,6 +181,7 @@ export const EmailTemplateLibrary = ({
           onOpenChange={(open) => !open && setSelectedTemplate(null)}
           preSelectedClient={preSelectedClient}
           preSelectedOpportunity={preSelectedOpportunity}
+          campaignData={campaignData}
         />
       )}
     </>
