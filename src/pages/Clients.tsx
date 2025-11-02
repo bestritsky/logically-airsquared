@@ -2,6 +2,14 @@ import { useState } from "react";
 import { Layout } from "@/components/Layout";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { MoreVertical } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 
 interface Client {
   id: number;
@@ -260,6 +268,7 @@ const Clients = () => {
                 <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">Status</th>
                 <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">Timeline</th>
                 <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">Key Opportunities</th>
+                <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground w-12"></th>
               </tr>
             </thead>
             <tbody>
@@ -322,6 +331,20 @@ const Clients = () => {
                         </li>
                       ))}
                     </ul>
+                  </td>
+                  <td className="px-4 py-4">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                          <MoreVertical className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem>Details</DropdownMenuItem>
+                        <DropdownMenuItem>Opportunities</DropdownMenuItem>
+                        <DropdownMenuItem>Emails</DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </td>
                 </tr>
               ))}
