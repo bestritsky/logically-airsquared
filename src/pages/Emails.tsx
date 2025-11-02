@@ -357,7 +357,7 @@ const Emails = () => {
                   </span>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Coming Soon. Select Email in the table and select email template to use. Use Copy Email button and integrate into your own email.</p>
+                  <p>Coming Soon. To use now: 1) Click a campaign below, 2) Select a template, 3) Click Copy Email button after updating Email as needed.</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
