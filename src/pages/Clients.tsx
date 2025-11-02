@@ -342,7 +342,9 @@ const Clients = () => {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem>Details</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => window.open(`/clients/${client.id}`, '_blank')}>
+                          Details
+                        </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => window.open(`/opportunities?client=${client.id}`, '_blank')}>
                           Opportunities
                         </DropdownMenuItem>
