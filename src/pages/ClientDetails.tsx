@@ -6,6 +6,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, AlertTriangle, CheckCircle2, XCircle } from "lucide-react";
 import { mecklenburgIntelligence } from "@/data/mecklenburgIntelligence";
+import { maplewoodIntelligence } from "@/data/maplewoodIntelligence";
 
 const ClientDetails = () => {
   const { clientId } = useParams();
@@ -44,6 +45,54 @@ const ClientDetails = () => {
           <Accordion type="multiple" className="space-y-4">
             {mecklenburgIntelligence.sections}
           </Accordion>
+        </div>
+      </Layout>
+    );
+  }
+
+  // Maplewood Senior Living (ID 2)
+  if (clientId === "2") {
+    return (
+      <Layout>
+        <div className="container mx-auto p-6 max-w-6xl">
+          <Button onClick={() => navigate("/clients")} variant="ghost" className="mb-4">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Clients
+          </Button>
+
+          <header className="bg-gradient-to-br from-primary to-coral-dark rounded-lg p-8 mb-8 shadow-sm">
+            <h1 className="text-4xl font-heading font-bold text-white mb-2">
+              MAPLEWOOD SENIOR LIVING
+            </h1>
+            <p className="text-white/90 text-lg font-mono mb-6">
+              P-RISM Ludicrous Mode Analysis - Westport, CT
+            </p>
+
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-6">
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                <div className="text-white/80 text-sm font-mono mb-1">Deal Size</div>
+                <div className="text-2xl font-heading font-bold text-white">$250K-400K</div>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                <div className="text-white/80 text-sm font-mono mb-1">Status</div>
+                <div className="text-2xl font-heading font-bold text-white">Existing</div>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                <div className="text-white/80 text-sm font-mono mb-1">Timeline</div>
+                <div className="text-2xl font-heading font-bold text-white">6 mo</div>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                <div className="text-white/80 text-sm font-mono mb-1">Confidence</div>
+                <div className="text-3xl font-heading font-bold text-white">85%</div>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                <div className="text-white/80 text-sm font-mono mb-1">Properties</div>
+                <div className="text-3xl font-heading font-bold text-white">17</div>
+              </div>
+            </div>
+          </header>
+
+          {maplewoodIntelligence}
         </div>
       </Layout>
     );
