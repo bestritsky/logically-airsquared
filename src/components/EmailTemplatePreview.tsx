@@ -168,6 +168,7 @@ export const EmailTemplatePreview = ({
             Close
           </Button>
           <Button
+            disabled
             onClick={() => {
               toast.success("Template saved! (Campaign creation coming in Phase 3)");
               onOpenChange(false);
