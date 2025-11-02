@@ -289,7 +289,7 @@ const Index = () => {
 
         {/* Footer */}
         <footer className="text-center font-mono text-sm text-muted-foreground">
-          <p>The AI Maestro | Henry Bestritsky</p>
+          <p>Logically AirSquared Intelligent Sales | Henry Bestritsky</p>
           <p className="mt-1 italic text-xs">Orchestrating Intelligence, Conducting Transformation</p>
         </footer>
       </div>
