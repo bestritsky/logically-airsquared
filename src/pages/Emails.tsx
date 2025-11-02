@@ -413,7 +413,7 @@ const Emails = () => {
             <thead className="bg-muted/20 border-b border-border">
               <tr>
                 <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">#</th>
-                <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">Campaign Name</th>
+                <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">Email</th>
                 <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">Client</th>
                 <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">Influence Principle</th>
                 <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">Status</th>
