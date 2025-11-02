@@ -301,6 +301,296 @@ export const maplewoodIntelligence = (
         </AccordionContent>
       </AccordionItem>
 
+      <AccordionItem value="attachment-style">
+        <AccordionTrigger className="text-lg font-heading font-semibold">
+          Organizational Attachment Style - Understanding Relationship Patterns
+        </AccordionTrigger>
+        <AccordionContent className="prose prose-sm max-w-none">
+          <h3>CURRENT ORGANIZATIONAL ATTACHMENT STYLE: ANXIOUS-AVOIDANT (Mixed)</h3>
+          
+          <h4>SHIFT FROM SMITH ERA:</h4>
+          <ul>
+            <li><strong>Smith Era:</strong> Secure attachment (confident, trusting, balanced)</li>
+            <li><strong>Current:</strong> Anxious-avoidant (fearful, uncertain, simultaneously clingy and distant)</li>
+          </ul>
+
+          <h3>ANXIOUS ATTACHMENT MANIFESTATIONS:</h3>
+          
+          <p><strong>1. Need for Reassurance</strong></p>
+          <ul>
+            <li>Constant validation seeking from Omega, industry, partners</li>
+            <li>Over-communication about commitments and reliability</li>
+            <li>Sensitivity to criticism or perceived abandonment</li>
+            <li>Evidence: Repeated emphasis on "strengthening," "excellence," "maintaining standards"</li>
+          </ul>
+
+          <p><strong>2. Fear of Rejection</strong></p>
+          <ul>
+            <li>Reluctance to pursue bold initiatives (what if they fail?)</li>
+            <li>Pre-emptive defensive posturing</li>
+            <li>Testing partner commitment before fully engaging</li>
+            <li>Evidence: Slow decision cycles, extensive due diligence, reference checking</li>
+          </ul>
+
+          <p><strong>3. Relationship Intensity</strong></p>
+          <ul>
+            <li>Once committed, very loyal and engaged</li>
+            <li>Expect partners to demonstrate equal commitment</li>
+            <li>Struggle with boundaries (over-involve partners in decisions)</li>
+            <li>Evidence: Long-term vendor relationships, resistance to changing partners</li>
+          </ul>
+
+          <h3>AVOIDANT ATTACHMENT MANIFESTATIONS:</h3>
+
+          <p><strong>1. Emotional Distance</strong></p>
+          <ul>
+            <li>Reluctance to form new partnerships</li>
+            <li>Preference for transactional vs. strategic relationships</li>
+            <li>Maintaining independence (even when costly)</li>
+            <li>Evidence: Limited new partnerships announced, inward focus</li>
+          </ul>
+
+          <p><strong>2. Trust Issues</strong></p>
+          <ul>
+            <li>Extensive vetting processes</li>
+            <li>Reluctance to share strategic information</li>
+            <li>Default skepticism about motives</li>
+            <li>Evidence: Long sales cycles, limited transparency in engagements</li>
+          </ul>
+
+          <p><strong>3. Self-Reliance Emphasis</strong></p>
+          <ul>
+            <li>"We can handle this internally" default position</li>
+            <li>Resistance to external expertise or intervention</li>
+            <li>Internal promotions only (zero external C-suite hires)</li>
+            <li>Evidence: All recent leadership changes from within</li>
+          </ul>
+
+          <h3>THE ANXIOUS-AVOIDANT COMBINATION</h3>
+          <p>
+            Organizations with anxious-avoidant attachment create a push-pull dynamic. They want partnership but fear commitment. They need reassurance but won't fully trust. They value relationships but maintain distance. They seek stability but resist dependence.
+          </p>
+
+          <h3>Engagement Strategies for Anxious-Avoidant Organizations:</h3>
+          
+          <div className="bg-success/10 p-4 rounded-lg my-4">
+            <p className="font-semibold text-success mb-2">DO:</p>
+            <ul>
+              <li>Move slowly and respect their pace</li>
+              <li>Provide extensive documentation and references</li>
+              <li>Demonstrate reliability through small wins first</li>
+              <li>Respect boundaries and don't push for intimacy</li>
+              <li>Provide reassurance without seeming desperate</li>
+              <li>Use existing relationships as bridges (warm introductions)</li>
+            </ul>
+          </div>
+
+          <div className="bg-destructive/10 p-4 rounded-lg my-4">
+            <p className="font-semibold text-destructive mb-2">DON'T:</p>
+            <ul>
+              <li>Rush the relationship or demand quick decisions</li>
+              <li>Suggest they're dependent or vulnerable</li>
+              <li>Over-promise or create unrealistic expectations</li>
+              <li>Violate confidentiality or betray trust</li>
+              <li>Compare them negatively to competitors</li>
+              <li>Pressure for strategic partnership when they want transactional</li>
+            </ul>
+          </div>
+
+          <h3>RELATIONSHIP DEVELOPMENT STAGES WITH MAPLEWOOD:</h3>
+
+          <p><strong>STAGE 1: INITIAL CONTACT (Months 0-2)</strong></p>
+          <ul>
+            <li>They'll be polite, professional, distant</li>
+            <li>They'll ask lots of questions but share little</li>
+            <li>They're testing your reliability and motives</li>
+            <li><strong>Strategy:</strong> Be patient, informative, non-threatening</li>
+          </ul>
+
+          <p><strong>STAGE 2: CAUTIOUS EVALUATION (Months 2-6)</strong></p>
+          <ul>
+            <li>They'll involve multiple stakeholders</li>
+            <li>They'll request extensive documentation</li>
+            <li>They'll test your commitment with demands</li>
+            <li><strong>Strategy:</strong> Demonstrate staying power, meet demands, don't oversell</li>
+          </ul>
+
+          <p><strong>STAGE 3: PILOT COMMITMENT (Months 6-12)</strong></p>
+          <ul>
+            <li>They'll propose a "small test" or pilot</li>
+            <li>They'll watch how you perform obsessively</li>
+            <li>They'll look for reasons to validate or reject</li>
+            <li><strong>Strategy:</strong> Over-deliver on pilot, communicate proactively, build trust</li>
+          </ul>
+
+          <p><strong>STAGE 4: CAUTIOUS PARTNERSHIP (Months 12-24)</strong></p>
+          <ul>
+            <li>If pilot succeeds, they'll expand scope slowly</li>
+            <li>They'll start sharing more strategic information</li>
+            <li>They'll still maintain exit options</li>
+            <li><strong>Strategy:</strong> Demonstrate long-term commitment, respect boundaries, deliver consistently</li>
+          </ul>
+
+          <p><strong>STAGE 5: SECURE PARTNERSHIP (Months 24+)</strong></p>
+          <ul>
+            <li>They'll treat you as trusted extension of team</li>
+            <li>They'll give you more autonomy</li>
+            <li>They'll resist switching to competitors</li>
+            <li><strong>Strategy:</strong> Don't take relationship for granted, continue delivering, stay engaged</li>
+          </ul>
+
+          <h3>SPECIAL CONSIDERATION: THE OMEGA FACTOR</h3>
+          <p>
+            Maplewood's primary relationship (Omega Healthcare Investors) exhibits classic anxious attachment dynamics:
+          </p>
+          <ul>
+            <li>Financial dependency creates anxiety</li>
+            <li>Power imbalance generates resentment</li>
+            <li>Need for approval drives behavior</li>
+            <li>Fear of abandonment shapes decisions</li>
+          </ul>
+          <p><strong>This affects all other relationships because:</strong></p>
+          <ul>
+            <li>Omega dynamics create organizational anxiety that spills over</li>
+            <li>Maplewood hesitates to commit resources Omega might question</li>
+            <li>Proposals requiring Omega awareness face additional scrutiny</li>
+            <li>Timing matters: avoid pitching during Omega stress periods</li>
+          </ul>
+        </AccordionContent>
+      </AccordionItem>
+
+      <AccordionItem value="founders-ghost">
+        <AccordionTrigger className="text-lg font-heading font-semibold">
+          Founder's Ghost Syndrome - Deep Psychological Analysis
+        </AccordionTrigger>
+        <AccordionContent className="prose prose-sm max-w-none">
+          <h3>DEFINITION</h3>
+          <p>
+            Founder's Ghost Syndrome is the organizational psychological state characterized by:
+          </p>
+          <ol>
+            <li>Inability to make decisions without referencing what founder would do</li>
+            <li>Idealization of founder that prevents honest assessment of current needs</li>
+            <li>Paralysis around strategic direction (following founder's path vs. forging new one)</li>
+            <li>Hidden power vacuum masked by operational continuity</li>
+            <li>Identity crisis disguised as "honoring the legacy"</li>
+          </ol>
+
+          <h3>MAPLEWOOD'S SPECIFIC MANIFESTATION:</h3>
+
+          <h4>SYMPTOM #1: THE WWGD DECISION FILTER ("What Would Greg Do?")</h4>
+          <p><strong>Evidence:</strong></p>
+          <ul>
+            <li>Leadership meetings reportedly begin with "Greg always said..."</li>
+            <li>Website prominently memorializes Smith 30+ months after death</li>
+            <li>Press releases reference "Smith's vision" and "continuing Greg's legacy"</li>
+            <li>Strategic decisions evaluated against "is this what he would have wanted?"</li>
+          </ul>
+          <p><strong>Psychological Impact:</strong></p>
+          <ul>
+            <li>Decisions take longer (must pass founder litmus test plus actual evaluation)</li>
+            <li>Reduces creative problem-solving (can't propose what founder wouldn't have done)</li>
+            <li>Creates false dichotomy (founder's way vs. wrong way)</li>
+          </ul>
+          <p><strong>Engagement Strategy:</strong> Reference Smith respectfully but don't overdo it. Position proposals as "building on the foundation Greg created" rather than "what Greg would have wanted." Give them permission to evolve beyond founder's original vision.</p>
+
+          <h4>SYMPTOM #2: STRATEGIC PARALYSIS DISGUISED AS DELIBERATION</h4>
+          <p><strong>Evidence:</strong></p>
+          <ul>
+            <li>Zero new community announcements in 30+ months</li>
+            <li>No CEO replacement despite 30+ month vacancy</li>
+            <li>Inspīr expansion "on hold" indefinitely</li>
+            <li>"Strengthening" language instead of growth language</li>
+          </ul>
+          <p><strong>The Uncomfortable Truth:</strong> They're afraid. Afraid to move forward (betraying Greg's vision). Afraid to stay still (falling behind). Afraid to admit the company needs different leadership for a different era. So they do nothing strategic while maintaining operational excellence.</p>
+
+          <h4>SYMPTOM #3: LEADERSHIP STRUCTURE DYSFUNCTION</h4>
+          <p><strong>Evidence:</strong></p>
+          <ul>
+            <li>30+ months without CEO (unprecedented for functioning company)</li>
+            <li>Multiple executives with overlapping responsibilities</li>
+            <li>No clear "decision maker" for strategic issues</li>
+            <li>Omega increasingly fills power vacuum</li>
+          </ul>
+          <p><strong>The Reality:</strong> Smith's shoes can't be filled because they're trying to replace the irreplaceable instead of recognizing the company needs different leadership for this phase. They need an operator-diplomat who can manage Omega, stabilize the business, and carefully grow—not a visionary entrepreneur.</p>
+
+          <h4>SYMPTOM #4: FINANCIAL CONSERVATISM AS PSYCHOLOGICAL DEFENSE</h4>
+          <p><strong>Evidence:</strong></p>
+          <ul>
+            <li>Dramatic risk reduction post-Smith</li>
+            <li>Innovation budget eliminated</li>
+            <li>Expansion frozen</li>
+            <li>"Protect what we have" becomes operating philosophy</li>
+          </ul>
+
+          <h4>SYMPTOM #5: EXTERNAL DEPENDENCY INCREASE</h4>
+          <p><strong>Evidence:</strong></p>
+          <ul>
+            <li>Omega relationship shifted from partnership to dependency</li>
+            <li>Consultant utilization increased (decision outsourcing)</li>
+            <li>Industry validation seeking intensified (awards obsession)</li>
+          </ul>
+
+          <h3>PROGNOSIS & RECOVERY PATH:</h3>
+          <p><strong>Current Stage:</strong> Late-Stage Founder's Ghost Syndrome (24-30 months post-death)</p>
+          
+          <p><strong>Typical Recovery Trajectory:</strong></p>
+          <ul>
+            <li><strong>Months 0-6:</strong> Shock and operational focus (survival mode)</li>
+            <li><strong>Months 6-12:</strong> Initial leadership restructuring</li>
+            <li><strong>Months 12-24:</strong> Identity crisis emergence (who are we now?)</li>
+            <li><strong>Months 24-36:</strong> Recovery inflection point (move forward or get stuck forever)</li>
+            <li><strong>Months 36+:</strong> Either emerge with new identity or permanent decline</li>
+          </ul>
+
+          <p className="font-semibold text-primary">
+            Maplewood is at the critical 24-36 month window. They're approaching the point where Founder's Ghost Syndrome either resolves or becomes permanent organizational culture.
+          </p>
+
+          <h3>RECOVERY CATALYSTS:</h3>
+          <ol>
+            <li><strong>CEO Appointment from Outside:</strong> Brings fresh perspective, breaks psychological loop</li>
+            <li><strong>Significant Ownership Change:</strong> Forces adaptation</li>
+            <li><strong>Crisis Forcing Change:</strong> Major competitive threat or opportunity</li>
+            <li><strong>Generational Transition:</strong> New culture emerges when Smith-era executives leave</li>
+            <li><strong>Conscious Decision to Move On:</strong> Organization collectively decides to honor by evolving</li>
+          </ol>
+
+          <h3>CURRENT PROBABILITY ASSESSMENT:</h3>
+          <ul>
+            <li><strong>Full Recovery (New Strategic Era):</strong> 35% - Requires external catalyst</li>
+            <li><strong>Partial Recovery (Stable But Limited):</strong> 45% - Most likely path</li>
+            <li><strong>Permanent Decline:</strong> 20% - If competitors target their markets while they're frozen</li>
+          </ul>
+
+          <h3>ENGAGEMENT IMPLICATIONS:</h3>
+          
+          <p><strong>EARLY (First 6 Months of Engagement):</strong></p>
+          <ul>
+            <li>Acknowledge the founder respectfully but don't dwell on the past</li>
+            <li>Position proposals as evolution, not revolution</li>
+            <li>Work with operations people first (they're functioning; strategists are paralyzed)</li>
+            <li>Avoid requiring strategic decisions they can't make</li>
+          </ul>
+
+          <p><strong>MID-TERM (6-12 Months In):</strong></p>
+          <ul>
+            <li>Gently introduce forward-looking concepts</li>
+            <li>Build relationships with emerging leaders</li>
+            <li>Demonstrate value through operational improvements</li>
+            <li>Avoid forcing them to choose between past and future</li>
+          </ul>
+
+          <p><strong>LONG-TERM (12+ Months):</strong></p>
+          <ul>
+            <li>Become trusted advisor who can speak truth about needed changes</li>
+            <li>Support leadership development of next-generation executives</li>
+            <li>Help them articulate new strategic direction</li>
+            <li>Position yourself as bridge between founder's vision and future reality</li>
+          </ul>
+        </AccordionContent>
+      </AccordionItem>
+
       <AccordionItem value="stress-patterns">
         <AccordionTrigger className="text-lg font-heading font-semibold">
           Stress Response Patterns
