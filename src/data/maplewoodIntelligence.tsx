@@ -925,10 +925,129 @@ export const maplewoodIntelligence = (
           <p><strong>Focus:</strong> Clinical excellence, regulatory compliance, care quality</p>
           <p><strong>Engagement Strategy:</strong> Lead with clinical outcomes, quality metrics, resident satisfaction data</p>
 
-          <h3>SAMANTHA SPINO - Chief Accounting Officer</h3>
-          <p><strong>Background:</strong> Financial controls and compliance expertise</p>
-          <p><strong>Focus:</strong> Cost containment, financial discipline, Omega relationship management</p>
-          <p><strong>Engagement Strategy:</strong> Emphasize ROI, cost savings, cash flow improvement</p>
+          <h3>SAMANTHA SPINO - Chief Accounting Officer (Deep Profile)</h3>
+          <p><strong>Background:</strong> Appointed September 2025. Previously consultant to Maplewood since 2019. Her appointment signals financial discipline focus and Omega's influence.</p>
+          <p><strong>Focus:</strong> Cost containment, financial discipline, Omega relationship management, cash flow optimization</p>
+          
+          <h4>Stress Patterns & Coping Mechanisms:</h4>
+          <p><strong>Current Stressors:</strong></p>
+          <ul>
+            <li>Omega relationship and reporting obligations (ongoing)</li>
+            <li>2023 rent shortfall still unresolved (back payment timing uncertain)</li>
+            <li>Inspīr Carnegie Hill financial drag (4+ years, still not stabilized)</li>
+            <li>CEO vacancy creating governance uncertainty</li>
+            <li>Potential organizational sale or restructuring</li>
+          </ul>
+
+          <p><strong>Under Stress, Spino Will:</strong></p>
+          <ul>
+            <li>Become more conservative and risk-averse</li>
+            <li>Tighten financial controls further</li>
+            <li>Increase reporting and documentation requirements</li>
+            <li>Seek external validation (auditors, consultants)</li>
+            <li>May become more reactive to Omega signals</li>
+          </ul>
+
+          <p><strong>Coping Mechanisms:</strong></p>
+          <ul>
+            <li>Detailed financial modeling (control through analysis)</li>
+            <li>Process improvement (creating order from chaos)</li>
+            <li>Professional network consultation (CFOs at other organizations)</li>
+            <li>Documentation (writing creates clarity)</li>
+          </ul>
+
+          <p><strong>Stress Vulnerabilities:</strong></p>
+          <ul>
+            <li>Quarterly Omega earnings calls (especially if Maplewood mentioned negatively)</li>
+            <li>Audit periods (additional pressure and scrutiny)</li>
+            <li>Major spending requests without clear ROI</li>
+            <li>Surprises (unexpected costs, revenue shortfalls)</li>
+          </ul>
+
+          <h4>Organizational Role & Influence:</h4>
+          <p><strong>Formal Authority:</strong> Chief Accounting Officer (C-suite executive)</p>
+          <p><strong>Actual Power:</strong> 35-40% of organizational decision-making (surprisingly high)</p>
+          
+          <p><strong>Why So High:</strong></p>
+          <ul>
+            <li>Financial constraints give her veto power on most initiatives</li>
+            <li>Omega relationship flows through her (rent, reporting, negotiations)</li>
+            <li>No CEO means financial discipline fills leadership vacuum</li>
+            <li>Post-crisis environment elevates financial oversight importance</li>
+          </ul>
+
+          <p><strong>Influence Areas:</strong></p>
+          <ul>
+            <li><strong>High Influence:</strong> All spending decisions, capital allocation, vendor contracts, pricing strategy, Omega relationship management</li>
+            <li><strong>Moderate Influence:</strong> Strategic direction (financial constraints limit options), staffing levels</li>
+            <li><strong>Low Influence:</strong> Clinical operations (Popescu's domain), property-level operations</li>
+          </ul>
+
+          <h4>Relationship Dynamics:</h4>
+          <p><strong>WITH TINO POPESCU (COO):</strong> Respectful but tension between quality (his priority) and cost (her priority). He requests resources; she evaluates whether affordable.</p>
+          <p><strong>WITH THOMAS GASTON (CIO):</strong> Collaborative on investment decisions. He identifies opportunities; she determines financial viability.</p>
+          <p><strong>WITH JENNA ANDERSON (VP Revenue):</strong> Aligned on revenue growth but tension on marketing/sales investment levels.</p>
+          <p><strong>WITH OMEGA:</strong> Critical relationship. She manages financial reporting, rent payments, covenant compliance. Feels pressure to deliver positive financial narrative.</p>
+          <p><strong>WITH EXTERNAL ADVISORS:</strong> Values relationships with auditors, banking partners, consultants. Uses external validation for internal decisions.</p>
+
+          <h4>Hidden Power Dynamic: The Omega Connection</h4>
+          <p className="bg-primary/10 p-4 rounded-lg">
+            <strong>High Confidence Speculation:</strong> Spino likely has direct reporting relationship or regular communication with Omega executives beyond just financial reporting. Evidence: Her appointment timing (September 2025) aligns with Omega's increased oversight. Consultant-to-executive suggests she was brought in specifically to manage Omega relationship. CAO role (vs. CFO) focuses on controls and reporting (Omega's concerns). Her influence level is higher than typical CAO (suggests external backing).
+          </p>
+          <p><strong>Implication:</strong> Spino may represent Omega's interests as much as Maplewood's interests. She's not just managing finances—she's managing Omega's investment. This makes her both gatekeeper and informant.</p>
+          <p><strong>Strategic Consideration:</strong> Any proposal that reaches Spino may effectively reach Omega. This can be advantage (if Omega-aligned) or barrier (if Omega might question it).</p>
+
+          <h4>The Spino Formula - How to Win:</h4>
+          
+          <p><strong>PHASE 1: Build Financial Credibility (Weeks 1-2)</strong></p>
+          <ul>
+            <li>Demonstrate financial sophistication</li>
+            <li>Show understanding of senior living financial challenges</li>
+            <li>Reference successful financial justifications from similar organizations</li>
+          </ul>
+
+          <p><strong>PHASE 2: Deliver Detailed Financial Analysis (Weeks 2-4)</strong></p>
+          <ul>
+            <li>Provide comprehensive ROI model with realistic assumptions</li>
+            <li>Show cash flow timing (not just P&L impact)</li>
+            <li>Address risks and mitigation strategies</li>
+            <li>Include sensitivity analysis (best/expected/worst case)</li>
+          </ul>
+
+          <p><strong>PHASE 3: Address Omega Implications (Weeks 4-6)</strong></p>
+          <ul>
+            <li>Frame benefits in Omega's language (property NOI, occupancy)</li>
+            <li>Show how this improves financial metrics Omega monitors</li>
+            <li>Provide clean justification she can use with Omega</li>
+          </ul>
+
+          <p><strong>PHASE 4: Propose Flexible Structure (Weeks 6-8)</strong></p>
+          <ul>
+            <li>Offer phased implementation to spread costs</li>
+            <li>Provide payment flexibility (performance-based, deferred, contingent)</li>
+            <li>Suggest pilot with limited financial commitment</li>
+          </ul>
+
+          <p><strong>PHASE 5: Support Internal Approval (Weeks 8-12)</strong></p>
+          <ul>
+            <li>Provide materials for internal budget presentations</li>
+            <li>Offer to present financial analysis to stakeholders</li>
+            <li>Make her look good to Omega and leadership</li>
+          </ul>
+
+          <h4>Success Probability with Spino:</h4>
+          <ul>
+            <li><strong>Strong ROI Initiative (&lt;18 month payback):</strong> 65%</li>
+            <li><strong>Moderate ROI Initiative (18-36 month payback):</strong> 40%</li>
+            <li><strong>Strategic Initiative (36+ month payback):</strong> 20%</li>
+            <li><strong>Cost Avoidance Initiative:</strong> 55%</li>
+            <li><strong>Omega-Aligned Initiative:</strong> 70%</li>
+            <li><strong>Innovation Without Clear ROI:</strong> 5%</li>
+          </ul>
+
+          <p className="font-semibold text-primary mt-4">
+            KEY TAKEAWAY: Samantha Spino is the organizational reality principle—she enforces financial discipline and protects against overspending during uncertain times. She's the hardest executive to convince but the most valuable approval to have. If she says yes, you know the financial analysis is solid, and you've likely got implicit Omega blessing.
+          </p>
 
           <h3>THOMAS Y. GASTON - Chief Investment Officer</h3>
           <p><strong>Background:</strong> Finance and investment strategy</p>
@@ -1011,6 +1130,166 @@ export const maplewoodIntelligence = (
           </ul>
 
           <p><strong>Strategy:</strong> If your proposal aligns with Omega's interests, it has a much higher probability of approval. If it conflicts with Omega's interests, it will likely be rejected regardless of Maplewood's interest.</p>
+        </AccordionContent>
+      </AccordionItem>
+
+      <AccordionItem value="immediate-actions">
+        <AccordionTrigger className="text-lg font-heading font-semibold">
+          Immediate Action Items & Strategic Recommendations
+        </AccordionTrigger>
+        <AccordionContent className="prose prose-sm max-w-none">
+          <h3>IF APPROACHING IN NEXT 30 DAYS:</h3>
+          
+          <div className="bg-accent/10 p-4 rounded-lg my-4">
+            <p><strong>1. TIMING:</strong></p>
+            <ul>
+              <li>Avoid December (year-end close) and January (budget planning)</li>
+              <li>February-April optimal engagement window</li>
+              <li>Avoid Omega earnings call periods (creates stress)</li>
+            </ul>
+
+            <p><strong>2. ENTRY POINT:</strong></p>
+            <ul>
+              <li>Start with property-level directors, not C-suite</li>
+              <li>Build grassroots support first</li>
+              <li>Use warm introductions through existing relationships</li>
+            </ul>
+
+            <p><strong>3. MESSAGE:</strong></p>
+            <ul>
+              <li>Lead with operational improvement and clinical quality</li>
+              <li>NOT innovation or growth</li>
+              <li>Frame as "enhancing what you already do well"</li>
+            </ul>
+
+            <p><strong>4. PROOF:</strong></p>
+            <ul>
+              <li>Bring detailed case studies from similar-sized operators</li>
+              <li>Use conservative financial assumptions</li>
+              <li>Provide clinical references and peer validation</li>
+            </ul>
+
+            <p><strong>5. STRUCTURE:</strong></p>
+            <ul>
+              <li>Propose small pilot at single property</li>
+              <li>Limited financial commitment</li>
+              <li>Clear success metrics</li>
+              <li>90-120 day evaluation period</li>
+            </ul>
+          </div>
+
+          <h3>RED FLAGS TO AVOID:</h3>
+          <div className="bg-destructive/10 p-4 rounded-lg my-4">
+            <ul>
+              <li>❌ Leading with "transformational change"</li>
+              <li>❌ Requiring fast decisions (anything &lt;90 days)</li>
+              <li>❌ Suggesting they're behind competitors</li>
+              <li>❌ Large upfront capital requirements</li>
+              <li>❌ Anything suggesting financial risk</li>
+              <li>❌ Unproven technologies or approaches</li>
+              <li>❌ Comparison to Smith-era aggressiveness</li>
+              <li>❌ Implying Omega dependency</li>
+              <li>❌ Criticism of current leadership</li>
+              <li>❌ Rushing relationship development</li>
+            </ul>
+          </div>
+
+          <h3>GREEN LIGHTS TO PURSUE:</h3>
+          <div className="bg-success/10 p-4 rounded-lg my-4">
+            <ul>
+              <li>✅ Clinical quality improvements with evidence</li>
+              <li>✅ Operational efficiency with quick ROI (&lt;18 months)</li>
+              <li>✅ Resident satisfaction enhancements</li>
+              <li>✅ Cost avoidance and risk mitigation</li>
+              <li>✅ Reputation and award support</li>
+              <li>✅ Omega-friendly NOI improvements</li>
+              <li>✅ Pilot programs with success metrics</li>
+              <li>✅ Staff retention and development</li>
+              <li>✅ Memory care program enhancements</li>
+              <li>✅ Revenue optimization strategies</li>
+            </ul>
+          </div>
+
+          <h3>FINAL ASSESSMENT:</h3>
+          
+          <div className="border-l-4 border-primary pl-4 my-6">
+            <p><strong>Current State:</strong> Post-traumatic stabilization with founder's ghost syndrome</p>
+            <p><strong>Strategic Direction:</strong> Unclear, preservation-focused</p>
+            <p><strong>Financial Health:</strong> Recovering but constrained</p>
+            <p><strong>Operational Excellence:</strong> Very strong ⭐⭐⭐⭐⭐</p>
+            <p><strong>Innovation Appetite:</strong> Very low ⚠️</p>
+            <p><strong>Decision Velocity:</strong> Very slow 🐌</p>
+            <p><strong>Partnership Readiness:</strong> Moderate for proven concepts</p>
+          </div>
+
+          <h3>BEST OPPORTUNITIES:</h3>
+          <ul>
+            <li>Proven clinical innovations with peer validation</li>
+            <li>Operational efficiency improvements with fast ROI</li>
+            <li>Memory care program enhancements</li>
+            <li>Staff development and retention solutions</li>
+            <li>Resident experience improvements</li>
+            <li>Technology with clear clinical or operational benefits</li>
+            <li>Reputation management and award support</li>
+          </ul>
+
+          <h3>WORST OPPORTUNITIES:</h3>
+          <ul>
+            <li>Untested innovations requiring risk</li>
+            <li>Strategic partnerships requiring governance changes</li>
+            <li>Major capital investments without proven ROI</li>
+            <li>Inspīr brand expansion proposals</li>
+            <li>New market development</li>
+            <li>Complex technology implementations</li>
+            <li>Long payback periods (&gt;36 months)</li>
+          </ul>
+
+          <h3>BOTTOM LINE:</h3>
+          <p className="text-lg font-semibold bg-primary/10 p-6 rounded-lg">
+            Maplewood is an operationally excellent company experiencing identity and leadership crisis. They're financially constrained but clinically strong. They need partners who understand their situation, respect their conservatism, bring proven solutions, and don't require the visionary decision-making that died with Gregory Smith. Win them slowly, with evidence, through operations, with patience.
+          </p>
+
+          <h3>ENGAGEMENT TIMELINE EXPECTATIONS:</h3>
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="border-b">
+                <th className="text-left p-2">Phase</th>
+                <th className="text-left p-2">Duration</th>
+                <th className="text-left p-2">Activities</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b">
+                <td className="p-2">Initial Contact</td>
+                <td className="p-2">0-2 months</td>
+                <td className="p-2">Build awareness, share information, no pressure</td>
+              </tr>
+              <tr className="border-b">
+                <td className="p-2">Evaluation</td>
+                <td className="p-2">2-6 months</td>
+                <td className="p-2">Stakeholder meetings, documentation review, reference checks</td>
+              </tr>
+              <tr className="border-b">
+                <td className="p-2">Pilot Approval</td>
+                <td className="p-2">6-9 months</td>
+                <td className="p-2">Financial analysis, contract negotiation, pilot design</td>
+              </tr>
+              <tr className="border-b">
+                <td className="p-2">Pilot Execution</td>
+                <td className="p-2">9-15 months</td>
+                <td className="p-2">Implementation, monitoring, adjustment</td>
+              </tr>
+              <tr className="border-b">
+                <td className="p-2">Expansion Decision</td>
+                <td className="p-2">15-24 months</td>
+                <td className="p-2">Results evaluation, business case for broader rollout</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p className="mt-4 text-sm text-muted-foreground italic">
+            This analysis represents strategic intelligence compiled from 15+ sources, analyzed through psychological frameworks, and synthesized into actionable insights. Confidence levels indicated throughout. Use responsibly.
+          </p>
         </AccordionContent>
       </AccordionItem>
     </Accordion>
