@@ -346,7 +346,7 @@ const Emails = () => {
               <FileText className="w-4 h-4 mr-2" />
               Browse Templates
             </Button>
-            <TooltipProvider>
+            <TooltipProvider delayDuration={0}>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <span>
