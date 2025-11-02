@@ -1,8 +1,11 @@
 import { useState, useMemo } from "react";
 import { Layout } from "@/components/Layout";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+import { EmailTemplateLibrary } from "@/components/EmailTemplateLibrary";
+import { FileText, Plus } from "lucide-react";
 
 // TypeScript Interfaces
 type InfluencePrinciple = 
@@ -217,6 +220,7 @@ const campaignData: EmailCampaign[] = [
 const Emails = () => {
   const [selectedFilter, setSelectedFilter] = useState<string>("all");
   const [selectedClient, setSelectedClient] = useState<string>("all");
+  const [templateLibraryOpen, setTemplateLibraryOpen] = useState(false);
 
   // Get unique clients for filter
   const clients = useMemo(() => {
@@ -300,6 +304,21 @@ const Emails = () => {
   return (
     <Layout>
       <div className="container mx-auto px-4 py-8 max-w-6xl">
+        {/* Header with Actions */}
+        <div className="flex items-center justify-between mb-4">
+          <div></div>
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={() => setTemplateLibraryOpen(true)}>
+              <FileText className="w-4 h-4 mr-2" />
+              Browse Templates
+            </Button>
+            <Button onClick={() => setTemplateLibraryOpen(true)}>
+              <Plus className="w-4 h-4 mr-2" />
+              Create Campaign
+            </Button>
+          </div>
+        </div>
+
         {/* Header */}
         <header className="bg-gradient-to-br from-primary to-coral-dark rounded-lg p-8 mb-8 shadow-sm">
           <h1 className="text-4xl font-heading font-bold text-white mb-2">
@@ -491,6 +510,11 @@ const Emails = () => {
           </div>
         </div>
       </div>
+
+      <EmailTemplateLibrary
+        open={templateLibraryOpen}
+        onOpenChange={setTemplateLibraryOpen}
+      />
     </Layout>
   );
 };
