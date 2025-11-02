@@ -343,7 +343,7 @@ const Clients = () => {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem>Details</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate(`/opportunities?client=${client.id}`)}>
+                        <DropdownMenuItem onClick={() => window.open(`/opportunities?client=${client.id}`, '_blank')}>
                           Opportunities
                         </DropdownMenuItem>
                         <DropdownMenuItem>Emails</DropdownMenuItem>
