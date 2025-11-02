@@ -5,12 +5,51 @@ import { Badge } from "@/components/ui/badge";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, AlertTriangle, CheckCircle2, XCircle } from "lucide-react";
+import { mecklenburgIntelligence } from "@/data/mecklenburgIntelligence";
 
 const ClientDetails = () => {
   const { clientId } = useParams();
   const navigate = useNavigate();
 
-  // For now, only Gaston County (ID 4) has intelligence data
+  // Mecklenburg County (ID 1)
+  if (clientId === "1") {
+    return (
+      <Layout>
+        <div className="container mx-auto p-6 max-w-6xl">
+          <Button onClick={() => navigate("/clients")} variant="ghost" className="mb-4">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Clients
+          </Button>
+
+          {/* Hero Section */}
+          <header className="bg-gradient-to-br from-primary to-coral-dark rounded-lg p-8 mb-8 shadow-sm">
+            <h1 className="text-4xl font-heading font-bold text-white mb-2">
+              {mecklenburgIntelligence.header.name}
+            </h1>
+            <p className="text-white/90 text-lg font-mono mb-6">
+              {mecklenburgIntelligence.header.subtitle}
+            </p>
+
+            {/* Meta Cards */}
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-6">
+              {mecklenburgIntelligence.header.metrics.map((metric, idx) => (
+                <div key={idx} className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                  <div className="text-white/80 text-sm font-mono mb-1">{metric.label}</div>
+                  <div className={`text-${metric.size} font-heading font-bold text-white`}>{metric.value}</div>
+                </div>
+              ))}
+            </div>
+          </header>
+
+          <Accordion type="multiple" className="space-y-4">
+            {mecklenburgIntelligence.sections}
+          </Accordion>
+        </div>
+      </Layout>
+    );
+  }
+
+  // Gaston County (ID 4) - keep existing
   if (clientId !== "4") {
     return (
       <Layout>
