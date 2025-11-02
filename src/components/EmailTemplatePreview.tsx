@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Label } from "@/components/ui/label";
 import { EmailTemplate, InfluencePrinciple } from "@/data/emailTemplates";
 import { EmailVariableEditor } from "./EmailVariableEditor";
@@ -167,15 +168,26 @@ export const EmailTemplatePreview = ({
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Close
           </Button>
-          <Button
-            disabled
-            onClick={() => {
-              toast.success("Template saved! (Campaign creation coming in Phase 3)");
-              onOpenChange(false);
-            }}
-          >
-            Save to Campaign
-          </Button>
+          <TooltipProvider delayDuration={0}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <span>
+                  <Button
+                    disabled
+                    onClick={() => {
+                      toast.success("Template saved! (Campaign creation coming in Phase 3)");
+                      onOpenChange(false);
+                    }}
+                  >
+                    Save to Campaign
+                  </Button>
+                </span>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Coming Soon. To use now: Use Copy Email button</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       </DialogContent>
     </Dialog>
