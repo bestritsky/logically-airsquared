@@ -357,7 +357,7 @@ const Emails = () => {
                   </span>
                 </TooltipTrigger>
                 <TooltipContent className="max-w-xs">
-                  <p>Coming Soon. To use now: 1) Click a campaign below, 2) Select a template, 3) Click Copy Email button after updating Email as needed.</p>
+                  <p className="whitespace-pre-line">Coming Soon. To use now:{'\n'}1) Click a campaign below{'\n'}2) Select a template{'\n'}3) Click Copy Email button after updating Email as needed</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
