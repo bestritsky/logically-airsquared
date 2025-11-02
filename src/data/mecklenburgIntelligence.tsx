@@ -633,6 +633,317 @@ export const mecklenburgIntelligence = {
         </AccordionContent>
       </AccordionItem>
 
+      {/* Strategic Priorities & Board Vision */}
+      <AccordionItem value="strategic-priorities" className="border rounded-lg px-4">
+        <AccordionTrigger className="text-xl font-semibold">
+          Strategic Priorities & Board Vision - Critical for Partners
+        </AccordionTrigger>
+        <AccordionContent className="space-y-4 pt-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Strategic Implications for Partners</CardTitle>
+              <CardDescription>
+                How to align your proposal with Board priorities for maximum success
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="bg-green-50 dark:bg-green-950 p-4 rounded-lg space-y-3">
+                <h4 className="font-semibold text-sm flex items-start gap-2">
+                  ✅ Alignment Strategy
+                </h4>
+                <ul className="text-sm space-y-2 list-disc list-inside text-muted-foreground">
+                  <li>Map your proposal to at least two Board priorities (e.g., workforce development + racial equity)</li>
+                  <li>Use Board priority language in proposal framing</li>
+                  <li>Demonstrate measurable impact on priority outcomes</li>
+                  <li>Show how initiative advances multiple priorities simultaneously</li>
+                </ul>
+              </div>
+
+              <div className="bg-blue-50 dark:bg-blue-950 p-4 rounded-lg space-y-3">
+                <h4 className="font-semibold text-sm flex items-start gap-2">
+                  ✅ Evidence Strategy
+                </h4>
+                <ul className="text-sm space-y-2 list-disc list-inside text-muted-foreground">
+                  <li>Reference specific Board statements and priorities</li>
+                  <li>Cite budget allocations as evidence of commitment</li>
+                  <li>Demonstrate understanding of priority interdependencies</li>
+                  <li>Show how your proposal leverages existing priority investments</li>
+                </ul>
+              </div>
+
+              <div className="bg-red-50 dark:bg-red-950 p-4 rounded-lg space-y-3">
+                <h4 className="font-semibold text-sm flex items-start gap-2">
+                  ❌ Misalignment Risks
+                </h4>
+                <ul className="text-sm space-y-2 list-disc list-inside text-muted-foreground">
+                  <li>Proposals not aligned to any priority face uphill battle</li>
+                  <li>Economic development proposals ignoring equity dimension likely fail</li>
+                  <li>Programs without clear connection to Board vision struggle regardless of merit</li>
+                  <li>Trying to create new priorities outside existing framework rarely succeeds</li>
+                </ul>
+              </div>
+            </CardContent>
+          </Card>
+        </AccordionContent>
+      </AccordionItem>
+
+      {/* Financial Position & Constraints */}
+      <AccordionItem value="financial-position" className="border rounded-lg px-4">
+        <AccordionTrigger className="text-xl font-semibold">
+          Financial Position & Constraints - Critical Reality Check
+        </AccordionTrigger>
+        <AccordionContent className="space-y-4 pt-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Current Fiscal Situation (FY2025-2026)</CardTitle>
+              <CardDescription>
+                Understanding fiscal reality is essential to crafting viable proposals
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <h4 className="font-semibold text-sm mb-2">Revenue Dynamics</h4>
+                <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                  <li><strong>Post-Pandemic Pattern Change:</strong> Robust sales tax growth (2021-2023) has slowed to &lt;3% annual growth</li>
+                  <li><strong>Property Tax Base:</strong> Growing but rate increases politically difficult (Republican state legislature monitors county tax rates)</li>
+                  <li><strong>Federal/State Grants:</strong> Variable and often restricted</li>
+                  <li><strong>Overall Projection:</strong> Revenues growing slower than expenses</li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-sm mb-2">Expense Pressures</h4>
+                <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                  <li><strong>Healthcare Costs:</strong> 8.75% increase in medical premiums (FY2026)</li>
+                  <li><strong>Salary Expectations:</strong> 3% across-the-board + up to 5% performance pay needed to retain talent</li>
+                  <li><strong>Service Demands:</strong> Growing population creates demand growth</li>
+                  <li><strong>Inflation Impact:</strong> Equipment, contracts, materials all cost more</li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-sm mb-2">Budget Response Strategy</h4>
+                <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                  <li>$2.5B operating budget (1.6% growth - minimal)</li>
+                  <li>0.96 cent tax rate increase (modest, to 49.27 cents per $100)</li>
+                  <li>$30.66M fund balance utilization for one-time expenses</li>
+                  <li>$65M in new funding for priorities (vs $146M in FY2025 - significant reduction)</li>
+                </ul>
+              </div>
+
+              <div className="bg-yellow-50 dark:bg-yellow-950 p-4 rounded-lg">
+                <h4 className="font-semibold text-sm mb-2">What This Means for Partners</h4>
+                <p className="text-sm text-muted-foreground mb-2">
+                  <strong>"Do more with less" is real, not rhetoric.</strong> The revenue-expense gap is creating genuine constraints.
+                </p>
+                <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                  <li>One-time expenditures preferred over ongoing commitments</li>
+                  <li>External funding sources highly valued</li>
+                  <li>ROI justification critical for all proposals</li>
+                  <li>Efficiency improvements welcomed</li>
+                </ul>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Partner Financial Implications</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="border-l-4 border-green-500 pl-4">
+                <h4 className="font-semibold text-sm mb-2 text-green-700 dark:text-green-400">Highly Favorable Proposals</h4>
+                <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                  <li>Bring external funding (federal/state grants, foundation support, private investment)</li>
+                  <li>Demonstrate clear ROI with realistic timeline</li>
+                  <li>Create one-time deliverables rather than requiring ongoing support</li>
+                  <li>Show efficiency improvements or cost savings</li>
+                  <li>Leverage existing County investments</li>
+                </ul>
+              </div>
+
+              <div className="border-l-4 border-red-500 pl-4">
+                <h4 className="font-semibold text-sm mb-2 text-red-700 dark:text-red-400">Challenging Proposals</h4>
+                <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                  <li>Require significant ongoing County funding commitments</li>
+                  <li>Lack external funding or revenue generation</li>
+                  <li>Cannot demonstrate clear measurable ROI</li>
+                  <li>Compete with existing programs for constrained resources</li>
+                  <li>Require new staff positions (ongoing expense)</li>
+                </ul>
+              </div>
+
+              <div className="bg-primary/10 p-4 rounded-lg">
+                <h4 className="font-semibold text-sm mb-2">Optimal Financial Framing</h4>
+                <ul className="text-sm space-y-2 list-disc list-inside">
+                  <li><strong>Lead with external funding:</strong> "This $5M program is 80% grant-funded, requiring only $1M County match"</li>
+                  <li><strong>Show multiplicative impact:</strong> "Each County dollar invested leverages $3 from other sources"</li>
+                  <li><strong>Emphasize long-term savings:</strong> "Initial investment of $X yields annual savings of $Y starting year 2"</li>
+                  <li><strong>Connect to existing budget lines:</strong> "Enhances existing $Z investment in [program] rather than creating new expense"</li>
+                </ul>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Fund Balance Philosophy</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground mb-2">
+                Maintain healthy fund balance above policy minimum. Use fund balance for one-time, non-recurring costs only. Protect fund balance for emergencies and credit rating maintenance.
+              </p>
+              <p className="text-sm font-semibold">
+                Currently $96M+ above policy minimum - healthy but will draw down over time if revenue/expense gap continues.
+              </p>
+            </CardContent>
+          </Card>
+        </AccordionContent>
+      </AccordionItem>
+
+      {/* Competitive Landscape */}
+      <AccordionItem value="competitive-landscape" className="border rounded-lg px-4">
+        <AccordionTrigger className="text-xl font-semibold">
+          Competitive Landscape & Regional Context
+        </AccordionTrigger>
+        <AccordionContent className="space-y-4 pt-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Peer Comparison Context</CardTitle>
+              <CardDescription>
+                How Mecklenburg County positions itself against peer jurisdictions
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <h4 className="font-semibold text-sm mb-2">National Peer Comparisons (Large Urban Counties)</h4>
+                <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                  <li>Wake County, NC (Raleigh)</li>
+                  <li>Fulton County, GA (Atlanta)</li>
+                  <li>Davidson County, TN (Nashville)</li>
+                  <li>Bexar County, TX (San Antonio)</li>
+                  <li>Other large metro counties in Southeast/South</li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-sm mb-2">Regional Context</h4>
+                <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                  <li>Largest county in North Carolina (significantly larger than Wake County)</li>
+                  <li>Charlotte-Mecklenburg is economic engine of NC and Southeast</li>
+                  <li>Banking center (Bank of America, Truist headquarters)</li>
+                  <li>Growing tech and innovation sector</li>
+                  <li>Diverse and rapidly growing population</li>
+                </ul>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Competitive Positioning</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="bg-green-50 dark:bg-green-950 p-4 rounded-lg">
+                <h4 className="font-semibold text-sm mb-2">Strengths</h4>
+                <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                  <li>Strong financial management (AAA rating, Distinguished Budget Award 34+ years)</li>
+                  <li>Progressive policy innovation (MECK Pre-K, equity focus)</li>
+                  <li>Professional management culture</li>
+                  <li>Strategic planning and performance measurement sophistication</li>
+                  <li>Award-winning communications and engagement</li>
+                  <li>Stable, committed leadership</li>
+                </ul>
+              </div>
+
+              <div className="bg-orange-50 dark:bg-orange-950 p-4 rounded-lg">
+                <h4 className="font-semibold text-sm mb-2">Challenges</h4>
+                <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                  <li>Rapid growth creating infrastructure and service demand pressure</li>
+                  <li>Affordable housing crisis (severe)</li>
+                  <li>Racial equity gaps persist despite investments</li>
+                  <li>Education outcomes lag some peer metros</li>
+                  <li>Economic mobility still below national median (38/50)</li>
+                  <li>Transportation infrastructure needs</li>
+                </ul>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>How Mecklenburg County Positions Itself</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <h4 className="font-semibold text-sm mb-2">Internal Self-Concept</h4>
+                <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                  <li>"Model of excellence" in local government management</li>
+                  <li>Progressive leader in NC and Southeast</li>
+                  <li>Data-driven professional organization</li>
+                  <li>Equity-focused government</li>
+                  <li>Fiscally responsible steward</li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-sm mb-2">External Validation</h4>
+                <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                  <li>National awards for budget, planning, performance management, innovation</li>
+                  <li>AAA rating (financial strength)</li>
+                  <li>Leadership in national organizations (NACo, GFOA, ICMA, Big Cities Health Coalition)</li>
+                  <li>Media recognition of leaders (CBJ Most Admired CEO, 40 Under 40 awards)</li>
+                </ul>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Partner Positioning Strategy</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="bg-green-50 dark:bg-green-950 p-4 rounded-lg">
+                <h4 className="font-semibold text-sm mb-2">✅ Honor Their Self-Concept</h4>
+                <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                  <li>Acknowledge their leadership and excellence</li>
+                  <li>Reference their awards and recognition</li>
+                  <li>Position proposal as enhancing their strengths</li>
+                </ul>
+              </div>
+
+              <div className="bg-blue-50 dark:bg-blue-950 p-4 rounded-lg">
+                <h4 className="font-semibold text-sm mb-2">✅ Provide Peer Comparisons</h4>
+                <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                  <li>"Wake County implemented similar approach with strong results"</li>
+                  <li>"Among the 50 largest US counties, leaders in this area have..."</li>
+                  <li>"National best practice from peer AAA-rated counties..."</li>
+                </ul>
+              </div>
+
+              <div className="bg-yellow-50 dark:bg-yellow-950 p-4 rounded-lg">
+                <h4 className="font-semibold text-sm mb-2">✅ Address Challenges Respectfully</h4>
+                <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                  <li>Acknowledge affordable housing challenge (they know it's severe)</li>
+                  <li>Reference equity gaps as opportunity for partnership to help close</li>
+                  <li>Frame your solution as helping them achieve stated goals</li>
+                </ul>
+              </div>
+
+              <div className="bg-red-50 dark:bg-red-950 p-4 rounded-lg">
+                <h4 className="font-semibold text-sm mb-2">❌ Avoid Positioning Errors</h4>
+                <ul className="text-sm space-y-1 list-disc list-inside text-muted-foreground">
+                  <li>Don't position Mecklenburg as behind or deficient</li>
+                  <li>Don't ignore their sophistication (they're highly professional)</li>
+                  <li>Don't pretend problems don't exist (they're data-driven and realistic)</li>
+                  <li>Don't compare unfavorably to peer counties without context</li>
+                </ul>
+              </div>
+            </CardContent>
+          </Card>
+        </AccordionContent>
+      </AccordionItem>
+
       {/* Engagement Strategy */}
       <AccordionItem value="strategy" className="border rounded-lg px-4">
         <AccordionTrigger className="text-xl font-semibold">
