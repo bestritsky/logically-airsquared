@@ -375,26 +375,75 @@ const Emails = () => {
 
           {/* Meta Cards */}
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-6">
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-              <div className="text-white/80 text-sm font-mono mb-1">Total Campaigns</div>
-              <div className="text-3xl font-heading font-bold text-white">{stats.totalCampaigns}</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-              <div className="text-white/80 text-sm font-mono mb-1">Active</div>
-              <div className="text-3xl font-heading font-bold text-white">{stats.activeCampaigns}</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-              <div className="text-white/80 text-sm font-mono mb-1">Emails Sent</div>
-              <div className="text-3xl font-heading font-bold text-white">{stats.totalEmailsSent}</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-              <div className="text-white/80 text-sm font-mono mb-1">Avg Open Rate</div>
-              <div className="text-3xl font-heading font-bold text-white">{stats.avgOpenRate}%</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-              <div className="text-white/80 text-sm font-mono mb-1">Avg Response</div>
-              <div className="text-3xl font-heading font-bold text-white">{stats.avgResponseRate}%</div>
-            </div>
+            <TooltipProvider delayDuration={0}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 opacity-50 cursor-not-allowed">
+                    <div className="text-white/80 text-sm font-mono mb-1">Total Campaigns</div>
+                    <div className="text-3xl font-heading font-bold text-white">{stats.totalCampaigns}</div>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Coming Soon.</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            <TooltipProvider delayDuration={0}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 opacity-50 cursor-not-allowed">
+                    <div className="text-white/80 text-sm font-mono mb-1">Active</div>
+                    <div className="text-3xl font-heading font-bold text-white">{stats.activeCampaigns}</div>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Coming Soon.</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            <TooltipProvider delayDuration={0}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 opacity-50 cursor-not-allowed">
+                    <div className="text-white/80 text-sm font-mono mb-1">Emails Sent</div>
+                    <div className="text-3xl font-heading font-bold text-white">{stats.totalEmailsSent}</div>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Coming Soon.</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            <TooltipProvider delayDuration={0}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 opacity-50 cursor-not-allowed">
+                    <div className="text-white/80 text-sm font-mono mb-1">Avg Open Rate</div>
+                    <div className="text-3xl font-heading font-bold text-white">{stats.avgOpenRate}%</div>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Coming Soon.</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            <TooltipProvider delayDuration={0}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 opacity-50 cursor-not-allowed">
+                    <div className="text-white/80 text-sm font-mono mb-1">Avg Response</div>
+                    <div className="text-3xl font-heading font-bold text-white">{stats.avgResponseRate}%</div>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Coming Soon.</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </header>
 
