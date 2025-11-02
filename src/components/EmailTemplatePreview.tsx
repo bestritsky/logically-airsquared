@@ -183,7 +183,7 @@ export const EmailTemplatePreview = ({
                   </Button>
                 </span>
               </TooltipTrigger>
-              <TooltipContent className="max-w-xs">
+              <TooltipContent className="max-w-[9rem]">
                 <p>Coming Soon. To use now: Use Copy Email button</p>
               </TooltipContent>
             </Tooltip>
