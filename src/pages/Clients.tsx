@@ -277,7 +277,8 @@ const Clients = () => {
               {filteredClients.map((client, index) => (
                 <tr 
                   key={client.id}
-                  className="border-b border-border hover:bg-primary/5 transition-colors"
+                  onClick={() => navigate(`/clients/${client.id}`)}
+                  className="border-b border-border hover:bg-primary/5 transition-colors cursor-pointer"
                 >
                   <td className="px-4 py-4">
                     <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
@@ -337,7 +338,12 @@ const Clients = () => {
                   <td className="px-4 py-4">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <Button 
+                          variant="ghost" 
+                          size="icon" 
+                          className="h-8 w-8"
+                          onClick={(e) => e.stopPropagation()}
+                        >
                           <MoreVertical className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
