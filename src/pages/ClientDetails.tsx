@@ -40,14 +40,39 @@ const ClientDetails = () => {
           Back to Clients
         </Button>
 
-        <div className="mb-6">
-          <h1 className="text-4xl font-bold mb-2">Gaston County Government</h1>
-          <p className="text-muted-foreground text-lg">P-RISM Strategic Intelligence Analysis</p>
-          <div className="flex gap-2 mt-3">
-            <Badge variant="secondary">Confidence: 85%</Badge>
-            <Badge variant="outline">Updated: November 2, 2025</Badge>
+        {/* Hero Section */}
+        <header className="bg-gradient-to-br from-primary to-coral-dark rounded-lg p-8 mb-8 shadow-sm">
+          <h1 className="text-4xl font-heading font-bold text-white mb-2">
+            GASTON COUNTY GOVERNMENT
+          </h1>
+          <p className="text-white/90 text-lg font-mono mb-6">
+            P-RISM Strategic Intelligence Analysis - Gastonia, NC
+          </p>
+
+          {/* Meta Cards */}
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-6">
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+              <div className="text-white/80 text-sm font-mono mb-1">Win Rate</div>
+              <div className="text-3xl font-heading font-bold text-white">80%</div>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+              <div className="text-white/80 text-sm font-mono mb-1">Deal Size</div>
+              <div className="text-2xl font-heading font-bold text-white">$60K-215K</div>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+              <div className="text-white/80 text-sm font-mono mb-1">Timeline</div>
+              <div className="text-3xl font-heading font-bold text-white">10 mo</div>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+              <div className="text-white/80 text-sm font-mono mb-1">Confidence</div>
+              <div className="text-3xl font-heading font-bold text-white">85%</div>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+              <div className="text-white/80 text-sm font-mono mb-1">Key Personas</div>
+              <div className="text-3xl font-heading font-bold text-white">9</div>
+            </div>
           </div>
-        </div>
+        </header>
 
         <Accordion type="multiple" className="space-y-4">
           {/* Executive Summary */}
