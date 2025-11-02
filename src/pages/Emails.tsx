@@ -313,7 +313,7 @@ const Emails = () => {
               <FileText className="w-4 h-4 mr-2" />
               Browse Templates
             </Button>
-            <Button onClick={() => setTemplateLibraryOpen(true)}>
+            <Button disabled onClick={() => setTemplateLibraryOpen(true)}>
               <Plus className="w-4 h-4 mr-2" />
               Create Campaign
             </Button>
