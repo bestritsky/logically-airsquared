@@ -7,11 +7,10 @@ import { influencePrincipleTemplates, EmailTemplate, InfluencePrinciple } from "
 import { EmailTemplatePreview } from "./EmailTemplatePreview";
 import { Info } from "lucide-react";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 interface EmailTemplateLibraryProps {
   open: boolean;
@@ -127,28 +126,30 @@ export const EmailTemplateLibrary = ({
                   </div>
 
                   <div className="flex gap-2 pt-2">
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="w-full"
-                          >
-                            <Info className="w-4 h-4 mr-1" />
-                            Why This Works
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent className="max-w-md p-4">
-                          <div className="space-y-2">
-                            <p className="text-sm font-semibold">Psychology:</p>
-                            <p className="text-sm">{template.psychologyExplanation}</p>
-                            <p className="text-sm font-semibold mt-2">When to Use:</p>
-                            <p className="text-sm">{template.whenToUse}</p>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="w-full"
+                        >
+                          <Info className="w-4 h-4 mr-1" />
+                          Why This Works
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-96">
+                        <div className="space-y-3">
+                          <div>
+                            <p className="text-sm font-semibold mb-1">Psychology:</p>
+                            <p className="text-sm text-muted-foreground">{template.psychologyExplanation}</p>
                           </div>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
+                          <div>
+                            <p className="text-sm font-semibold mb-1">When to Use:</p>
+                            <p className="text-sm text-muted-foreground">{template.whenToUse}</p>
+                          </div>
+                        </div>
+                      </PopoverContent>
+                    </Popover>
                     
                     <Button
                       onClick={() => setSelectedTemplate(template)}
