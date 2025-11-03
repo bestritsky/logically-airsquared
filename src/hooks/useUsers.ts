@@ -13,10 +13,18 @@ export const useUsers = () => {
   return useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      // First get all users
-      const { data: { users }, error: usersError } = await supabase.auth.admin.listUsers();
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error('Not authenticated');
+
+      // Call edge function to list users (requires admin role)
+      const { data, error: functionError } = await supabase.functions.invoke('list-users', {
+        headers: {
+          Authorization: `Bearer ${session.access_token}`
+        }
+      });
       
-      if (usersError) throw usersError;
+      if (functionError) throw functionError;
+      if (!data?.users) throw new Error('No users data returned');
 
       // Then get all roles
       const { data: rolesData, error: rolesError } = await supabase
@@ -26,7 +34,7 @@ export const useUsers = () => {
       if (rolesError) throw rolesError;
 
       // Combine users with their roles
-      const usersWithRoles: UserWithRole[] = users.map(user => ({
+      const usersWithRoles: UserWithRole[] = data.users.map((user: any) => ({
         id: user.id,
         email: user.email || '',
         created_at: user.created_at,
