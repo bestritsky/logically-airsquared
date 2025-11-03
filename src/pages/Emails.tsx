@@ -7,7 +7,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { EmailTemplateLibrary } from "@/components/EmailTemplateLibrary";
-import { FileText, Plus } from "lucide-react";
+import { FileText, Plus, Copy, Trash2, Eye } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { format } from "date-fns";
 
 // TypeScript Interfaces
 type InfluencePrinciple = 
@@ -20,626 +24,395 @@ type InfluencePrinciple =
   | 'Unity'
   | 'Instant Influence';
 
-type CampaignStatus = 
-  | 'Draft'
-  | 'Scheduled'
-  | 'Active'
-  | 'Paused'
-  | 'Completed'
-  | 'Responded'
-  | 'Converted';
+type EmailStatus = 'Draft' | 'Ready' | 'Exported' | 'Archived';
 
-interface EmailCampaign {
+interface GeneratedEmail {
   id: string;
-  name: string;
-  clientId: number;
-  clientName: string;
-  opportunityName?: string;
-  contactName: string;
-  contactEmail: string;
-  primaryPrinciple: InfluencePrinciple;
-  status: CampaignStatus;
-  createdDate: string;
-  totalEmails: number;
-  emailsSent: number;
-  openRate: number;
-  responseRate: number;
-  lastSentDate?: string;
+  client_id: number;
+  opportunity_id: string | null;
+  contact_name: string;
+  contact_email: string;
+  subject: string;
+  body: string;
+  influence_principle: InfluencePrinciple;
+  template_variables: Record<string, string>;
+  status: EmailStatus;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+  exported_at: string | null;
 }
-
-// Sample Campaign Data
-const campaignData: EmailCampaign[] = [
-  {
-    id: "camp-001",
-    name: "Gaston County - AI Strategy Outreach",
-    clientId: 4,
-    clientName: "Gaston County Government",
-    opportunityName: "AI Strategy Workshop Series",
-    contactName: "John Davidson",
-    contactEmail: "jdavidson@gastongov.com",
-    primaryPrinciple: "Reciprocation",
-    status: "Active",
-    createdDate: "2024-10-15",
-    totalEmails: 5,
-    emailsSent: 3,
-    openRate: 66,
-    responseRate: 0,
-    lastSentDate: "2024-11-01"
-  },
-  {
-    id: "camp-002",
-    name: "Maplewood - HIPAA Upsell",
-    clientId: 2,
-    clientName: "Maplewood Senior Living",
-    opportunityName: "HIPAA Compliance Program",
-    contactName: "Sarah Mitchell",
-    contactEmail: "smitchell@maplewoodsenior.com",
-    primaryPrinciple: "Social Proof",
-    status: "Responded",
-    createdDate: "2024-10-20",
-    totalEmails: 4,
-    emailsSent: 2,
-    openRate: 100,
-    responseRate: 100,
-    lastSentDate: "2024-10-27"
-  },
-  {
-    id: "camp-003",
-    name: "Mecklenburg County - Enterprise SOC",
-    clientId: 1,
-    clientName: "Mecklenburg County",
-    opportunityName: "County-wide SOC",
-    contactName: "Robert Chen",
-    contactEmail: "rchen@mecklenburgcounty.gov",
-    primaryPrinciple: "Authority",
-    status: "Active",
-    createdDate: "2024-10-28",
-    totalEmails: 6,
-    emailsSent: 1,
-    openRate: 100,
-    responseRate: 0,
-    lastSentDate: "2024-10-28"
-  },
-  {
-    id: "camp-004",
-    name: "Morgan Creek - Multi-touch Sequence",
-    clientId: 6,
-    clientName: "Morgan Creek Capital Management",
-    opportunityName: "Financial Services SOC",
-    contactName: "David Thompson",
-    contactEmail: "dthompson@morgancreek.com",
-    primaryPrinciple: "Instant Influence",
-    status: "Paused",
-    createdDate: "2024-10-10",
-    totalEmails: 8,
-    emailsSent: 4,
-    openRate: 75,
-    responseRate: 0,
-    lastSentDate: "2024-10-25"
-  },
-  {
-    id: "camp-005",
-    name: "Churchill County - Reactivation",
-    clientId: 7,
-    clientName: "Churchill County Government",
-    opportunityName: "vCISO Services",
-    contactName: "Linda Martinez",
-    contactEmail: "lmartinez@churchillcounty.gov",
-    primaryPrinciple: "Scarcity",
-    status: "Completed",
-    createdDate: "2024-09-15",
-    totalEmails: 5,
-    emailsSent: 5,
-    openRate: 40,
-    responseRate: 0,
-    lastSentDate: "2024-10-20"
-  },
-  {
-    id: "camp-006",
-    name: "Wake County - CJIS Compliance Intro",
-    clientId: 3,
-    clientName: "Wake County",
-    opportunityName: "CJIS Compliance",
-    contactName: "Michael Brooks",
-    contactEmail: "mbrooks@wakegov.com",
-    primaryPrinciple: "Liking",
-    status: "Active",
-    createdDate: "2024-10-25",
-    totalEmails: 4,
-    emailsSent: 2,
-    openRate: 50,
-    responseRate: 0,
-    lastSentDate: "2024-10-30"
-  },
-  {
-    id: "camp-007",
-    name: "Catholic Charities - Mission Alignment",
-    clientId: 10,
-    clientName: "Catholic Charities Maine",
-    opportunityName: "HIPAA Compliance Program",
-    contactName: "Father James O'Brien",
-    contactEmail: "jobrien@ccmaine.org",
-    primaryPrinciple: "Unity",
-    status: "Active",
-    createdDate: "2024-10-22",
-    totalEmails: 6,
-    emailsSent: 3,
-    openRate: 100,
-    responseRate: 0,
-    lastSentDate: "2024-10-29"
-  },
-  {
-    id: "camp-008",
-    name: "La Costa Dental - Healthcare Partnership",
-    clientId: 8,
-    clientName: "La Costa Dental Group",
-    opportunityName: "Enhanced HIPAA Services",
-    contactName: "Dr. Rachel Kim",
-    contactEmail: "rkim@lacostadental.com",
-    primaryPrinciple: "Commitment/Consistency",
-    status: "Draft",
-    createdDate: "2024-11-01",
-    totalEmails: 5,
-    emailsSent: 0,
-    openRate: 0,
-    responseRate: 0
-  },
-  {
-    id: "camp-009",
-    name: "INSURLYNX - Retention Campaign",
-    clientId: 9,
-    clientName: "INSURLYNX",
-    opportunityName: "vCISO for Small Business",
-    contactName: "Tom Patterson",
-    contactEmail: "tpatterson@insurlynx.com",
-    primaryPrinciple: "Reciprocation",
-    status: "Converted",
-    createdDate: "2024-09-20",
-    totalEmails: 3,
-    emailsSent: 3,
-    openRate: 100,
-    responseRate: 66,
-    lastSentDate: "2024-10-05"
-  },
-  {
-    id: "camp-010",
-    name: "Cleveland Courts - Compliance Upgrade",
-    clientId: 5,
-    clientName: "City of Cleveland (Court System)",
-    opportunityName: "Enhanced CJIS Compliance",
-    contactName: "Judge Patricia Williams",
-    contactEmail: "pwilliams@clevelandcourts.gov",
-    primaryPrinciple: "Authority",
-    status: "Scheduled",
-    createdDate: "2024-11-02",
-    totalEmails: 4,
-    emailsSent: 0,
-    openRate: 0,
-    responseRate: 0
-  },
-  {
-    id: "camp-011",
-    name: "Gaston County - CJIS Compliance Outreach",
-    clientId: 4,
-    clientName: "Gaston County Government",
-    opportunityName: "CJIS Compliance-as-a-Service",
-    contactName: "John Davidson",
-    contactEmail: "jdavidson@gastongov.com",
-    primaryPrinciple: "Authority",
-    status: "Draft",
-    createdDate: "2024-11-02",
-    totalEmails: 4,
-    emailsSent: 0,
-    openRate: 0,
-    responseRate: 0
-  },
-  {
-    id: "camp-012",
-    name: "Gaston County - Managed Firewall Proposal",
-    clientId: 4,
-    clientName: "Gaston County Government",
-    opportunityName: "Managed Firewall for CJIS Systems",
-    contactName: "John Davidson",
-    contactEmail: "jdavidson@gastongov.com",
-    primaryPrinciple: "Scarcity",
-    status: "Draft",
-    createdDate: "2024-11-02",
-    totalEmails: 3,
-    emailsSent: 0,
-    openRate: 0,
-    responseRate: 0
-  }
-];
 
 const Emails = () => {
   const [searchParams] = useSearchParams();
-  const clientParam = searchParams.get("client");
-  const [selectedFilter, setSelectedFilter] = useState<string>("all");
+  const [selectedFilter, setSelectedFilter] = useState<EmailStatus | "All">("All");
   const [selectedClient, setSelectedClient] = useState<string>("all");
   const [templateLibraryOpen, setTemplateLibraryOpen] = useState(false);
-  const [selectedCampaign, setSelectedCampaign] = useState<EmailCampaign | null>(null);
+  const [selectedEmail, setSelectedEmail] = useState<GeneratedEmail | null>(null);
+  const queryClient = useQueryClient();
+
+  const preSelectedClientId = searchParams.get("client");
+
+  // Fetch generated emails
+  const { data: generatedEmails = [], isLoading } = useQuery({
+    queryKey: ["generated-emails"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("generated_emails")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+      return data as GeneratedEmail[];
+    },
+  });
+
+  // Delete email mutation
+  const deleteMutation = useMutation({
+    mutationFn: async (emailId: string) => {
+      const { error } = await supabase
+        .from("generated_emails")
+        .delete()
+        .eq("id", emailId);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["generated-emails"] });
+      toast.success("Email deleted successfully");
+    },
+    onError: (error: any) => {
+      toast.error(error.message || "Failed to delete email");
+    },
+  });
+
+  // Update email status mutation
+  const updateStatusMutation = useMutation({
+    mutationFn: async ({ emailId, status }: { emailId: string; status: EmailStatus }) => {
+      const { error } = await supabase
+        .from("generated_emails")
+        .update({ status })
+        .eq("id", emailId);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["generated-emails"] });
+      toast.success("Status updated");
+    },
+  });
+
+  useEffect(() => {
+    if (preSelectedClientId) {
+      setSelectedClient(preSelectedClientId);
+      setTemplateLibraryOpen(true);
+    }
+  }, [preSelectedClientId]);
 
   // Get unique clients for filter
   const clients = useMemo(() => {
-    const uniqueClients = Array.from(new Set(campaignData.map(c => c.clientName)))
-      .sort()
-      .map(name => {
-        const campaign = campaignData.find(c => c.clientName === name);
-        return { id: campaign?.clientId || 0, name };
-      });
-    return [{ id: 0, name: "All Clients" }, ...uniqueClients];
-  }, []);
+    const clientIds = new Set(generatedEmails.map(e => e.client_id));
+    return Array.from(clientIds).map(id => ({
+      id,
+      name: `Client ${id}`, // You could join with clients table for real names
+    }));
+  }, [generatedEmails]);
 
-  // Handle client filter from URL parameter
-  useEffect(() => {
-    if (clientParam) {
-      const clientId = parseInt(clientParam);
-      const client = clients.find(c => c.id === clientId);
-      if (client && client.name !== "All Clients") {
-        setSelectedClient(client.name);
-      }
-    }
-  }, [clientParam, clients]);
-
-  // Filter campaigns
-  const filteredCampaigns = useMemo(() => {
-    let filtered = campaignData;
-    
-    if (selectedClient !== "all") {
-      filtered = filtered.filter(c => c.clientName === selectedClient);
-    }
-    
-    if (selectedFilter !== "all") {
-      filtered = filtered.filter(c => c.status === selectedFilter);
-    }
-    
-    return filtered;
-  }, [selectedFilter, selectedClient]);
+  // Filter emails
+  const filteredEmails = useMemo(() => {
+    return generatedEmails.filter(email => {
+      const matchesStatus = selectedFilter === "All" || email.status === selectedFilter;
+      const matchesClient = selectedClient === "all" || email.client_id.toString() === selectedClient;
+      return matchesStatus && matchesClient;
+    });
+  }, [generatedEmails, selectedFilter, selectedClient]);
 
   // Calculate stats
   const stats = useMemo(() => {
-    const activeCampaigns = campaignData.filter(c => c.status === "Active").length;
-    const totalEmailsSent = campaignData.reduce((sum, c) => sum + c.emailsSent, 0);
-    const avgOpenRate = Math.round(
-      campaignData.filter(c => c.emailsSent > 0).reduce((sum, c) => sum + c.openRate, 0) / 
-      campaignData.filter(c => c.emailsSent > 0).length
-    );
-    const avgResponseRate = Math.round(
-      campaignData.filter(c => c.emailsSent > 0).reduce((sum, c) => sum + c.responseRate, 0) / 
-      campaignData.filter(c => c.emailsSent > 0).length
-    );
-    
     return {
-      totalCampaigns: campaignData.length,
-      activeCampaigns,
-      totalEmailsSent,
-      avgOpenRate,
-      avgResponseRate
+      total: generatedEmails.length,
+      ready: generatedEmails.filter(e => e.status === "Ready").length,
+      draft: generatedEmails.filter(e => e.status === "Draft").length,
+      exported: generatedEmails.filter(e => e.status === "Exported").length,
     };
-  }, []);
+  }, [generatedEmails]);
 
-  // Get badge color for influence principle
   const getPrincipleBadgeClass = (principle: InfluencePrinciple) => {
-    const colorMap: Record<InfluencePrinciple, string> = {
-      'Reciprocation': 'hsl(120, 100%, 40%)',
-      'Liking': 'hsl(210, 100%, 56%)',
-      'Social Proof': 'hsl(270, 70%, 60%)',
-      'Authority': 'hsl(240, 60%, 60%)',
-      'Scarcity': 'hsl(0, 85%, 60%)',
-      'Commitment/Consistency': 'hsl(30, 95%, 55%)',
-      'Unity': 'hsl(330, 70%, 60%)',
-      'Instant Influence': 'hsl(45, 90%, 50%)'
+    const classes: Record<InfluencePrinciple, string> = {
+      "Reciprocation": "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/20",
+      "Liking": "bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/20",
+      "Social Proof": "bg-purple-500/10 text-purple-700 dark:text-purple-400 border-purple-500/20",
+      "Authority": "bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 border-indigo-500/20",
+      "Scarcity": "bg-red-500/10 text-red-700 dark:text-red-400 border-red-500/20",
+      "Commitment/Consistency": "bg-orange-500/10 text-orange-700 dark:text-orange-400 border-orange-500/20",
+      "Unity": "bg-pink-500/10 text-pink-700 dark:text-pink-400 border-pink-500/20",
+      "Instant Influence": "bg-yellow-500/10 text-yellow-700 dark:text-yellow-400 border-yellow-500/20",
     };
-    return colorMap[principle];
+    return classes[principle];
   };
 
-  // Get status badge styling
-  const getStatusBadgeClass = (status: CampaignStatus) => {
-    const statusStyles: Record<CampaignStatus, string> = {
-      'Draft': 'bg-muted text-white',
-      'Scheduled': 'bg-primary/70 text-white',
-      'Active': 'bg-primary text-white',
-      'Paused': 'bg-status-yellow/80 text-white',
-      'Completed': 'bg-muted-foreground text-white',
-      'Responded': 'bg-status-green text-white',
-      'Converted': 'bg-status-green text-white'
+  const getStatusBadgeClass = (status: EmailStatus) => {
+    const classes: Record<EmailStatus, string> = {
+      "Draft": "bg-gray-500/10 text-gray-700 dark:text-gray-400 border-gray-500/20",
+      "Ready": "bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/20",
+      "Exported": "bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/20",
+      "Archived": "bg-gray-500/10 text-gray-700 dark:text-gray-400 border-gray-500/20",
     };
-    return statusStyles[status];
+    return classes[status];
   };
 
-  const statusOptions: CampaignStatus[] = ['Active', 'Paused', 'Draft', 'Scheduled', 'Completed', 'Responded', 'Converted'];
+  const handleCopyEmail = (email: GeneratedEmail) => {
+    const fullEmail = `Subject: ${email.subject}\n\n${email.body}`;
+    navigator.clipboard.writeText(fullEmail);
+    toast.success("Email copied to clipboard!");
+  };
+
+  const handleDelete = (emailId: string) => {
+    if (confirm("Are you sure you want to delete this email?")) {
+      deleteMutation.mutate(emailId);
+    }
+  };
+
+  const handleMarkReady = (emailId: string) => {
+    updateStatusMutation.mutate({ emailId, status: "Ready" });
+  };
+
+  const handleMarkExported = (emailId: string) => {
+    updateStatusMutation.mutate({ emailId, status: "Exported" });
+  };
+
+  if (isLoading) {
+    return (
+      <Layout>
+        <div className="flex items-center justify-center h-96">
+          <p className="text-muted-foreground">Loading emails...</p>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
-    <Layout>
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
-        {/* Header with Actions */}
-        <div className="flex items-center justify-between mb-4">
-          <div></div>
-          <div className="flex gap-2">
-            <Button variant="outline" onClick={() => setTemplateLibraryOpen(true)}>
-              <FileText className="w-4 h-4 mr-2" />
-              Browse Templates
-            </Button>
-            <TooltipProvider delayDuration={0}>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <span>
-                    <Button disabled onClick={() => setTemplateLibraryOpen(true)}>
-                      <Plus className="w-4 h-4 mr-2" />
-                      Create Campaign
-                    </Button>
-                  </span>
-                </TooltipTrigger>
-                <TooltipContent className="max-w-xs">
-                  <p className="whitespace-pre-line">Coming Soon. To use now:{'\n'}1) Click on an Email below{'\n'}2) Select a template{'\n'}3) Click Copy Email button after updating Email as needed</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
-        </div>
-
+    <>
+      <Layout>
         {/* Header */}
-        <header className="bg-gradient-to-br from-primary to-coral-dark rounded-lg p-8 mb-8 shadow-sm">
-          <h1 className="text-4xl font-heading font-bold text-white mb-2">
-            EMAILS
-          </h1>
-          <p className="text-white/90 text-lg font-mono mb-6">
-            Cialdini's 8 Principles of Influence Applied
-          </p>
-
-          {/* Meta Cards */}
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-6">
-            <TooltipProvider delayDuration={0}>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 opacity-50 cursor-not-allowed">
-                    <div className="text-white/80 text-sm font-mono mb-1">Total Campaigns</div>
-                    <div className="text-3xl font-heading font-bold text-white">{stats.totalCampaigns}</div>
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Coming Soon.</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-
-            <TooltipProvider delayDuration={0}>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 opacity-50 cursor-not-allowed">
-                    <div className="text-white/80 text-sm font-mono mb-1">Active</div>
-                    <div className="text-3xl font-heading font-bold text-white">{stats.activeCampaigns}</div>
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Coming Soon.</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-
-            <TooltipProvider delayDuration={0}>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 opacity-50 cursor-not-allowed">
-                    <div className="text-white/80 text-sm font-mono mb-1">Emails Sent</div>
-                    <div className="text-3xl font-heading font-bold text-white">{stats.totalEmailsSent}</div>
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Coming Soon.</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-
-            <TooltipProvider delayDuration={0}>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 opacity-50 cursor-not-allowed">
-                    <div className="text-white/80 text-sm font-mono mb-1">Avg Open Rate</div>
-                    <div className="text-3xl font-heading font-bold text-white">{stats.avgOpenRate}%</div>
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Coming Soon.</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-
-            <TooltipProvider delayDuration={0}>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 opacity-50 cursor-not-allowed">
-                    <div className="text-white/80 text-sm font-mono mb-1">Avg Response</div>
-                    <div className="text-3xl font-heading font-bold text-white">{stats.avgResponseRate}%</div>
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Coming Soon.</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
-        </header>
-
-        {/* Filters */}
-        <div className="flex flex-col md:flex-row gap-4 mb-6">
-          {/* Client Filter */}
-          <div className="flex-1">
-            <label className="block text-sm font-mono text-foreground mb-2">Filter by Client</label>
-            <Select value={selectedClient} onValueChange={setSelectedClient}>
-              <SelectTrigger className="bg-card border-border">
-                <SelectValue placeholder="All Clients" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Clients ({campaignData.length})</SelectItem>
-                {clients.slice(1).map((client) => (
-                  <SelectItem key={client.id} value={client.name}>
-                    {client.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Status Filter */}
-          <div className="flex-1">
-            <label className="block text-sm font-mono text-foreground mb-2">Filter by Status</label>
-            <div className="flex gap-2 flex-wrap">
-              <button
-                onClick={() => setSelectedFilter("all")}
-                className={cn(
-                  "px-4 py-2 rounded-lg font-heading font-medium transition-all text-sm",
-                  selectedFilter === "all"
-                    ? "bg-primary text-white shadow-md"
-                    : "bg-card text-foreground hover:bg-primary/10 border border-border"
-                )}
-              >
-                All
-              </button>
-              {statusOptions.map((status) => (
-                <TooltipProvider key={status} delayDuration={0}>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <button
-                        onClick={() => setSelectedFilter(status)}
-                        className={cn(
-                          "px-4 py-2 rounded-lg font-heading font-medium transition-all text-sm opacity-50 cursor-not-allowed",
-                          selectedFilter === status
-                            ? "bg-primary text-white shadow-md"
-                            : "bg-card text-foreground hover:bg-primary/10 border border-border"
-                        )}
-                        disabled
-                      >
-                        {status}
-                      </button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Coming Soon.</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              ))}
+        <div className="mb-8">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-4xl font-heading font-bold tracking-tight text-foreground">
+                Generated Emails
+              </h1>
+              <p className="text-lg text-muted-foreground mt-1">
+                Create persuasive emails using psychological principles
+              </p>
+            </div>
+            <div className="flex gap-3">
+              <Button onClick={() => setTemplateLibraryOpen(true)} size="lg">
+                <FileText className="w-4 h-4 mr-2" />
+                Browse Templates
+              </Button>
             </div>
           </div>
         </div>
 
-        {/* Campaign Table */}
-        <div className="bg-card rounded-lg shadow-sm border border-border overflow-x-auto">
+        {/* Stats Cards */}
+        <div className="grid grid-cols-4 gap-4 mb-6">
+          <div className="bg-card border rounded-lg p-4">
+            <div className="text-sm text-muted-foreground mb-1">Total Generated</div>
+            <div className="text-3xl font-bold text-foreground">{stats.total}</div>
+          </div>
+          <div className="bg-card border rounded-lg p-4">
+            <div className="text-sm text-muted-foreground mb-1">Ready to Export</div>
+            <div className="text-3xl font-bold text-green-600">{stats.ready}</div>
+          </div>
+          <div className="bg-card border rounded-lg p-4">
+            <div className="text-sm text-muted-foreground mb-1">Drafts</div>
+            <div className="text-3xl font-bold text-gray-600">{stats.draft}</div>
+          </div>
+          <div className="bg-card border rounded-lg p-4">
+            <div className="text-sm text-muted-foreground mb-1">Exported</div>
+            <div className="text-3xl font-bold text-blue-600">{stats.exported}</div>
+          </div>
+        </div>
+
+        {/* Filters */}
+        <div className="flex gap-3 mb-6">
+          <Select value={selectedClient} onValueChange={setSelectedClient}>
+            <SelectTrigger className="w-[200px]">
+              <SelectValue placeholder="All Clients" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Clients</SelectItem>
+              {clients.map(client => (
+                <SelectItem key={client.id} value={client.id.toString()}>
+                  {client.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <div className="flex gap-2">
+            <Button
+              variant={selectedFilter === "All" ? "default" : "outline"}
+              onClick={() => setSelectedFilter("All")}
+              size="sm"
+            >
+              All
+            </Button>
+            <Button
+              variant={selectedFilter === "Draft" ? "default" : "outline"}
+              onClick={() => setSelectedFilter("Draft")}
+              size="sm"
+            >
+              Drafts
+            </Button>
+            <Button
+              variant={selectedFilter === "Ready" ? "default" : "outline"}
+              onClick={() => setSelectedFilter("Ready")}
+              size="sm"
+            >
+              Ready
+            </Button>
+            <Button
+              variant={selectedFilter === "Exported" ? "default" : "outline"}
+              onClick={() => setSelectedFilter("Exported")}
+              size="sm"
+            >
+              Exported
+            </Button>
+          </div>
+        </div>
+
+        {/* Emails Table */}
+        <div className="border rounded-lg overflow-hidden bg-card">
           <table className="w-full">
-            <thead className="bg-muted/20 border-b border-border">
+            <thead className="bg-muted/50 border-b">
               <tr>
-                <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">#</th>
-                <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">Email</th>
-                <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">Client</th>
-                <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">Influence Principle</th>
-                <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">Status</th>
-                <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">Progress</th>
-                <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">Performance</th>
-                <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">Last Sent</th>
+                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Contact</th>
+                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Subject</th>
+                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Principle</th>
+                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Status</th>
+                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Created</th>
+                <th className="px-4 py-3 text-right text-sm font-semibold text-foreground">Actions</th>
               </tr>
             </thead>
-            <tbody>
-              {filteredCampaigns.map((campaign, index) => (
-                <tr 
-                  key={campaign.id}
-                  className="border-b border-border hover:bg-primary/5 transition-colors cursor-pointer"
-                  onClick={() => {
-                    setSelectedCampaign(campaign);
-                    setTemplateLibraryOpen(true);
-                  }}
-                >
-                  <td className="px-4 py-4">
-                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                      <span className="font-heading font-bold text-primary text-sm">{index + 1}</span>
-                    </div>
-                  </td>
-                  <td className="px-4 py-4">
-                    <div className="font-heading font-semibold text-foreground">{campaign.name}</div>
-                    <div className="text-sm font-mono text-muted-foreground">
-                      {campaign.opportunityName}
-                    </div>
-                  </td>
-                  <td className="px-4 py-4">
-                    <div className="font-mono text-sm text-foreground">{campaign.clientName}</div>
-                    <div className="text-xs font-mono text-muted-foreground">{campaign.contactName}</div>
-                  </td>
-                  <td className="px-4 py-4">
-                    <Badge 
-                      className="font-mono text-xs text-white border-0"
-                      style={{ backgroundColor: getPrincipleBadgeClass(campaign.primaryPrinciple) }}
-                    >
-                      {campaign.primaryPrinciple}
-                    </Badge>
-                  </td>
-                  <td className="px-4 py-4">
-                    <Badge className={cn("font-mono text-xs", getStatusBadgeClass(campaign.status))}>
-                      {campaign.status}
-                    </Badge>
-                  </td>
-                  <td className="px-4 py-4">
-                    <div className="space-y-1">
-                      <div className="text-xs font-mono text-muted-foreground">
-                        {campaign.emailsSent} of {campaign.totalEmails} sent
-                      </div>
-                      <div className="w-24 h-2 bg-muted/30 rounded-full overflow-hidden">
-                        <div 
-                          className="h-full bg-primary rounded-full transition-all"
-                          style={{ width: `${(campaign.emailsSent / campaign.totalEmails) * 100}%` }}
-                        />
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-4 py-4">
-                    {campaign.emailsSent > 0 ? (
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-2">
-                          <span className="text-xs font-mono text-muted-foreground">Open:</span>
-                          <span className="text-xs font-mono font-semibold text-primary">{campaign.openRate}%</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-xs font-mono text-muted-foreground">Reply:</span>
-                          <span className="text-xs font-mono font-semibold text-primary">{campaign.responseRate}%</span>
-                        </div>
-                      </div>
-                    ) : (
-                      <span className="text-xs font-mono text-muted-foreground">Not sent yet</span>
-                    )}
-                  </td>
-                  <td className="px-4 py-4">
-                    <div className="font-mono text-xs text-foreground">
-                      {campaign.lastSentDate 
-                        ? new Date(campaign.lastSentDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
-                        : '—'
-                      }
-                    </div>
+            <tbody className="divide-y divide-border">
+              {filteredEmails.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="px-4 py-12 text-center text-muted-foreground">
+                    No generated emails yet. Click "Browse Templates" to create your first email.
                   </td>
                 </tr>
-              ))}
+              ) : (
+                filteredEmails.map((email) => (
+                  <tr key={email.id} className="hover:bg-muted/30 transition-colors">
+                    <td className="px-4 py-4">
+                      <div className="font-semibold text-foreground">{email.contact_name}</div>
+                      <div className="text-sm text-muted-foreground">{email.contact_email}</div>
+                    </td>
+                    <td className="px-4 py-4">
+                      <div className="max-w-md truncate text-foreground">{email.subject}</div>
+                    </td>
+                    <td className="px-4 py-4">
+                      <Badge className={getPrincipleBadgeClass(email.influence_principle)}>
+                        {email.influence_principle}
+                      </Badge>
+                    </td>
+                    <td className="px-4 py-4">
+                      <Badge className={getStatusBadgeClass(email.status)}>
+                        {email.status}
+                      </Badge>
+                    </td>
+                    <td className="px-4 py-4 text-sm text-muted-foreground">
+                      {format(new Date(email.created_at), "MMM d, yyyy")}
+                    </td>
+                    <td className="px-4 py-4">
+                      <div className="flex justify-end gap-2">
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => handleCopyEmail(email)}
+                              >
+                                <Copy className="w-4 h-4" />
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>Copy Email</TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+
+                        {email.status === "Draft" && (
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => handleMarkReady(email.id)}
+                                >
+                                  Mark Ready
+                                </Button>
+                              </TooltipTrigger>
+                              <TooltipContent>Mark as Ready to Export</TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        )}
+
+                        {email.status === "Ready" && (
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => handleMarkExported(email.id)}
+                                >
+                                  Mark Exported
+                                </Button>
+                              </TooltipTrigger>
+                              <TooltipContent>Mark as Exported</TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        )}
+
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => handleDelete(email.id)}
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>Delete Email</TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
 
         {/* Summary Footer */}
-        <div className="mt-6 p-4 bg-card rounded-lg border border-border">
-          <div className="flex items-center justify-between">
-            <div className="font-mono text-sm text-muted-foreground">
-              Showing {filteredCampaigns.length} of {campaignData.length} campaigns
-            </div>
-            <div className="font-mono text-sm text-foreground">
-              Active Campaigns: <span className="font-semibold text-primary">{stats.activeCampaigns}</span>
-            </div>
+        <div className="mt-4 flex items-center justify-between text-sm text-muted-foreground">
+          <div>
+            Showing {filteredEmails.length} of {generatedEmails.length} generated emails
+          </div>
+          <div>
+            {stats.ready} ready to export
           </div>
         </div>
-      </div>
+      </Layout>
 
       <EmailTemplateLibrary
         open={templateLibraryOpen}
         onOpenChange={setTemplateLibraryOpen}
-        preSelectedClient={selectedCampaign ? { id: selectedCampaign.clientId, name: selectedCampaign.clientName } : undefined}
-        preSelectedOpportunity={selectedCampaign ? { id: selectedCampaign.id, name: selectedCampaign.opportunityName || '' } : undefined}
-        campaignData={selectedCampaign || undefined}
       />
-    </Layout>
+    </>
   );
 };
 

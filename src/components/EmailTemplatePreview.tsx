@@ -12,6 +12,8 @@ import { Copy, Check } from "lucide-react";
 import { toast } from "sonner";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from "@tanstack/react-query";
 
 interface EmailTemplatePreviewProps {
   template: EmailTemplate;
@@ -34,6 +36,16 @@ export const EmailTemplatePreview = ({
   const [copied, setCopied] = useState(false);
   const [editedSubject, setEditedSubject] = useState("");
   const [editedBody, setEditedBody] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
+
+  // Get current user
+  const { data: session } = useQuery({
+    queryKey: ["session"],
+    queryFn: async () => {
+      const { data } = await supabase.auth.getSession();
+      return data.session;
+    },
+  });
 
   const substituteVariables = (text: string, vars: Record<string, string>) => {
     return text.replace(/\{(\w+)\}/g, (match, key) => vars[key] || match);
@@ -73,6 +85,50 @@ export const EmailTemplatePreview = ({
   const hasAllRequiredVariables = template.variables
     .filter(v => v.required)
     .every(v => variables[v.key] && variables[v.key].trim() !== "");
+
+  const handleSaveEmail = async () => {
+    if (!session?.user) {
+      toast.error("You must be logged in to save emails");
+      return;
+    }
+
+    if (!hasAllRequiredVariables) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
+
+    // Get contact name and email from variables
+    const contactName = variables.contact_name || "Contact";
+    const contactEmail = variables.email || variables.contact_email || "contact@example.com";
+    const clientId = preSelectedClient?.id || parseInt(variables.client_id || "0");
+
+    setIsSaving(true);
+    try {
+      const { error } = await supabase.from("generated_emails").insert({
+        client_id: clientId,
+        opportunity_id: preSelectedOpportunity?.id || null,
+        template_id: null, // We'll update this when templates are in DB
+        contact_name: contactName,
+        contact_email: contactEmail,
+        subject: generatedSubject,
+        body: generatedBody,
+        influence_principle: template.influencePrinciple,
+        template_variables: variables,
+        status: "Draft",
+        created_by: session.user.id,
+      });
+
+      if (error) throw error;
+
+      toast.success("Email saved successfully!");
+      onOpenChange(false);
+    } catch (error: any) {
+      console.error("Error saving email:", error);
+      toast.error(error.message || "Failed to save email");
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -168,26 +224,12 @@ export const EmailTemplatePreview = ({
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Close
           </Button>
-          <TooltipProvider delayDuration={0}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <span>
-                  <Button
-                    disabled
-                    onClick={() => {
-                      toast.success("Template saved! (Campaign creation coming in Phase 3)");
-                      onOpenChange(false);
-                    }}
-                  >
-                    Save to Campaign
-                  </Button>
-                </span>
-              </TooltipTrigger>
-              <TooltipContent className="max-w-[9rem]">
-                <p>Coming Soon. To use now: Use Copy Email button</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <Button
+            onClick={handleSaveEmail}
+            disabled={!hasAllRequiredVariables || isSaving || !session?.user}
+          >
+            {isSaving ? "Saving..." : "Save Email"}
+          </Button>
         </div>
       </DialogContent>
     </Dialog>
