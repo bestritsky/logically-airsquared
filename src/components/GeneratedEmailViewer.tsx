@@ -261,8 +261,8 @@ export const GeneratedEmailViewer = ({
 
               <Button
                 variant="destructive"
+                size="sm"
                 onClick={() => setShowDeleteDialog(true)}
-                className="w-full"
               >
                 <Trash2 className="w-4 h-4 mr-2" />
                 Delete Email
