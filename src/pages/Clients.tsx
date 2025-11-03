@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { MoreVertical, Loader2 } from "lucide-react";
+import { MoreVertical, Loader2, Mail } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -243,6 +243,13 @@ const Clients = () => {
                           </DropdownMenuItem>
                           <DropdownMenuItem className="font-bold" onClick={() => window.open(`/emails?client=${client.id}`, '_blank')}>
                             Emails
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="font-bold" onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(`/emails?generateFor=client&clientId=${client.id}&clientName=${encodeURIComponent(client.name)}`);
+                          }}>
+                            <Mail className="mr-2 h-4 w-4" />
+                            Generate Email
                           </DropdownMenuItem>
                           <DropdownMenuItem className="font-bold" onClick={(e) => {
                             e.stopPropagation();

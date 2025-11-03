@@ -4,7 +4,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Badge } from "@/components/ui/badge";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, AlertTriangle, CheckCircle2, XCircle, Download } from "lucide-react";
+import { ArrowLeft, AlertTriangle, CheckCircle2, XCircle, Download, Mail } from "lucide-react";
 import { mecklenburgIntelligence } from "@/data/mecklenburgIntelligence";
 import { maplewoodIntelligence } from "@/data/maplewoodIntelligence";
 import mecklenburgPdf from "@/assets/mecklenburg-county.pdf";
@@ -25,15 +25,21 @@ const ClientDetails = () => {
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Clients
             </Button>
-            <Button onClick={() => {
-              const link = document.createElement('a');
-              link.href = mecklenburgPdf;
-              link.download = 'Mecklenburg County.pdf';
-              link.click();
-            }} variant="outline">
-              <Download className="mr-2 h-4 w-4" />
-              Download PDF
-            </Button>
+            <div className="flex gap-2">
+              <Button onClick={() => navigate(`/emails?generateFor=client&clientId=1&clientName=${encodeURIComponent('Mecklenburg County')}`)} variant="default">
+                <Mail className="mr-2 h-4 w-4" />
+                Generate Email
+              </Button>
+              <Button onClick={() => {
+                const link = document.createElement('a');
+                link.href = mecklenburgPdf;
+                link.download = 'Mecklenburg County.pdf';
+                link.click();
+              }} variant="outline">
+                <Download className="mr-2 h-4 w-4" />
+                Download PDF
+              </Button>
+            </div>
           </div>
 
           {/* Hero Section */}
@@ -74,15 +80,21 @@ const ClientDetails = () => {
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Clients
             </Button>
-            <Button onClick={() => {
-              const link = document.createElement('a');
-              link.href = maplewoodPdf;
-              link.download = 'Maplewood Senior Living.pdf';
-              link.click();
-            }} variant="outline">
-              <Download className="mr-2 h-4 w-4" />
-              Download PDF
-            </Button>
+            <div className="flex gap-2">
+              <Button onClick={() => navigate(`/emails?generateFor=client&clientId=2&clientName=${encodeURIComponent('Maplewood Senior Living')}`)} variant="default">
+                <Mail className="mr-2 h-4 w-4" />
+                Generate Email
+              </Button>
+              <Button onClick={() => {
+                const link = document.createElement('a');
+                link.href = maplewoodPdf;
+                link.download = 'Maplewood Senior Living.pdf';
+                link.click();
+              }} variant="outline">
+                <Download className="mr-2 h-4 w-4" />
+                Download PDF
+              </Button>
+            </div>
           </div>
 
           <header className="bg-gradient-to-br from-primary to-coral-dark rounded-lg p-8 mb-8 shadow-sm">
@@ -153,15 +165,21 @@ const ClientDetails = () => {
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Clients
             </Button>
-            <Button onClick={() => {
-              const link = document.createElement('a');
-              link.href = gastonPdf;
-              link.download = 'Gaston County Government.pdf';
-              link.click();
-            }} variant="outline">
-              <Download className="mr-2 h-4 w-4" />
-              Download PDF
-            </Button>
+            <div className="flex gap-2">
+              <Button onClick={() => navigate(`/emails?generateFor=client&clientId=4&clientName=${encodeURIComponent('Gaston County Government')}`)} variant="default">
+                <Mail className="mr-2 h-4 w-4" />
+                Generate Email
+              </Button>
+              <Button onClick={() => {
+                const link = document.createElement('a');
+                link.href = gastonPdf;
+                link.download = 'Gaston County Government.pdf';
+                link.click();
+              }} variant="outline">
+                <Download className="mr-2 h-4 w-4" />
+                Download PDF
+              </Button>
+            </div>
           </div>
 
         {/* Hero Section */}

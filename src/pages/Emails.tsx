@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { EmailTemplateLibrary } from "@/components/EmailTemplateLibrary";
-import { FileText, Plus, Copy, Trash2, Eye } from "lucide-react";
+import { FileText, Plus, Copy, Trash2, Eye, Mail } from "lucide-react";
 import { GeneratedEmailViewer } from "@/components/GeneratedEmailViewer";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -54,10 +54,13 @@ interface GeneratedEmail {
 }
 
 const Emails = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [selectedFilter, setSelectedFilter] = useState<EmailStatus | "All">("All");
   const [selectedClient, setSelectedClient] = useState<string>("all");
   const [templateLibraryOpen, setTemplateLibraryOpen] = useState(false);
+  const [showTemplateLibrary, setShowTemplateLibrary] = useState(false);
+  const [preSelectedClient, setPreSelectedClient] = useState<{ id: number; name: string } | undefined>();
+  const [preSelectedOpportunity, setPreSelectedOpportunity] = useState<{ id: string; name: string } | undefined>();
   const [selectedEmail, setSelectedEmail] = useState<GeneratedEmail | null>(null);
   const [viewerEmail, setViewerEmail] = useState<GeneratedEmail | null>(null);
   const queryClient = useQueryClient();
@@ -122,6 +125,29 @@ const Emails = () => {
     },
   });
 
+  // Auto-open template library from URL params
+  useEffect(() => {
+    const generateFor = searchParams.get("generateFor");
+    const clientId = searchParams.get("clientId");
+    const clientName = searchParams.get("clientName");
+    const opportunityId = searchParams.get("opportunityId");
+    const opportunityName = searchParams.get("opportunityName");
+
+    if (generateFor && clientId && clientName) {
+      setPreSelectedClient({ id: parseInt(clientId), name: decodeURIComponent(clientName) });
+      
+      if (opportunityId && opportunityName) {
+        setPreSelectedOpportunity({ id: opportunityId, name: decodeURIComponent(opportunityName) });
+      }
+      
+      setShowTemplateLibrary(true);
+      
+      // Clear URL params after opening
+      setSearchParams({});
+    }
+  }, [searchParams, setSearchParams]);
+
+  // Legacy support for old URL format
   useEffect(() => {
     if (preSelectedClientId) {
       setSelectedClient(preSelectedClientId);
@@ -231,7 +257,11 @@ const Emails = () => {
               </p>
             </div>
             <div className="flex gap-3">
-              <Button onClick={() => setTemplateLibraryOpen(true)} size="lg">
+              <Button onClick={() => setShowTemplateLibrary(true)} size="lg">
+                <Mail className="w-4 h-4 mr-2" />
+                Generate New Email
+              </Button>
+              <Button onClick={() => setTemplateLibraryOpen(true)} size="lg" variant="outline">
                 <FileText className="w-4 h-4 mr-2" />
                 Browse Templates
               </Button>
@@ -458,6 +488,19 @@ const Emails = () => {
       <EmailTemplateLibrary
         open={templateLibraryOpen}
         onOpenChange={setTemplateLibraryOpen}
+      />
+
+      <EmailTemplateLibrary
+        open={showTemplateLibrary}
+        onOpenChange={(open) => {
+          setShowTemplateLibrary(open);
+          if (!open) {
+            setPreSelectedClient(undefined);
+            setPreSelectedOpportunity(undefined);
+          }
+        }}
+        preSelectedClient={preSelectedClient}
+        preSelectedOpportunity={preSelectedOpportunity}
       />
 
       <GeneratedEmailViewer

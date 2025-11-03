@@ -895,7 +895,7 @@ const Opportunities = () => {
                 return (
                   <tr
                     key={opp.id}
-                    onClick={() => navigate(`/emails?client=${opp.client_id}`)}
+                    onClick={() => navigate(`/emails?generateFor=opportunity&clientId=${opp.client_id}&clientName=${encodeURIComponent(clientName)}&opportunityId=${opp.id}&opportunityName=${encodeURIComponent(opp.name)}`)}
                     className="border-b border-border hover:bg-primary/5 transition-colors cursor-pointer"
                   >
                     <td className="px-4 py-4">
