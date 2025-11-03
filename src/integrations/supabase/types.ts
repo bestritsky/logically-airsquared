@@ -14,6 +14,57 @@ export type Database = {
   }
   public: {
     Tables: {
+      clients: {
+        Row: {
+          created_at: string
+          deal_size: string | null
+          domain: string | null
+          id: number
+          industry: string | null
+          linkedin_url: string | null
+          location: string | null
+          name: string
+          sector: string | null
+          status: string | null
+          tier: number | null
+          timeline: string | null
+          updated_at: string
+          win_rate: number | null
+        }
+        Insert: {
+          created_at?: string
+          deal_size?: string | null
+          domain?: string | null
+          id?: number
+          industry?: string | null
+          linkedin_url?: string | null
+          location?: string | null
+          name: string
+          sector?: string | null
+          status?: string | null
+          tier?: number | null
+          timeline?: string | null
+          updated_at?: string
+          win_rate?: number | null
+        }
+        Update: {
+          created_at?: string
+          deal_size?: string | null
+          domain?: string | null
+          id?: number
+          industry?: string | null
+          linkedin_url?: string | null
+          location?: string | null
+          name?: string
+          sector?: string | null
+          status?: string | null
+          tier?: number | null
+          timeline?: string | null
+          updated_at?: string
+          win_rate?: number | null
+        }
+        Relationships: []
+      }
       email_templates: {
         Row: {
           body_template: string
@@ -119,10 +170,80 @@ export type Database = {
         }
         Relationships: [
           {
+            foreignKeyName: "fk_client"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fk_opportunity"
+            columns: ["opportunity_id"]
+            isOneToOne: false
+            referencedRelation: "opportunities"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "generated_emails_template_id_fkey"
             columns: ["template_id"]
             isOneToOne: false
             referencedRelation: "email_templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      opportunities: {
+        Row: {
+          client_id: number
+          created_at: string
+          description: string | null
+          drivers: string[] | null
+          id: string
+          name: string
+          service_type: string
+          timeline: string | null
+          updated_at: string
+          win_rate: number | null
+          year1_revenue: number | null
+          year2_revenue: number | null
+          year3_revenue: number | null
+        }
+        Insert: {
+          client_id: number
+          created_at?: string
+          description?: string | null
+          drivers?: string[] | null
+          id: string
+          name: string
+          service_type: string
+          timeline?: string | null
+          updated_at?: string
+          win_rate?: number | null
+          year1_revenue?: number | null
+          year2_revenue?: number | null
+          year3_revenue?: number | null
+        }
+        Update: {
+          client_id?: number
+          created_at?: string
+          description?: string | null
+          drivers?: string[] | null
+          id?: string
+          name?: string
+          service_type?: string
+          timeline?: string | null
+          updated_at?: string
+          win_rate?: number | null
+          year1_revenue?: number | null
+          year2_revenue?: number | null
+          year3_revenue?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "opportunities_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
             referencedColumns: ["id"]
           },
         ]

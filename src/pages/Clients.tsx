@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { MoreVertical } from "lucide-react";
+import { MoreVertical, Loader2 } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,183 +12,18 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { useClients } from "@/hooks/useClients";
+import { useOpportunities } from "@/hooks/useOpportunities";
 import mecklenburgPdf from "@/assets/mecklenburg-county.pdf";
 import gastonPdf from "@/assets/gaston-county-government.pdf";
 import maplewoodPdf from "@/assets/maplewood-senior-living-inspir.pdf";
-
-interface Client {
-  id: number;
-  name: string;
-  location: string;
-  tier: 1 | 2 | 3;
-  sector: "Government" | "Healthcare" | "Financial" | "Manufacturing" | "Other";
-  dealSize: string;
-  status: "Existing" | "Prospect";
-  winRate?: number;
-  timeline: string;
-  opportunities: string[];
-}
-
-const clientData: Client[] = [
-  {
-    id: 1,
-    name: "Mecklenburg County",
-    location: "Charlotte, NC",
-    tier: 1,
-    sector: "Government",
-    dealSize: "$300K-$500K",
-    status: "Prospect",
-    winRate: 60,
-    timeline: "12-18 months",
-    opportunities: [
-      "Enterprise CJIS Compliance ($150K annually)",
-      "HIPAA for Health & Human Services ($80K annually)",
-      "County-wide SOC ($200K annually)",
-    ],
-  },
-  {
-    id: 2,
-    name: "Maplewood Senior Living",
-    location: "Westport, CT",
-    tier: 1,
-    sector: "Healthcare",
-    dealSize: "$250K-$400K",
-    status: "Existing",
-    timeline: "Upsell - 6 months",
-    opportunities: [
-      "HIPAA Compliance Program ($120K annually)",
-      "Healthcare Security Services ($150K annually)",
-      "Medical IoT Security ($60K annually)",
-    ],
-  },
-  {
-    id: 3,
-    name: "Wake County",
-    location: "Raleigh, NC",
-    tier: 1,
-    sector: "Government",
-    dealSize: "$250K-$450K",
-    status: "Prospect",
-    winRate: 55,
-    timeline: "12-18 months",
-    opportunities: [
-      "CJIS Compliance ($120K annually)",
-      "HIPAA for Public Health & EMS ($90K annually)",
-      "Managed XDR ($180K annually)",
-    ],
-  },
-  {
-    id: 4,
-    name: "Gaston County Government",
-    location: "Gastonia, NC",
-    tier: 2,
-    sector: "Government",
-    dealSize: "$60K-$215K",
-    status: "Prospect",
-    winRate: 80,
-    timeline: "10 months",
-    opportunities: [
-      "CJIS Compliance-as-a-Service ($60K annually)",
-      "Managed Firewall for CJIS ($50K annually)",
-      "HIPAA for Health Dept ($60K annually)",
-    ],
-  },
-  {
-    id: 5,
-    name: "City of Cleveland (Court System)",
-    location: "Cleveland, OH",
-    tier: 2,
-    sector: "Government",
-    dealSize: "$100K-$180K",
-    status: "Existing",
-    timeline: "Expansion - 6 months",
-    opportunities: [
-      "Enhanced CJIS Compliance ($75K annually)",
-      "Case Management Security ($40K)",
-      "Managed Security Services ($120K annually)",
-    ],
-  },
-  {
-    id: 6,
-    name: "Morgan Creek Capital Management",
-    location: "Chapel Hill, NC",
-    tier: 2,
-    sector: "Financial",
-    dealSize: "$100K-$180K",
-    status: "Existing",
-    timeline: "Upsell - 4 months",
-    opportunities: [
-      "SEC Compliance Services ($60K annually)",
-      "Financial Services SOC ($90K annually)",
-      "Advanced Threat Intelligence ($40K annually)",
-    ],
-  },
-  {
-    id: 7,
-    name: "Churchill County Government",
-    location: "Fallon, NV",
-    tier: 3,
-    sector: "Government",
-    dealSize: "$40K-$80K",
-    status: "Existing",
-    timeline: "Upsell - 4-6 months",
-    opportunities: [
-      "CJIS Compliance Program ($35K annually)",
-      "Advanced Security Services ($30K annually)",
-      "vCISO Services ($40K annually)",
-    ],
-  },
-  {
-    id: 8,
-    name: "La Costa Dental Group",
-    location: "California",
-    tier: 3,
-    sector: "Healthcare",
-    dealSize: "$40K-$75K",
-    status: "Existing",
-    timeline: "Retention + Upsell",
-    opportunities: [
-      "Enhanced HIPAA Services ($20K annually)",
-      "Cloud Migration ($30K project)",
-      "Advanced Threat Protection ($15K annually)",
-    ],
-  },
-  {
-    id: 9,
-    name: "INSURLYNX",
-    location: "Trumbull, CT",
-    tier: 3,
-    sector: "Financial",
-    dealSize: "$30K-$60K",
-    status: "Existing",
-    timeline: "Retention",
-    opportunities: [
-      "Insurance Compliance ($20K annually)",
-      "Enhanced Backup/DR ($15K annually)",
-      "vCISO for Small Business ($25K annually)",
-    ],
-  },
-  {
-    id: 10,
-    name: "Catholic Charities Maine",
-    location: "Portland, ME",
-    tier: 2,
-    sector: "Other",
-    dealSize: "$80K-$150K",
-    status: "Existing",
-    timeline: "Expansion - 6 months",
-    opportunities: [
-      "HIPAA Compliance Program ($50K annually)",
-      "Grant Security Requirements ($30K annually)",
-      "Nonprofit IT Strategy ($40K annually)",
-    ],
-  },
-];
 
 const Clients = () => {
   const navigate = useNavigate();
   const [selectedSector, setSelectedSector] = useState<string>("all");
   const { toast } = useToast();
+  const { data: clients, isLoading, error } = useClients();
+  const { data: opportunities } = useOpportunities();
 
   const handleDownload = (clientId: number, clientName: string) => {
     const pdfMap: { [key: number]: string } = {
@@ -217,8 +52,8 @@ const Clients = () => {
   const sectors = ["all", "Government", "Healthcare", "Financial", "Other"];
   
   const filteredClients = selectedSector === "all" 
-    ? clientData 
-    : clientData.filter(client => client.sector === selectedSector);
+    ? (clients || [])
+    : (clients || []).filter(client => client.sector === selectedSector);
 
   const getTierBadgeClass = (tier: 1 | 2 | 3) => {
     switch (tier) {
@@ -231,8 +66,28 @@ const Clients = () => {
     }
   };
 
+  if (isLoading) {
+    return (
+      <Layout>
+        <div className="flex items-center justify-center min-h-screen">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+      </Layout>
+    );
+  }
+
+  if (error) {
+    return (
+      <Layout>
+        <div className="flex items-center justify-center min-h-screen">
+          <p className="text-destructive">Error loading clients: {error.message}</p>
+        </div>
+      </Layout>
+    );
+  }
+
   const totalPipeline = "$4.2M";
-  const existingClients = clientData.filter(c => c.status === "Existing").length;
+  const existingClients = (clients || []).filter(c => c.status === "Existing").length;
   const avgDealSize = "$168K";
 
   return (
@@ -251,7 +106,7 @@ const Clients = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
             <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
               <div className="text-white/80 text-sm font-mono mb-1">Total Clients</div>
-              <div className="text-3xl font-heading font-bold text-white">{clientData.length}</div>
+              <div className="text-3xl font-heading font-bold text-white">{clients?.length || 0}</div>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
               <div className="text-white/80 text-sm font-mono mb-1">Pipeline Value</div>
@@ -281,7 +136,7 @@ const Clients = () => {
                   : "bg-card text-foreground hover:bg-primary/10 border border-border"
               )}
             >
-              {sector === "all" ? `All (${clientData.length})` : sector}
+              {sector === "all" ? `All (${clients?.length || 0})` : sector}
             </button>
           ))}
         </div>
@@ -303,100 +158,104 @@ const Clients = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredClients.map((client, index) => (
-                <tr 
-                  key={client.id}
-                  onClick={() => navigate(`/clients/${client.id}`)}
-                  className="border-b border-border hover:bg-primary/5 transition-colors cursor-pointer"
-                >
-                  <td className="px-4 py-4">
-                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                      <span className="font-heading font-bold text-primary text-sm">{index + 1}</span>
-                    </div>
-                  </td>
-                  <td className="px-4 py-4">
-                    <div className="font-heading font-semibold text-foreground">{client.name}</div>
-                    <div className="text-sm font-mono text-muted-foreground">📍 {client.location}</div>
-                  </td>
-                  <td className="px-4 py-4">
-                    <Badge className={cn("font-mono text-xs", getTierBadgeClass(client.tier))}>
-                      Tier {client.tier}
-                    </Badge>
-                  </td>
-                  <td className="px-4 py-4">
-                    <Badge variant="outline" className="font-mono text-xs bg-primary/10 text-primary border-primary/20">
-                      {client.sector}
-                    </Badge>
-                  </td>
-                  <td className="px-4 py-4">
-                    <div className="font-mono text-sm font-semibold text-foreground">{client.dealSize}</div>
-                  </td>
-                  <td className="px-4 py-4">
-                    {client.status === "Existing" ? (
-                      <Badge className="bg-status-green/10 text-status-green border-0 font-mono text-xs">
-                        ✓ EXISTING
-                      </Badge>
-                    ) : (
-                      <div className="space-y-1">
-                        <div className="text-xs font-mono text-muted-foreground">Win Rate</div>
-                        <div className="flex items-center gap-2">
-                          <div className="w-16 h-2 bg-muted/30 rounded-full overflow-hidden">
-                            <div 
-                              className="h-full bg-primary rounded-full transition-all"
-                              style={{ width: `${client.winRate}%` }}
-                            />
-                          </div>
-                          <span className="text-xs font-mono font-semibold text-primary">{client.winRate}%</span>
-                        </div>
+              {filteredClients.map((client, index) => {
+                const clientOpportunities = opportunities?.filter(opp => opp.client_id === client.id) || [];
+                
+                return (
+                  <tr 
+                    key={client.id}
+                    onClick={() => navigate(`/clients/${client.id}`)}
+                    className="border-b border-border hover:bg-primary/5 transition-colors cursor-pointer"
+                  >
+                    <td className="px-4 py-4">
+                      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                        <span className="font-heading font-bold text-primary text-sm">{index + 1}</span>
                       </div>
-                    )}
-                  </td>
-                  <td className="px-4 py-4">
-                    <div className="font-mono text-sm text-foreground">{client.timeline}</div>
-                  </td>
-                  <td className="px-4 py-4">
-                    <ul className="space-y-1">
-                      {client.opportunities.slice(0, 3).map((opp, idx) => (
-                        <li key={idx} className="text-xs font-mono text-muted-foreground flex items-start">
-                          <span className="text-primary mr-2">•</span>
-                          <span>{opp}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </td>
-                  <td className="px-4 py-4">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button 
-                          variant="ghost" 
-                          size="icon" 
-                          className="h-8 w-8 rounded-full border-2 border-coral-dark"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <MoreVertical className="h-6 w-6 font-bold" strokeWidth={3} />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem className="font-bold" onClick={() => window.open(`/clients/${client.id}`, '_blank')}>
-                          Details
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="font-bold" onClick={() => window.open(`/opportunities?client=${client.id}`, '_blank')}>
-                          Opportunities
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="font-bold" onClick={() => window.open(`/emails?client=${client.id}`, '_blank')}>
-                          Emails
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="font-bold" onClick={(e) => {
-                          e.stopPropagation();
-                          handleDownload(client.id, client.name);
-                        }}>
-                          Download
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </td>
-                </tr>
-              ))}
+                    </td>
+                    <td className="px-4 py-4">
+                      <div className="font-heading font-semibold text-foreground">{client.name}</div>
+                      <div className="text-sm font-mono text-muted-foreground">📍 {client.location}</div>
+                    </td>
+                    <td className="px-4 py-4">
+                      <Badge className={cn("font-mono text-xs", getTierBadgeClass(client.tier))}>
+                        Tier {client.tier}
+                      </Badge>
+                    </td>
+                    <td className="px-4 py-4">
+                      <Badge variant="outline" className="font-mono text-xs bg-primary/10 text-primary border-primary/20">
+                        {client.sector}
+                      </Badge>
+                    </td>
+                    <td className="px-4 py-4">
+                      <div className="font-mono text-sm font-semibold text-foreground">{client.deal_size || "N/A"}</div>
+                    </td>
+                    <td className="px-4 py-4">
+                      {client.status === "Existing" ? (
+                        <Badge className="bg-status-green/10 text-status-green border-0 font-mono text-xs">
+                          ✓ EXISTING
+                        </Badge>
+                      ) : (
+                        <div className="space-y-1">
+                          <div className="text-xs font-mono text-muted-foreground">Win Rate</div>
+                          <div className="flex items-center gap-2">
+                            <div className="w-16 h-2 bg-muted/30 rounded-full overflow-hidden">
+                              <div 
+                                className="h-full bg-primary rounded-full transition-all"
+                                style={{ width: `${client.win_rate || 0}%` }}
+                              />
+                            </div>
+                            <span className="text-xs font-mono font-semibold text-primary">{client.win_rate || 0}%</span>
+                          </div>
+                        </div>
+                      )}
+                    </td>
+                    <td className="px-4 py-4">
+                      <div className="font-mono text-sm text-foreground">{client.timeline}</div>
+                    </td>
+                    <td className="px-4 py-4">
+                      <ul className="space-y-1">
+                        {clientOpportunities.slice(0, 3).map((opp, idx) => (
+                          <li key={idx} className="text-xs font-mono text-muted-foreground flex items-start">
+                            <span className="text-primary mr-2">•</span>
+                            <span>{opp.name}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </td>
+                    <td className="px-4 py-4">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button 
+                            variant="ghost" 
+                            size="icon" 
+                            className="h-8 w-8 rounded-full border-2 border-coral-dark"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <MoreVertical className="h-6 w-6 font-bold" strokeWidth={3} />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem className="font-bold" onClick={() => window.open(`/clients/${client.id}`, '_blank')}>
+                            Details
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="font-bold" onClick={() => window.open(`/opportunities?client=${client.id}`, '_blank')}>
+                            Opportunities
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="font-bold" onClick={() => window.open(`/emails?client=${client.id}`, '_blank')}>
+                            Emails
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="font-bold" onClick={(e) => {
+                            e.stopPropagation();
+                            handleDownload(client.id, client.name);
+                          }}>
+                            Download
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
@@ -405,7 +264,7 @@ const Clients = () => {
         <div className="mt-6 p-4 bg-card rounded-lg border border-border">
           <div className="flex items-center justify-between">
             <div className="font-mono text-sm text-muted-foreground">
-              Showing {filteredClients.length} of {clientData.length} clients
+              Showing {filteredClients.length} of {clients?.length || 0} clients
             </div>
             <div className="font-mono text-sm text-foreground">
               Total Pipeline: <span className="font-semibold text-primary">{totalPipeline}</span>

@@ -10,6 +10,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+import { useOpportunities } from "@/hooks/useOpportunities";
+import { useClients } from "@/hooks/useClients";
+import { Loader2 } from "lucide-react";
 
 interface Opportunity {
   id: string;
@@ -680,6 +683,8 @@ const Opportunities = () => {
   const navigate = useNavigate();
   const clientParam = searchParams.get("client");
   const [selectedClientId, setSelectedClientId] = useState<string>("all");
+  const { data: opportunities, isLoading, error } = useOpportunities();
+  const { data: clients } = useClients();
 
   useEffect(() => {
     if (clientParam) {
@@ -687,39 +692,30 @@ const Opportunities = () => {
     }
   }, [clientParam]);
 
-  const clients = [
-    { id: 1, name: "Mecklenburg County", tier: 1 },
-    { id: 2, name: "Maplewood Senior Living", tier: 1 },
-    { id: 3, name: "Wake County", tier: 1 },
-    { id: 4, name: "Gaston County Government", tier: 2 },
-    { id: 5, name: "City of Cleveland (Court System)", tier: 2 },
-    { id: 6, name: "Morgan Creek Capital Management", tier: 2 },
-    { id: 7, name: "Churchill County Government", tier: 3 },
-    { id: 8, name: "La Costa Dental Group", tier: 3 },
-    { id: 9, name: "INSURLYNX", tier: 3 },
-    { id: 10, name: "Catholic Charities Maine", tier: 2 },
-  ];
-
   const filteredOpportunities = useMemo(() => {
+    if (!opportunities) return [];
+    
     if (selectedClientId === "all") {
       // Show top 10 opportunities by win rate
-      return [...opportunityData]
-        .sort((a, b) => b.winRate - a.winRate)
+      return [...opportunities]
+        .sort((a, b) => (b.win_rate || 0) - (a.win_rate || 0))
         .slice(0, 10);
     }
-    return opportunityData
-      .filter((opp) => opp.clientId === parseInt(selectedClientId))
-      .sort((a, b) => b.winRate - a.winRate);
-  }, [selectedClientId]);
+    return opportunities
+      .filter((opp) => opp.client_id === parseInt(selectedClientId))
+      .sort((a, b) => (b.win_rate || 0) - (a.win_rate || 0));
+  }, [selectedClientId, opportunities]);
 
   const stats = useMemo(() => {
+    if (!opportunities) return { totalOpps: 0, totalPipeline: "$0K", avgWinRate: 0, expectedRevenue: "$0K" };
+    
     const opps = selectedClientId === "all" 
-      ? opportunityData 
-      : opportunityData.filter((opp) => opp.clientId === parseInt(selectedClientId));
+      ? opportunities 
+      : opportunities.filter((opp) => opp.client_id === parseInt(selectedClientId));
     
     const totalOpps = opps.length;
-    const totalPipeline = opps.reduce((sum, opp) => sum + opp.year1, 0);
-    const avgWinRate = opps.reduce((sum, opp) => sum + opp.winRate, 0) / opps.length;
+    const totalPipeline = opps.reduce((sum, opp) => sum + (opp.year1_revenue || 0), 0);
+    const avgWinRate = opps.reduce((sum, opp) => sum + (opp.win_rate || 0), 0) / (opps.length || 1);
     const expectedRevenue = totalPipeline * (avgWinRate / 100);
 
     return {
@@ -728,7 +724,27 @@ const Opportunities = () => {
       avgWinRate: Math.round(avgWinRate),
       expectedRevenue: `$${(expectedRevenue / 1000).toFixed(1)}K`,
     };
-  }, [selectedClientId]);
+  }, [selectedClientId, opportunities]);
+
+  if (isLoading) {
+    return (
+      <Layout>
+        <div className="flex items-center justify-center min-h-screen">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+      </Layout>
+    );
+  }
+
+  if (error) {
+    return (
+      <Layout>
+        <div className="flex items-center justify-center min-h-screen">
+          <p className="text-destructive">Error loading opportunities: {error.message}</p>
+        </div>
+      </Layout>
+    );
+  }
 
   const getServiceTypeBadgeClass = (type: string) => {
     switch (type) {
@@ -873,82 +889,86 @@ const Opportunities = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredOpportunities.map((opp, index) => (
-                <tr
-                  key={opp.id}
-                  onClick={() => navigate(`/emails?client=${opp.clientId}`)}
-                  className="border-b border-border hover:bg-primary/5 transition-colors cursor-pointer"
-                >
-                  <td className="px-4 py-4">
-                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                      <span className="font-heading font-bold text-primary text-sm">
-                        {index + 1}
-                      </span>
-                    </div>
-                  </td>
-                  <td className="px-4 py-4">
-                    <div className="font-heading font-semibold text-foreground">
-                      {opp.name}
-                    </div>
-                    <div className="text-sm font-mono text-muted-foreground">
-                      {opp.description}
-                    </div>
-                    {selectedClientId === "all" && (
-                      <div className="text-xs font-mono text-primary mt-1">
-                        📍 {opp.clientName}
+              {filteredOpportunities.map((opp, index) => {
+                const clientName = opp.clients?.name || clients?.find(c => c.id === opp.client_id)?.name || "Unknown Client";
+                
+                return (
+                  <tr
+                    key={opp.id}
+                    onClick={() => navigate(`/emails?client=${opp.client_id}`)}
+                    className="border-b border-border hover:bg-primary/5 transition-colors cursor-pointer"
+                  >
+                    <td className="px-4 py-4">
+                      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                        <span className="font-heading font-bold text-primary text-sm">
+                          {index + 1}
+                        </span>
                       </div>
-                    )}
-                  </td>
-                  <td className="px-4 py-4">
-                    <Badge
-                      variant="outline"
-                      className={cn(
-                        "font-mono text-xs whitespace-nowrap",
-                        getServiceTypeBadgeClass(opp.serviceType)
+                    </td>
+                    <td className="px-4 py-4">
+                      <div className="font-heading font-semibold text-foreground">
+                        {opp.name}
+                      </div>
+                      <div className="text-sm font-mono text-muted-foreground">
+                        {opp.description}
+                      </div>
+                      {selectedClientId === "all" && (
+                        <div className="text-xs font-mono text-primary mt-1">
+                          📍 {clientName}
+                        </div>
                       )}
-                    >
-                      {opp.serviceType}
-                    </Badge>
-                  </td>
-                  <td className="px-4 py-4">
-                    <div className="font-mono text-sm font-semibold text-foreground whitespace-nowrap">
-                      {formatCurrency(opp.year1)} → {formatCurrency(opp.year2)}{" "}
-                      → {formatCurrency(opp.year3)}
-                    </div>
-                  </td>
-                  <td className="px-4 py-4">
-                    <div className="flex items-center gap-2">
-                      <div className="w-24 h-2 bg-muted/30 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-primary rounded-full transition-all"
-                          style={{ width: `${opp.winRate}%` }}
-                        />
+                    </td>
+                    <td className="px-4 py-4">
+                      <Badge
+                        variant="outline"
+                        className={cn(
+                          "font-mono text-xs whitespace-nowrap",
+                          getServiceTypeBadgeClass(opp.service_type)
+                        )}
+                      >
+                        {opp.service_type}
+                      </Badge>
+                    </td>
+                    <td className="px-4 py-4">
+                      <div className="font-mono text-sm font-semibold text-foreground whitespace-nowrap">
+                        {formatCurrency(opp.year1_revenue || 0)} → {formatCurrency(opp.year2_revenue || 0)}{" "}
+                        → {formatCurrency(opp.year3_revenue || 0)}
                       </div>
-                      <span className="text-sm font-mono font-semibold text-primary whitespace-nowrap">
-                        {opp.winRate}%
-                      </span>
-                    </div>
-                  </td>
-                  <td className="px-4 py-4">
-                    <div className="font-mono text-sm text-foreground whitespace-nowrap">
-                      {opp.timeline}
-                    </div>
-                  </td>
-                  <td className="px-4 py-4">
-                    <ul className="space-y-1">
-                      {opp.drivers.slice(0, 4).map((driver, idx) => (
-                        <li
-                          key={idx}
-                          className="text-xs font-mono text-muted-foreground flex items-start"
-                        >
-                          <span className="text-primary mr-2">•</span>
-                          <span>{driver}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </td>
-                </tr>
-              ))}
+                    </td>
+                    <td className="px-4 py-4">
+                      <div className="flex items-center gap-2">
+                        <div className="w-24 h-2 bg-muted/30 rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-primary rounded-full transition-all"
+                            style={{ width: `${opp.win_rate || 0}%` }}
+                          />
+                        </div>
+                        <span className="text-sm font-mono font-semibold text-primary whitespace-nowrap">
+                          {opp.win_rate || 0}%
+                        </span>
+                      </div>
+                    </td>
+                    <td className="px-4 py-4">
+                      <div className="font-mono text-sm text-foreground whitespace-nowrap">
+                        {opp.timeline}
+                      </div>
+                    </td>
+                    <td className="px-4 py-4">
+                      <ul className="space-y-1">
+                        {(opp.drivers || []).slice(0, 4).map((driver, idx) => (
+                          <li
+                            key={idx}
+                            className="text-xs font-mono text-muted-foreground flex items-start"
+                          >
+                            <span className="text-primary mr-2">•</span>
+                            <span>{driver}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
