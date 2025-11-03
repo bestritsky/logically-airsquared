@@ -195,9 +195,12 @@ const Clients = () => {
 
     const pdfPath = pdfMap[clientId];
     if (pdfPath) {
+      // Encode the URL to handle spaces and special characters
+      const encodedPath = encodeURI(pdfPath);
       const link = document.createElement('a');
-      link.href = pdfPath;
+      link.href = encodedPath;
       link.download = `${clientName}.pdf`;
+      link.target = '_blank';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
