@@ -332,27 +332,17 @@ export const GeneratedEmailViewer = ({
             </div>
           </div>
 
-          <DialogFooter className="flex-row items-center justify-between gap-3 pt-6 border-t">
-            <Button
-              variant="destructive"
-              size="sm"
-              onClick={() => setShowDeleteDialog(true)}
-            >
-              <Trash2 className="w-4 h-4 mr-2" />
-              Delete Email
+          <DialogFooter className="flex-row items-center justify-end gap-3 pt-6 border-t">
+            <Button variant="outline" onClick={() => onOpenChange(false)}>
+              Close
             </Button>
-            <div className="flex gap-2">
-              <Button variant="outline" onClick={() => onOpenChange(false)}>
-                Close
-              </Button>
-              <Button
-                onClick={() => updateMutation.mutate()}
-                disabled={!hasUnsavedChanges || updateMutation.isPending}
-              >
-                <Save className="w-4 h-4 mr-2" />
-                Save
-              </Button>
-            </div>
+            <Button
+              onClick={() => updateMutation.mutate()}
+              disabled={!hasUnsavedChanges || updateMutation.isPending}
+            >
+              <Save className="w-4 h-4 mr-2" />
+              Save
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
