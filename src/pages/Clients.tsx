@@ -373,7 +373,7 @@ const Clients = () => {
                           className="h-8 w-8"
                           onClick={(e) => e.stopPropagation()}
                         >
-                          <MoreVertical className="h-4 w-4" />
+                          <MoreVertical className="h-6 w-6 font-bold" strokeWidth={3} />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
