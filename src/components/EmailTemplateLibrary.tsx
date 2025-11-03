@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { influencePrincipleTemplates, EmailTemplate, InfluencePrinciple } from "@/data/emailTemplates";
+import { type EmailTemplate, type InfluencePrinciple } from "@/data/emailTemplates";
 import { EmailTemplatePreview } from "./EmailTemplatePreview";
-import { Info } from "lucide-react";
+import { Info, Loader2 } from "lucide-react";
+import { useEmailTemplates } from "@/hooks/useEmailTemplates";
 import {
   Popover,
   PopoverContent,
@@ -30,6 +31,7 @@ export const EmailTemplateLibrary = ({
   const [selectedTemplate, setSelectedTemplate] = useState<EmailTemplate | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterPrinciple, setFilterPrinciple] = useState<InfluencePrinciple | "All">("All");
+  const { data: templates, isLoading } = useEmailTemplates();
 
   const getPrincipleBadgeClass = (principle: InfluencePrinciple) => {
     const classes: Record<InfluencePrinciple, string> = {
@@ -45,13 +47,17 @@ export const EmailTemplateLibrary = ({
     return classes[principle];
   };
 
-  const filteredTemplates = influencePrincipleTemplates.filter((template) => {
-    const matchesSearch = 
-      template.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      template.psychologyExplanation.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesPrinciple = filterPrinciple === "All" || template.influencePrinciple === filterPrinciple;
-    return matchesSearch && matchesPrinciple;
-  });
+  const filteredTemplates = useMemo(() => {
+    if (!templates) return [];
+    
+    return templates.filter((template) => {
+      const matchesSearch = 
+        template.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        template.psychologyExplanation.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesPrinciple = filterPrinciple === "All" || template.influencePrinciple === filterPrinciple;
+      return matchesSearch && matchesPrinciple;
+    });
+  }, [templates, searchQuery, filterPrinciple]);
 
   const principles: (InfluencePrinciple | "All")[] = [
     "All",
@@ -101,8 +107,13 @@ export const EmailTemplateLibrary = ({
           </div>
 
           {/* Template Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
-            {filteredTemplates.map((template) => (
+          {isLoading ? (
+            <div className="flex items-center justify-center py-12">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+              {filteredTemplates.map((template) => (
               <div
                 key={template.id}
                 className="border rounded-lg p-4 hover:shadow-md transition-shadow bg-card"
@@ -163,10 +174,11 @@ export const EmailTemplateLibrary = ({
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
 
-          {filteredTemplates.length === 0 && (
+          {!isLoading && filteredTemplates.length === 0 && (
             <div className="text-center py-12 text-muted-foreground">
               No templates found. Try adjusting your search or filters.
             </div>

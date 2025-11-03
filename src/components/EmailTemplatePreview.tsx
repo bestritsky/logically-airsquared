@@ -12,8 +12,7 @@ import { Copy, Check } from "lucide-react";
 import { toast } from "sonner";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { supabase } from "@/integrations/supabase/client";
-import { useQuery } from "@tanstack/react-query";
+import { useSaveGeneratedEmail } from "@/hooks/useSaveGeneratedEmail";
 
 interface EmailTemplatePreviewProps {
   template: EmailTemplate;
@@ -36,16 +35,7 @@ export const EmailTemplatePreview = ({
   const [copied, setCopied] = useState(false);
   const [editedSubject, setEditedSubject] = useState("");
   const [editedBody, setEditedBody] = useState("");
-  const [isSaving, setIsSaving] = useState(false);
-
-  // Get current user
-  const { data: session } = useQuery({
-    queryKey: ["session"],
-    queryFn: async () => {
-      const { data } = await supabase.auth.getSession();
-      return data.session;
-    },
-  });
+  const saveEmailMutation = useSaveGeneratedEmail();
 
   const substituteVariables = (text: string, vars: Record<string, string>) => {
     return text.replace(/\{(\w+)\}/g, (match, key) => vars[key] || match);
@@ -87,47 +77,29 @@ export const EmailTemplatePreview = ({
     .every(v => variables[v.key] && variables[v.key].trim() !== "");
 
   const handleSaveEmail = async () => {
-    if (!session?.user) {
-      toast.error("You must be logged in to save emails");
+    if (!preSelectedClient) {
+      toast.error("Please select a client first");
       return;
     }
 
-    if (!hasAllRequiredVariables) {
-      toast.error("Please fill in all required fields");
+    if (!variables.contact_name || !variables.contact_email) {
+      toast.error("Contact name and email are required");
       return;
     }
 
-    // Get contact name and email from variables
-    const contactName = variables.contact_name || "Contact";
-    const contactEmail = variables.email || variables.contact_email || "contact@example.com";
-    const clientId = preSelectedClient?.id || parseInt(variables.client_id || "0");
-
-    setIsSaving(true);
-    try {
-      const { error } = await supabase.from("generated_emails").insert({
-        client_id: clientId,
-        opportunity_id: preSelectedOpportunity?.id || null,
-        template_id: null, // We'll update this when templates are in DB
-        contact_name: contactName,
-        contact_email: contactEmail,
-        subject: generatedSubject,
-        body: generatedBody,
-        influence_principle: template.influencePrinciple,
-        template_variables: variables,
-        status: "Draft",
-        created_by: session.user.id,
-      });
-
-      if (error) throw error;
-
-      toast.success("Email saved successfully!");
-      onOpenChange(false);
-    } catch (error: any) {
-      console.error("Error saving email:", error);
-      toast.error(error.message || "Failed to save email");
-    } finally {
-      setIsSaving(false);
-    }
+    await saveEmailMutation.mutateAsync({
+      clientId: preSelectedClient.id,
+      opportunityId: preSelectedOpportunity?.id,
+      templateId: template.id,
+      contactName: variables.contact_name,
+      contactEmail: variables.contact_email,
+      subject: editedSubject,
+      body: editedBody,
+      influencePrinciple: template.influencePrinciple,
+      templateVariables: variables,
+    });
+    
+    onOpenChange(false);
   };
 
   return (
@@ -226,9 +198,9 @@ export const EmailTemplatePreview = ({
           </Button>
           <Button
             onClick={handleSaveEmail}
-            disabled={!hasAllRequiredVariables || isSaving || !session?.user}
+            disabled={!hasAllRequiredVariables || saveEmailMutation.isPending}
           >
-            {isSaving ? "Saving..." : "Save Email"}
+            {saveEmailMutation.isPending ? "Saving..." : "Save Email"}
           </Button>
         </div>
       </DialogContent>
