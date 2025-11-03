@@ -21,7 +21,7 @@ export const Layout = ({ children }: LayoutProps) => {
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="flex items-center justify-between h-16">
             <div className="font-heading font-bold text-foreground text-lg">
-              Logically AirSquared Intelligent Sales
+              AirSquared Intelligent Sales
             </div>
             <div className="flex gap-1">
               {navItems.map((item) => (
