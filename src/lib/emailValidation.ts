@@ -24,9 +24,11 @@ export const emailContentSchema = z.object({
     .max(255, 'Email must be less than 255 characters')
 });
 
-// Schema for updating email content (subset without contact info)
+// Schema for updating email content (includes contact info)
 export const emailUpdateSchema = emailContentSchema.pick({
   subject: true,
   body: true,
-  notes: true
+  notes: true,
+  contact_name: true,
+  contact_email: true
 });

@@ -83,6 +83,8 @@ export const GeneratedEmailViewer = ({
   const [editedSubject, setEditedSubject] = useState("");
   const [editedBody, setEditedBody] = useState("");
   const [editedNotes, setEditedNotes] = useState("");
+  const [editedContactName, setEditedContactName] = useState("");
+  const [editedContactEmail, setEditedContactEmail] = useState("");
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   useEffect(() => {
@@ -90,6 +92,8 @@ export const GeneratedEmailViewer = ({
       setEditedSubject(email.subject);
       setEditedBody(email.body);
       setEditedNotes(email.notes || "");
+      setEditedContactName(email.contact_name);
+      setEditedContactEmail(email.contact_email);
     }
   }, [email]);
 
@@ -101,7 +105,9 @@ export const GeneratedEmailViewer = ({
       const validation = emailUpdateSchema.safeParse({
         subject: editedSubject,
         body: editedBody,
-        notes: editedNotes || null
+        notes: editedNotes || null,
+        contact_name: editedContactName,
+        contact_email: editedContactEmail
       });
       
       if (!validation.success) {
@@ -205,7 +211,9 @@ export const GeneratedEmailViewer = ({
   const hasUnsavedChanges =
     editedSubject.trim() !== email.subject.trim() ||
     editedBody.trim() !== email.body.trim() ||
-    (editedNotes.trim() || null) !== email.notes;
+    (editedNotes.trim() || null) !== email.notes ||
+    editedContactName.trim() !== email.contact_name.trim() ||
+    editedContactEmail.trim() !== email.contact_email.trim();
 
   return (
     <>
@@ -228,6 +236,28 @@ export const GeneratedEmailViewer = ({
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-4">
             {/* Left Column - Email Content */}
             <div className="lg:col-span-2 space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="contact_name">Contact Name</Label>
+                  <Input
+                    id="contact_name"
+                    value={editedContactName}
+                    onChange={(e) => setEditedContactName(e.target.value)}
+                    className="mt-1"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="contact_email">Contact Email</Label>
+                  <Input
+                    id="contact_email"
+                    type="email"
+                    value={editedContactEmail}
+                    onChange={(e) => setEditedContactEmail(e.target.value)}
+                    className="mt-1"
+                  />
+                </div>
+              </div>
+
               <div>
                 <Label htmlFor="subject">Subject</Label>
                 <Input
@@ -273,14 +303,6 @@ export const GeneratedEmailViewer = ({
               </Button>
 
               <div className="bg-muted/30 p-4 rounded-lg space-y-3">
-                <div>
-                  <h4 className="text-sm font-semibold mb-2">Contact Information</h4>
-                  <div className="text-sm space-y-1">
-                    <div className="font-medium">{email.contact_name}</div>
-                    <div className="text-muted-foreground">{email.contact_email}</div>
-                  </div>
-                </div>
-
                 {email.clients && (
                   <div>
                     <h4 className="text-sm font-semibold mb-2">Client</h4>

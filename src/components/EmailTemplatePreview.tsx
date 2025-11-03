@@ -40,6 +40,8 @@ export const EmailTemplatePreview = ({
   const [copied, setCopied] = useState(false);
   const [editedSubject, setEditedSubject] = useState("");
   const [editedBody, setEditedBody] = useState("");
+  const [contactName, setContactName] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
   const [selectedClient, setSelectedClient] = useState<{ id: number; name: string } | undefined>(preSelectedClient);
   const [selectedOpportunity, setSelectedOpportunity] = useState<{ id: string; name: string } | undefined>(preSelectedOpportunity);
   
@@ -108,8 +110,8 @@ export const EmailTemplatePreview = ({
       clientId: selectedClient.id,
       opportunityId: selectedOpportunity?.id,
       templateId: template.id,
-      contactName: variables.contact_name || '',
-      contactEmail: variables.contact_email || '',
+      contactName: contactName || variables.contact_name || '',
+      contactEmail: contactEmail || variables.contact_email || '',
       subject: editedSubject,
       body: editedBody,
       influencePrinciple: template.influencePrinciple,
@@ -224,6 +226,34 @@ export const EmailTemplatePreview = ({
             
             <ScrollArea className="h-[calc(95vh-280px)]">
               <div className="border rounded-lg p-6 bg-card space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="contact_name" className="text-xs font-medium text-muted-foreground mb-2">
+                      Contact Name:
+                    </Label>
+                    <Input
+                      id="contact_name"
+                      value={contactName}
+                      onChange={(e) => setContactName(e.target.value)}
+                      placeholder="Enter contact name"
+                      className="mt-2"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="contact_email" className="text-xs font-medium text-muted-foreground mb-2">
+                      Contact Email:
+                    </Label>
+                    <Input
+                      id="contact_email"
+                      type="email"
+                      value={contactEmail}
+                      onChange={(e) => setContactEmail(e.target.value)}
+                      placeholder="Enter contact email"
+                      className="mt-2"
+                    />
+                  </div>
+                </div>
+                
                 <div>
                   <Label htmlFor="subject" className="text-xs font-medium text-muted-foreground mb-2">
                     Subject:
