@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { cn } from "@/lib/utils";
 import { EmailTemplateLibrary } from "@/components/EmailTemplateLibrary";
-import { FileText, Plus, Copy, Trash2, Eye, Mail } from "lucide-react";
+import { FileText, Plus, Copy, Trash2, Pencil, Mail } from "lucide-react";
 import { GeneratedEmailViewer } from "@/components/GeneratedEmailViewer";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -472,7 +472,7 @@ const Emails = () => {
                                 size="sm"
                                 onClick={() => setViewerEmail(email)}
                               >
-                                <Eye className="w-4 h-4" />
+                                <Pencil className="w-4 h-4" />
                               </Button>
                             </TooltipTrigger>
                             <TooltipContent>View & Edit Email</TooltipContent>
