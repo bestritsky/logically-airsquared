@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -677,6 +677,7 @@ const opportunityData: Opportunity[] = [
 
 const Opportunities = () => {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const clientParam = searchParams.get("client");
   const [selectedClientId, setSelectedClientId] = useState<string>("all");
 
@@ -875,7 +876,8 @@ const Opportunities = () => {
               {filteredOpportunities.map((opp, index) => (
                 <tr
                   key={opp.id}
-                  className="border-b border-border hover:bg-primary/5 transition-colors"
+                  onClick={() => navigate(`/emails?client=${opp.clientId}`)}
+                  className="border-b border-border hover:bg-primary/5 transition-colors cursor-pointer"
                 >
                   <td className="px-4 py-4">
                     <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
