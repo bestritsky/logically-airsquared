@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import {
   AlertDialog,
@@ -289,9 +290,20 @@ export const GeneratedEmailViewer = ({
 
                 <div>
                   <h4 className="text-sm font-semibold mb-2">Status</h4>
-                  <Badge className={getStatusBadgeClass(email.status)}>
-                    {email.status}
-                  </Badge>
+                  <Select
+                    value={email.status}
+                    onValueChange={(value: EmailStatus) => statusMutation.mutate(value)}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Draft">Draft</SelectItem>
+                      <SelectItem value="Ready">Ready</SelectItem>
+                      <SelectItem value="Exported">Exported</SelectItem>
+                      <SelectItem value="Archived">Archived</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
 
