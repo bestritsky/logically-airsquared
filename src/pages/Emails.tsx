@@ -460,39 +460,6 @@ const Emails = () => {
                           </Tooltip>
                         </TooltipProvider>
 
-                        {email.status === "Draft" && (
-                          <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  onClick={() => handleMarkReady(email.id)}
-                                >
-                                  Mark Ready
-                                </Button>
-                              </TooltipTrigger>
-                              <TooltipContent>Mark as Ready to Export</TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                        )}
-
-                        {email.status === "Ready" && (
-                          <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  onClick={() => handleMarkExported(email.id)}
-                                >
-                                  Mark Exported
-                                </Button>
-                              </TooltipTrigger>
-                              <TooltipContent>Mark as Exported</TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                        )}
 
                         <TooltipProvider>
                           <Tooltip>
