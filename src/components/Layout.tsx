@@ -35,7 +35,7 @@ export const Layout = ({ children }: LayoutProps) => {
     { href: "/clients", label: "Clients" },
     { href: "/opportunities", label: "Opportunities" },
     { href: "/emails", label: "Emails" },
-    { href: "/users", label: "Users" },
+    { href: "/users", label: "Admin" },
   ];
 
   const handleLogout = async () => {
