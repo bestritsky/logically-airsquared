@@ -115,7 +115,7 @@ export const GeneratedEmailViewer = ({
       if (error) throw error;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["generatedEmails"] });
+      queryClient.invalidateQueries({ queryKey: ["generated-emails"] });
       toast.success("Email updated successfully!");
       onEmailUpdated?.();
     },
@@ -138,7 +138,7 @@ export const GeneratedEmailViewer = ({
       if (error) throw error;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["generatedEmails"] });
+      queryClient.invalidateQueries({ queryKey: ["generated-emails"] });
       toast.success("Status updated successfully!");
       onEmailUpdated?.();
     },
@@ -158,7 +158,7 @@ export const GeneratedEmailViewer = ({
       if (error) throw error;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["generatedEmails"] });
+      queryClient.invalidateQueries({ queryKey: ["generated-emails"] });
       toast.success("Email deleted successfully!");
       onOpenChange(false);
       onEmailUpdated?.();
