@@ -286,16 +286,10 @@ const Emails = () => {
                 Create persuasive emails using psychological principles
               </p>
             </div>
-            <div className="flex gap-3">
-              <Button onClick={() => setShowTemplateLibrary(true)} size="lg">
-                <Mail className="w-4 h-4 mr-2" />
-                Generate New Email
-              </Button>
-              <Button onClick={() => setTemplateLibraryOpen(true)} size="lg" variant="outline">
-                <FileText className="w-4 h-4 mr-2" />
-                Browse Templates
-              </Button>
-            </div>
+            <Button onClick={() => setShowTemplateLibrary(true)} size="lg">
+              <Mail className="w-4 h-4 mr-2" />
+              Generate New Email
+            </Button>
           </div>
         </div>
 
