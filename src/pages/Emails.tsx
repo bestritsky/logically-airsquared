@@ -57,6 +57,7 @@ const Emails = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedFilter, setSelectedFilter] = useState<EmailStatus | "All">("All");
   const [selectedClient, setSelectedClient] = useState<string>("all");
+  const [selectedOpportunity, setSelectedOpportunity] = useState<string>("all");
   const [templateLibraryOpen, setTemplateLibraryOpen] = useState(false);
   const [showTemplateLibrary, setShowTemplateLibrary] = useState(false);
   const [preSelectedClient, setPreSelectedClient] = useState<{ id: number; name: string } | undefined>();
@@ -169,14 +170,30 @@ const Emails = () => {
     return Array.from(clientMap.values()).sort((a, b) => a.name.localeCompare(b.name));
   }, [generatedEmails]);
 
+  // Get unique opportunities for filter
+  const opportunities = useMemo(() => {
+    const oppMap = new Map<string, { id: string; name: string; clientName: string }>();
+    generatedEmails.forEach(email => {
+      if (email.opportunities && email.opportunity_id && !oppMap.has(email.opportunity_id)) {
+        oppMap.set(email.opportunity_id, {
+          id: email.opportunity_id,
+          name: email.opportunities.name,
+          clientName: email.clients?.name || 'Unknown Client'
+        });
+      }
+    });
+    return Array.from(oppMap.values()).sort((a, b) => a.name.localeCompare(b.name));
+  }, [generatedEmails]);
+
   // Filter emails
   const filteredEmails = useMemo(() => {
     return generatedEmails.filter(email => {
       const matchesStatus = selectedFilter === "All" || email.status === selectedFilter;
       const matchesClient = selectedClient === "all" || email.client_id.toString() === selectedClient;
-      return matchesStatus && matchesClient;
+      const matchesOpportunity = selectedOpportunity === "all" || email.opportunity_id === selectedOpportunity;
+      return matchesStatus && matchesClient && matchesOpportunity;
     });
-  }, [generatedEmails, selectedFilter, selectedClient]);
+  }, [generatedEmails, selectedFilter, selectedClient, selectedOpportunity]);
 
   // Calculate stats
   const stats = useMemo(() => {
@@ -305,6 +322,20 @@ const Emails = () => {
             </SelectContent>
           </Select>
 
+          <Select value={selectedOpportunity} onValueChange={setSelectedOpportunity}>
+            <SelectTrigger className="w-[250px]">
+              <SelectValue placeholder="All Opportunities" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Opportunities</SelectItem>
+              {opportunities.map(opp => (
+                <SelectItem key={opp.id} value={opp.id}>
+                  {opp.name} ({opp.clientName})
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
           <div className="flex gap-2">
             <Button
               variant={selectedFilter === "All" ? "default" : "outline"}
@@ -360,15 +391,20 @@ const Emails = () => {
               ) : (
                 filteredEmails.map((email) => (
                   <tr key={email.id} className="hover:bg-muted/30 transition-colors">
-                  <td className="px-4 py-4">
-                    <div className="font-semibold text-foreground">{email.contact_name}</div>
-                    <div className="text-sm text-muted-foreground">{email.contact_email}</div>
-                    {email.clients && (
-                      <div className="text-xs text-muted-foreground mt-0.5">
-                        {email.clients.name}
-                      </div>
-                    )}
-                  </td>
+                   <td className="px-4 py-4">
+                     <div className="font-semibold text-foreground">{email.contact_name}</div>
+                     <div className="text-sm text-muted-foreground">{email.contact_email}</div>
+                     {email.clients && (
+                       <div className="text-xs text-muted-foreground mt-0.5">
+                         {email.clients.name}
+                       </div>
+                     )}
+                     {email.opportunities && (
+                       <div className="text-xs text-purple-600 dark:text-purple-400 mt-0.5 font-medium">
+                         📋 {email.opportunities.name}
+                       </div>
+                     )}
+                   </td>
                     <td className="px-4 py-4">
                       <div className="max-w-md truncate text-foreground">{email.subject}</div>
                     </td>
