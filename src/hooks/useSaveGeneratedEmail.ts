@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { emailContentSchema } from "@/lib/emailValidation";
 
 interface SaveEmailParams {
   clientId: number;
@@ -25,16 +26,29 @@ export const useSaveGeneratedEmail = () => {
         throw new Error("You must be logged in to save emails");
       }
 
+      // Validate input
+      const validation = emailContentSchema.safeParse({
+        subject: params.subject,
+        body: params.body,
+        notes: null,
+        contact_name: params.contactName,
+        contact_email: params.contactEmail
+      });
+      
+      if (!validation.success) {
+        throw new Error(validation.error.errors[0].message);
+      }
+
       const { data, error } = await supabase
         .from("generated_emails")
         .insert({
           client_id: params.clientId,
           opportunity_id: params.opportunityId,
           template_id: params.templateId,
-          contact_name: params.contactName,
-          contact_email: params.contactEmail,
-          subject: params.subject,
-          body: params.body,
+          contact_name: validation.data.contact_name,
+          contact_email: validation.data.contact_email,
+          subject: validation.data.subject,
+          body: validation.data.body,
           influence_principle: params.influencePrinciple as any,
           template_variables: params.templateVariables,
           status: "Draft",

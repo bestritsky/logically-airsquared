@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { emailUpdateSchema } from "@/lib/emailValidation";
 import {
   Dialog,
   DialogContent,
@@ -94,13 +95,21 @@ export const GeneratedEmailViewer = ({
   const updateMutation = useMutation({
     mutationFn: async () => {
       if (!email) return;
+
+      // Validate before updating
+      const validation = emailUpdateSchema.safeParse({
+        subject: editedSubject,
+        body: editedBody,
+        notes: editedNotes || null
+      });
+      
+      if (!validation.success) {
+        throw new Error(validation.error.errors[0].message);
+      }
+
       const { error } = await supabase
         .from("generated_emails")
-        .update({
-          subject: editedSubject,
-          body: editedBody,
-          notes: editedNotes || null,
-        })
+        .update(validation.data)
         .eq("id", email.id);
 
       if (error) throw error;

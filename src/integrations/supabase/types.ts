@@ -149,7 +149,7 @@ export type Database = {
           contact_email: string
           contact_name: string
           created_at: string
-          created_by: string | null
+          created_by: string
           exported_at: string | null
           id: string
           influence_principle: Database["public"]["Enums"]["influence_principle"]
@@ -167,7 +167,7 @@ export type Database = {
           contact_email: string
           contact_name: string
           created_at?: string
-          created_by?: string | null
+          created_by?: string
           exported_at?: string | null
           id?: string
           influence_principle: Database["public"]["Enums"]["influence_principle"]
@@ -185,7 +185,7 @@ export type Database = {
           contact_email?: string
           contact_name?: string
           created_at?: string
-          created_by?: string | null
+          created_by?: string
           exported_at?: string | null
           id?: string
           influence_principle?: Database["public"]["Enums"]["influence_principle"]
