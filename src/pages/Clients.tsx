@@ -377,16 +377,16 @@ const Clients = () => {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => window.open(`/clients/${client.id}`, '_blank')}>
+                        <DropdownMenuItem className="font-bold" onClick={() => window.open(`/clients/${client.id}`, '_blank')}>
                           Details
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => window.open(`/opportunities?client=${client.id}`, '_blank')}>
+                        <DropdownMenuItem className="font-bold" onClick={() => window.open(`/opportunities?client=${client.id}`, '_blank')}>
                           Opportunities
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => window.open(`/emails?client=${client.id}`, '_blank')}>
+                        <DropdownMenuItem className="font-bold" onClick={() => window.open(`/emails?client=${client.id}`, '_blank')}>
                           Emails
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={(e) => {
+                        <DropdownMenuItem className="font-bold" onClick={(e) => {
                           e.stopPropagation();
                           handleDownload(client.id, client.name);
                         }}>
