@@ -352,7 +352,7 @@ export const GeneratedEmailViewer = ({
                 disabled={!hasUnsavedChanges || updateMutation.isPending}
               >
                 <Save className="w-4 h-4 mr-2" />
-                Save Changes
+                Save
               </Button>
             </div>
           </DialogFooter>
