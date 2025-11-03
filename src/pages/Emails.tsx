@@ -41,6 +41,15 @@ interface GeneratedEmail {
   created_at: string;
   updated_at: string;
   exported_at: string | null;
+  clients?: {
+    id: number;
+    name: string;
+    sector: string;
+  };
+  opportunities?: {
+    id: string;
+    name: string;
+  } | null;
 }
 
 const Emails = () => {
@@ -59,7 +68,18 @@ const Emails = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("generated_emails")
-        .select("*")
+        .select(`
+          *,
+          clients:client_id (
+            id,
+            name,
+            sector
+          ),
+          opportunities:opportunity_id (
+            id,
+            name
+          )
+        `)
         .order("created_at", { ascending: false });
 
       if (error) throw error;
@@ -109,11 +129,16 @@ const Emails = () => {
 
   // Get unique clients for filter
   const clients = useMemo(() => {
-    const clientIds = new Set(generatedEmails.map(e => e.client_id));
-    return Array.from(clientIds).map(id => ({
-      id,
-      name: `Client ${id}`, // You could join with clients table for real names
-    }));
+    const clientMap = new Map<number, { id: number; name: string }>();
+    generatedEmails.forEach(email => {
+      if (email.clients && !clientMap.has(email.client_id)) {
+        clientMap.set(email.client_id, {
+          id: email.client_id,
+          name: email.clients.name
+        });
+      }
+    });
+    return Array.from(clientMap.values()).sort((a, b) => a.name.localeCompare(b.name));
   }, [generatedEmails]);
 
   // Filter emails
@@ -303,10 +328,15 @@ const Emails = () => {
               ) : (
                 filteredEmails.map((email) => (
                   <tr key={email.id} className="hover:bg-muted/30 transition-colors">
-                    <td className="px-4 py-4">
-                      <div className="font-semibold text-foreground">{email.contact_name}</div>
-                      <div className="text-sm text-muted-foreground">{email.contact_email}</div>
-                    </td>
+                  <td className="px-4 py-4">
+                    <div className="font-semibold text-foreground">{email.contact_name}</div>
+                    <div className="text-sm text-muted-foreground">{email.contact_email}</div>
+                    {email.clients && (
+                      <div className="text-xs text-muted-foreground mt-0.5">
+                        {email.clients.name}
+                      </div>
+                    )}
+                  </td>
                     <td className="px-4 py-4">
                       <div className="max-w-md truncate text-foreground">{email.subject}</div>
                     </td>
