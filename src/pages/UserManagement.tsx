@@ -5,10 +5,20 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { useUsers, useAssignRole, useRemoveRole, useClientAccess, useAssignClientAccess, useRemoveClientAccess } from "@/hooks/useUsers";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { Separator } from "@/components/ui/separator";
+import { useUsers, useAssignRole, useRemoveRole, useClientAccess, useAssignClientAccess, useRemoveClientAccess, useCreateUser, useUpdateUser, useDeleteUser } from "@/hooks/useUsers";
 import { useClients } from "@/hooks/useClients";
 import { useState } from "react";
-import { UserPlus, Shield, X, Building2 } from "lucide-react";
+import { UserPlus, Shield, X, Building2, Trash2, Mail, Key } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createUserSchema, updateUserSchema } from "@/lib/userValidation";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import type { z } from "zod";
+import { supabase } from "@/integrations/supabase/client";
 
 export default function UserManagement() {
   const { data: users, isLoading } = useUsers();
@@ -17,14 +27,70 @@ export default function UserManagement() {
   const removeRole = useRemoveRole();
   const assignClientAccess = useAssignClientAccess();
   const removeClientAccess = useRemoveClientAccess();
+  const createUser = useCreateUser();
+  const updateUser = useUpdateUser();
+  const deleteUser = useDeleteUser();
 
   const [selectedUser, setSelectedUser] = useState<string | null>(null);
   const [selectedRole, setSelectedRole] = useState<string>("");
   const [selectedClient, setSelectedClient] = useState<string>("");
+  const [createDialogOpen, setCreateDialogOpen] = useState(false);
+  const [manageDialogOpen, setManageDialogOpen] = useState(false);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
 
   const { data: clientAccess } = useClientAccess(selectedUser || "");
 
   const availableRoles = ["admin", "manager", "sales", "viewer"];
+
+  // Get current user ID
+  useState(() => {
+    supabase.auth.getUser().then(({ data }) => {
+      if (data?.user) setCurrentUserId(data.user.id);
+    });
+  });
+
+  // Create user form
+  const createForm = useForm<z.infer<typeof createUserSchema>>({
+    resolver: zodResolver(createUserSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+  });
+
+  // Update user form
+  const updateForm = useForm<z.infer<typeof updateUserSchema>>({
+    resolver: zodResolver(updateUserSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const handleCreateUser = async (values: z.infer<typeof createUserSchema>) => {
+    await createUser.mutateAsync({
+      email: values.email,
+      password: values.password,
+    });
+    createForm.reset();
+    setCreateDialogOpen(false);
+  };
+
+  const handleUpdateUser = async (values: z.infer<typeof updateUserSchema>) => {
+    if (!selectedUser) return;
+    await updateUser.mutateAsync({
+      userId: selectedUser,
+      email: values.email || undefined,
+      password: values.password || undefined,
+    });
+    updateForm.reset();
+  };
+
+  const handleDeleteUser = async (userId: string) => {
+    await deleteUser.mutateAsync(userId);
+    setManageDialogOpen(false);
+  };
 
   const handleAssignRole = () => {
     if (selectedUser && selectedRole) {
@@ -64,11 +130,76 @@ export default function UserManagement() {
   return (
     <Layout>
       <div className="container mx-auto py-8 space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold">User Management</h1>
-          <p className="text-muted-foreground mt-2">
-            Manage user roles and client access permissions
-          </p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold">User Management</h1>
+            <p className="text-muted-foreground mt-2">
+              Manage user roles and client access permissions
+            </p>
+          </div>
+          
+          <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
+            <DialogTrigger asChild>
+              <Button>
+                <UserPlus className="h-4 w-4 mr-2" />
+                Create User
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Create New User</DialogTitle>
+                <DialogDescription>
+                  Add a new user to the system
+                </DialogDescription>
+              </DialogHeader>
+              <Form {...createForm}>
+                <form onSubmit={createForm.handleSubmit(handleCreateUser)} className="space-y-4">
+                  <FormField
+                    control={createForm.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input type="email" placeholder="user@example.com" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={createForm.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Password</FormLabel>
+                        <FormControl>
+                          <Input type="password" placeholder="Min 6 characters" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={createForm.control}
+                    name="confirmPassword"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Confirm Password</FormLabel>
+                        <FormControl>
+                          <Input type="password" placeholder="Re-enter password" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button type="submit" className="w-full" disabled={createUser.isPending}>
+                    {createUser.isPending ? "Creating..." : "Create User"}
+                  </Button>
+                </form>
+              </Form>
+            </DialogContent>
+          </Dialog>
         </div>
 
         <Card>
@@ -115,18 +246,29 @@ export default function UserManagement() {
                       {new Date(user.created_at).toLocaleDateString()}
                     </TableCell>
                     <TableCell>
-                      <Dialog>
-                        <DialogTrigger asChild>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => setSelectedUser(user.id)}
-                          >
-                            <Shield className="h-4 w-4 mr-2" />
-                            Manage
-                          </Button>
-                        </DialogTrigger>
-                        <DialogContent className="max-w-2xl">
+                      <div className="flex gap-2">
+                        <Dialog open={manageDialogOpen && selectedUser === user.id} onOpenChange={(open) => {
+                          setManageDialogOpen(open);
+                          if (!open) {
+                            setSelectedUser(null);
+                            updateForm.reset();
+                          }
+                        }}>
+                          <DialogTrigger asChild>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => {
+                                setSelectedUser(user.id);
+                                setManageDialogOpen(true);
+                                updateForm.reset();
+                              }}
+                            >
+                              <Shield className="h-4 w-4 mr-2" />
+                              Manage
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                           <DialogHeader>
                             <DialogTitle>Manage User: {user.email}</DialogTitle>
                             <DialogDescription>
@@ -135,6 +277,52 @@ export default function UserManagement() {
                           </DialogHeader>
                           
                           <div className="space-y-6">
+                            {/* Update Email/Password */}
+                            <div>
+                              <h3 className="text-sm font-medium mb-3">Update User Details</h3>
+                              <Form {...updateForm}>
+                                <form onSubmit={updateForm.handleSubmit(handleUpdateUser)} className="space-y-4">
+                                  <FormField
+                                    control={updateForm.control}
+                                    name="email"
+                                    render={({ field }) => (
+                                      <FormItem>
+                                        <FormLabel>
+                                          <Mail className="h-4 w-4 inline mr-2" />
+                                          New Email (optional)
+                                        </FormLabel>
+                                        <FormControl>
+                                          <Input type="email" placeholder="new@example.com" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                      </FormItem>
+                                    )}
+                                  />
+                                  <FormField
+                                    control={updateForm.control}
+                                    name="password"
+                                    render={({ field }) => (
+                                      <FormItem>
+                                        <FormLabel>
+                                          <Key className="h-4 w-4 inline mr-2" />
+                                          New Password (optional)
+                                        </FormLabel>
+                                        <FormControl>
+                                          <Input type="password" placeholder="Min 6 characters" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                      </FormItem>
+                                    )}
+                                  />
+                                  <Button type="submit" disabled={updateUser.isPending}>
+                                    {updateUser.isPending ? "Updating..." : "Update User"}
+                                  </Button>
+                                </form>
+                              </Form>
+                            </div>
+
+                            <Separator />
+
                             {/* Role Assignment */}
                             <div>
                               <h3 className="text-sm font-medium mb-3">Assign Role</h3>
@@ -213,9 +401,51 @@ export default function UserManagement() {
                                 )}
                               </div>
                             </div>
+
+                            <Separator />
+
+                            {/* Delete User */}
+                            <div>
+                              <h3 className="text-sm font-medium mb-3 text-destructive">Danger Zone</h3>
+                              <AlertDialog>
+                                <AlertDialogTrigger asChild>
+                                  <Button 
+                                    variant="destructive" 
+                                    disabled={user.id === currentUserId}
+                                  >
+                                    <Trash2 className="h-4 w-4 mr-2" />
+                                    Delete User
+                                  </Button>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent>
+                                  <AlertDialogHeader>
+                                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                      This action cannot be undone. This will permanently delete the user
+                                      <strong> {user.email}</strong> and remove all associated data including roles and client access.
+                                    </AlertDialogDescription>
+                                  </AlertDialogHeader>
+                                  <AlertDialogFooter>
+                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                    <AlertDialogAction
+                                      onClick={() => handleDeleteUser(user.id)}
+                                      className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                                    >
+                                      Delete User
+                                    </AlertDialogAction>
+                                  </AlertDialogFooter>
+                                </AlertDialogContent>
+                              </AlertDialog>
+                              {user.id === currentUserId && (
+                                <p className="text-xs text-muted-foreground mt-2">
+                                  You cannot delete your own account
+                                </p>
+                              )}
+                            </div>
                           </div>
                         </DialogContent>
                       </Dialog>
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))}
