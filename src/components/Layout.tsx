@@ -20,9 +20,9 @@ export const Layout = ({ children }: LayoutProps) => {
       <nav className="bg-card border-b border-border">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="flex items-center justify-between h-16">
-            <div className="font-heading font-bold text-foreground text-lg">
+            <Link to="/clients" className="font-heading font-bold text-foreground text-lg hover:text-primary transition-colors">
               AirSquared Intelligent Sales
-            </div>
+            </Link>
             <div className="flex gap-1">
               {navItems.map((item) => (
                 <Link
@@ -30,7 +30,7 @@ export const Layout = ({ children }: LayoutProps) => {
                   to={item.href}
                   className={cn(
                     "px-4 py-2 font-heading font-medium rounded-lg transition-all",
-                    location.pathname === item.href
+                    location.pathname === item.href || (item.href === "/clients" && location.pathname === "/")
                       ? "bg-primary text-white"
                       : "text-foreground hover:bg-primary hover:text-white"
                   )}
