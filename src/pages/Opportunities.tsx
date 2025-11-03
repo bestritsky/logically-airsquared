@@ -32,7 +32,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useOpportunities } from "@/hooks/useOpportunities";
 import { useClients } from "@/hooks/useClients";
-import { Loader2, MoreVertical, Mail, FileText, Trash2 } from "lucide-react";
+import { Loader2, MoreVertical, Mail, FileText, Trash2, Download } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -846,6 +846,67 @@ const Opportunities = () => {
     return `$${(amount / 1000).toFixed(0)}K`;
   };
 
+  const exportToCSV = () => {
+    if (!filteredOpportunities.length) {
+      toast.error("No opportunities to export");
+      return;
+    }
+
+    // Define CSV headers
+    const headers = [
+      "Opportunity Name",
+      "Client Name",
+      "Service Type",
+      "Description",
+      "Year 1 Revenue",
+      "Year 2 Revenue",
+      "Year 3 Revenue",
+      "Win Rate (%)",
+      "Timeline",
+      "Key Drivers"
+    ];
+
+    // Convert opportunities to CSV rows
+    const rows = filteredOpportunities.map(opp => {
+      const clientName = opp.clients?.name || clients?.find(c => c.id === opp.client_id)?.name || "Unknown Client";
+      const drivers = (opp.drivers || []).join("; ");
+      
+      return [
+        `"${opp.name}"`,
+        `"${clientName}"`,
+        `"${opp.service_type}"`,
+        `"${opp.description || ""}"`,
+        opp.year1_revenue || 0,
+        opp.year2_revenue || 0,
+        opp.year3_revenue || 0,
+        opp.win_rate || 0,
+        `"${opp.timeline || ""}"`,
+        `"${drivers}"`
+      ];
+    });
+
+    // Combine headers and rows
+    const csvContent = [
+      headers.join(","),
+      ...rows.map(row => row.join(","))
+    ].join("\n");
+
+    // Create blob and download
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    
+    link.setAttribute("href", url);
+    link.setAttribute("download", `opportunities-${selectedClientId === "all" ? "all-clients" : "client-" + selectedClientId}-${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = "hidden";
+    
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    toast.success(`Exported ${filteredOpportunities.length} opportunities to CSV`);
+  };
+
   return (
     <Layout>
       <div className="container mx-auto px-4 py-8 max-w-6xl">
@@ -895,45 +956,57 @@ const Opportunities = () => {
           </div>
         </header>
 
-        {/* Client Selector */}
+        {/* Client Selector and Export Button */}
         <div className="mb-6 bg-card rounded-lg p-6 shadow-sm border border-border">
-          <label className="block text-sm font-heading font-semibold text-foreground mb-2">
-            Filter by Client
-          </label>
-          <Select value={selectedClientId} onValueChange={setSelectedClientId}>
-            <SelectTrigger className="w-full md:w-96 bg-background">
-              <SelectValue placeholder="Select a client" />
-            </SelectTrigger>
-            <SelectContent className="bg-background z-50">
-              <SelectItem value="all" className="font-heading">
-                <span className="font-semibold">All Clients</span>
-                <span className="text-muted-foreground ml-2">
-                  (Top 10 Opportunities)
-                </span>
-              </SelectItem>
-              {clients.map((client) => (
-                <SelectItem
-                  key={client.id}
-                  value={client.id.toString()}
-                  className="font-heading"
-                >
-                  {client.name}
-                  <Badge
-                    className={cn(
-                      "ml-2 text-xs",
-                      client.tier === 1
-                        ? "bg-primary text-white"
-                        : client.tier === 2
-                        ? "bg-coral-dark text-white"
-                        : "bg-muted text-white"
-                    )}
-                  >
-                    Tier {client.tier}
-                  </Badge>
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+            <div className="flex-1">
+              <label className="block text-sm font-heading font-semibold text-foreground mb-2">
+                Filter by Client
+              </label>
+              <Select value={selectedClientId} onValueChange={setSelectedClientId}>
+                <SelectTrigger className="w-full md:w-96 bg-background">
+                  <SelectValue placeholder="Select a client" />
+                </SelectTrigger>
+                <SelectContent className="bg-background z-50">
+                  <SelectItem value="all" className="font-heading">
+                    <span className="font-semibold">All Clients</span>
+                    <span className="text-muted-foreground ml-2">
+                      (Top 10 Opportunities)
+                    </span>
+                  </SelectItem>
+                  {clients.map((client) => (
+                    <SelectItem
+                      key={client.id}
+                      value={client.id.toString()}
+                      className="font-heading"
+                    >
+                      {client.name}
+                      <Badge
+                        className={cn(
+                          "ml-2 text-xs",
+                          client.tier === 1
+                            ? "bg-primary text-white"
+                            : client.tier === 2
+                            ? "bg-coral-dark text-white"
+                            : "bg-muted text-white"
+                        )}
+                      >
+                        Tier {client.tier}
+                      </Badge>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <Button
+              onClick={exportToCSV}
+              variant="outline"
+              className="font-heading font-semibold"
+            >
+              <Download className="mr-2 h-4 w-4" />
+              Export to CSV
+            </Button>
+          </div>
         </div>
 
         {/* Opportunities Table */}
