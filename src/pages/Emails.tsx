@@ -8,6 +8,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { cn } from "@/lib/utils";
 import { EmailTemplateLibrary } from "@/components/EmailTemplateLibrary";
 import { FileText, Plus, Copy, Trash2, Eye } from "lucide-react";
+import { GeneratedEmailViewer } from "@/components/GeneratedEmailViewer";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -58,6 +59,7 @@ const Emails = () => {
   const [selectedClient, setSelectedClient] = useState<string>("all");
   const [templateLibraryOpen, setTemplateLibraryOpen] = useState(false);
   const [selectedEmail, setSelectedEmail] = useState<GeneratedEmail | null>(null);
+  const [viewerEmail, setViewerEmail] = useState<GeneratedEmail | null>(null);
   const queryClient = useQueryClient();
 
   const preSelectedClientId = searchParams.get("client");
@@ -361,6 +363,21 @@ const Emails = () => {
                               <Button
                                 variant="ghost"
                                 size="sm"
+                                onClick={() => setViewerEmail(email)}
+                              >
+                                <Eye className="w-4 h-4" />
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>View & Edit Email</TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                size="sm"
                                 onClick={() => handleCopyEmail(email)}
                               >
                                 <Copy className="w-4 h-4" />
@@ -441,6 +458,12 @@ const Emails = () => {
       <EmailTemplateLibrary
         open={templateLibraryOpen}
         onOpenChange={setTemplateLibraryOpen}
+      />
+
+      <GeneratedEmailViewer
+        email={viewerEmail}
+        open={!!viewerEmail}
+        onOpenChange={(open) => !open && setViewerEmail(null)}
       />
     </>
   );
