@@ -64,6 +64,16 @@ export const EmailTemplatePreview = ({
     setEditedBody(substituteVariables(template.body, variables));
   }, [variables, template]);
 
+  // Initialize contact fields from campaignData
+  useEffect(() => {
+    if (campaignData?.contactName) {
+      setContactName(campaignData.contactName);
+    }
+    if (campaignData?.contactEmail) {
+      setContactEmail(campaignData.contactEmail);
+    }
+  }, [campaignData]);
+
   const generatedSubject = editedSubject;
   const generatedBody = editedBody;
 
