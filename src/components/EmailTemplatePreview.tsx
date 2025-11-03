@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { EmailTemplate, InfluencePrinciple } from "@/data/emailTemplates";
 import { EmailVariableEditor } from "./EmailVariableEditor";
 import { Copy, Check } from "lucide-react";
@@ -13,6 +14,8 @@ import { toast } from "sonner";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useSaveGeneratedEmail } from "@/hooks/useSaveGeneratedEmail";
+import { useClients } from "@/hooks/useClients";
+import { useOpportunities } from "@/hooks/useOpportunities";
 
 interface EmailTemplatePreviewProps {
   template: EmailTemplate;
@@ -35,7 +38,17 @@ export const EmailTemplatePreview = ({
   const [copied, setCopied] = useState(false);
   const [editedSubject, setEditedSubject] = useState("");
   const [editedBody, setEditedBody] = useState("");
+  const [selectedClient, setSelectedClient] = useState<{ id: number; name: string } | undefined>(preSelectedClient);
+  const [selectedOpportunity, setSelectedOpportunity] = useState<{ id: string; name: string } | undefined>(preSelectedOpportunity);
+  
   const saveEmailMutation = useSaveGeneratedEmail();
+  const { data: clients } = useClients();
+  const { data: opportunities } = useOpportunities();
+
+  // Filter opportunities by selected client
+  const filteredOpportunities = opportunities?.filter(
+    opp => selectedClient && opp.client_id === selectedClient.id
+  );
 
   const substituteVariables = (text: string, vars: Record<string, string>) => {
     return text.replace(/\{(\w+)\}/g, (match, key) => vars[key] || match);
@@ -72,10 +85,26 @@ export const EmailTemplatePreview = ({
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const handleClientChange = (clientId: string) => {
+    const client = clients?.find(c => c.id === parseInt(clientId));
+    setSelectedClient(client ? { id: client.id, name: client.name } : undefined);
+    setSelectedOpportunity(undefined); // Reset opportunity when client changes
+  };
+
+  const handleOpportunityChange = (opportunityId: string) => {
+    const opportunity = filteredOpportunities?.find(o => o.id === opportunityId);
+    setSelectedOpportunity(opportunity ? { id: opportunity.id, name: opportunity.name } : undefined);
+  };
+
   const handleSaveEmail = async () => {
+    if (!selectedClient) {
+      toast.error("Please select a client");
+      return;
+    }
+
     await saveEmailMutation.mutateAsync({
-      clientId: preSelectedClient?.id || 0,
-      opportunityId: preSelectedOpportunity?.id,
+      clientId: selectedClient.id,
+      opportunityId: selectedOpportunity?.id,
       templateId: template.id,
       contactName: variables.contact_name || '',
       contactEmail: variables.contact_email || '',
@@ -106,6 +135,51 @@ export const EmailTemplatePreview = ({
           </div>
         </DialogHeader>
 
+        <div className="grid grid-cols-2 gap-4 pb-4 border-b">
+          <div className="space-y-2">
+            <Label htmlFor="client-select" className="text-sm font-medium">
+              Client <span className="text-destructive">*</span>
+            </Label>
+            <Select
+              value={selectedClient?.id.toString()}
+              onValueChange={handleClientChange}
+            >
+              <SelectTrigger id="client-select">
+                <SelectValue placeholder="Select a client..." />
+              </SelectTrigger>
+              <SelectContent>
+                {clients?.map(client => (
+                  <SelectItem key={client.id} value={client.id.toString()}>
+                    {client.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="opportunity-select" className="text-sm font-medium">
+              Opportunity (Optional)
+            </Label>
+            <Select
+              value={selectedOpportunity?.id}
+              onValueChange={handleOpportunityChange}
+              disabled={!selectedClient}
+            >
+              <SelectTrigger id="opportunity-select">
+                <SelectValue placeholder={selectedClient ? "Select an opportunity..." : "Select a client first"} />
+              </SelectTrigger>
+              <SelectContent>
+                {filteredOpportunities?.map(opp => (
+                  <SelectItem key={opp.id} value={opp.id}>
+                    {opp.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
         <div className="grid grid-cols-2 gap-6 flex-1 overflow-hidden">
           {/* Variable Editor */}
           <div className="space-y-4">
@@ -115,8 +189,8 @@ export const EmailTemplatePreview = ({
                 template={template}
                 variables={variables}
                 onVariablesChange={setVariables}
-                preSelectedClient={preSelectedClient}
-                preSelectedOpportunity={preSelectedOpportunity}
+                preSelectedClient={selectedClient}
+                preSelectedOpportunity={selectedOpportunity}
                 campaignData={campaignData}
               />
             </ScrollArea>
