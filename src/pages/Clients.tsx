@@ -357,6 +357,9 @@ const Clients = () => {
                         <DropdownMenuItem onClick={() => window.open(`/emails?client=${client.id}`, '_blank')}>
                           Emails
                         </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => console.log('Download', client.id)}>
+                          Download
+                        </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </td>
