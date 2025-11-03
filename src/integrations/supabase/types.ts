@@ -14,6 +14,35 @@ export type Database = {
   }
   public: {
     Tables: {
+      client_access: {
+        Row: {
+          client_id: number
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          client_id: number
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          client_id?: number
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_access_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       clients: {
         Row: {
           created_at: string
@@ -248,14 +277,42 @@ export type Database = {
           },
         ]
       }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
+      app_role: "admin" | "manager" | "sales" | "viewer"
       email_status: "Draft" | "Ready" | "Exported" | "Archived"
       influence_principle:
         | "Reciprocation"
@@ -393,6 +450,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      app_role: ["admin", "manager", "sales", "viewer"],
       email_status: ["Draft", "Ready", "Exported", "Archived"],
       influence_principle: [
         "Reciprocation",
