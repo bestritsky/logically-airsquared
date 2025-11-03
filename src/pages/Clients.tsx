@@ -370,7 +370,7 @@ const Clients = () => {
                         <Button 
                           variant="ghost" 
                           size="icon" 
-                          className="h-8 w-8"
+                          className="h-8 w-8 rounded-full border-2 border-coral-dark"
                           onClick={(e) => e.stopPropagation()}
                         >
                           <MoreVertical className="h-6 w-6 font-bold" strokeWidth={3} />
