@@ -72,10 +72,6 @@ export const EmailTemplatePreview = ({
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const hasAllRequiredVariables = template.variables
-    .filter(v => v.required)
-    .every(v => variables[v.key] && variables[v.key].trim() !== "");
-
   const handleSaveEmail = async () => {
     if (!preSelectedClient) {
       toast.error("Please select a client first");
@@ -198,7 +194,7 @@ export const EmailTemplatePreview = ({
           </Button>
           <Button
             onClick={handleSaveEmail}
-            disabled={!hasAllRequiredVariables || saveEmailMutation.isPending}
+            disabled={saveEmailMutation.isPending}
           >
             {saveEmailMutation.isPending ? "Saving..." : "Save Email"}
           </Button>

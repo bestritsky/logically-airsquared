@@ -227,7 +227,7 @@ export const EmailVariableEditor = ({
       {/* Progress Bar */}
       <div className="space-y-2 mb-4">
         <div className="flex justify-between text-sm">
-          <span className="text-muted-foreground">Required Fields</span>
+          <span className="text-muted-foreground">Suggested Fields</span>
           <span className="font-medium">
             {filledRequiredFields.length} / {requiredFields.length}
           </span>
@@ -235,10 +235,10 @@ export const EmailVariableEditor = ({
         <Progress value={progress} className="h-2" />
         {progress === 100 ? (
           <p className="text-xs text-green-600 dark:text-green-400">
-            ✓ All required fields completed!
+            ✓ All suggested fields completed!
           </p>
         ) : (
-          <p className="text-xs text-amber-600 dark:text-amber-400">
+          <p className="text-xs text-muted-foreground">
             {requiredFields.length - filledRequiredFields.length} field(s) remaining
           </p>
         )}
@@ -262,17 +262,12 @@ export const EmailVariableEditor = ({
         return (
           <div 
             key={variable.key} 
-            className={`space-y-2 ${showWarning ? 'ring-2 ring-amber-500/50 rounded-lg p-3 -m-3' : ''}`}
+            className="space-y-2"
           >
             <Label htmlFor={variable.key} className="text-sm font-medium">
               {variable.label}
               {variable.required && (
-                <span className="text-destructive ml-1">*</span>
-              )}
-              {showWarning && (
-                <span className="text-xs text-amber-600 dark:text-amber-400 ml-2">
-                  (Required - please fill)
-                </span>
+                <span className="text-muted-foreground ml-1 text-xs">(suggested)</span>
               )}
             </Label>
             {renderInput(variable)}
