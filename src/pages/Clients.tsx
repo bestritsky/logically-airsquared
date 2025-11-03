@@ -127,6 +127,54 @@ const Clients = () => {
     }
   };
 
+  const handleExportCSV = () => {
+    if (!clients || clients.length === 0) {
+      toast({
+        variant: "destructive",
+        title: "No data to export",
+        description: "There are no clients to export.",
+      });
+      return;
+    }
+
+    // CSV headers
+    const headers = ["Client Name", "Tier", "Sector", "Deal Size", "Status", "Timeline", "Location", "Win Rate"];
+    
+    // CSV rows
+    const rows = filteredClients.map(client => [
+      client.name,
+      `Tier ${client.tier}`,
+      client.sector,
+      client.deal_size || "N/A",
+      client.status,
+      client.timeline,
+      client.location,
+      client.status === "Existing" ? "N/A" : `${client.win_rate || 0}%`
+    ]);
+
+    // Create CSV content
+    const csvContent = [
+      headers.join(","),
+      ...rows.map(row => row.map(cell => `"${cell}"`).join(","))
+    ].join("\n");
+
+    // Create blob and download
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", `clients_export_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    toast({
+      title: "Export successful",
+      description: `Exported ${filteredClients.length} clients to CSV.`,
+    });
+  };
+
   const sectors = ["all", "Government", "Healthcare", "Financial", "Other"];
   
   const filteredClients = selectedSector === "all" 
@@ -173,12 +221,24 @@ const Clients = () => {
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Header */}
         <header className="bg-gradient-to-br from-primary to-coral-dark rounded-lg p-8 mb-8 shadow-sm">
-          <h1 className="text-4xl font-heading font-bold text-white mb-2">
-            CLIENTS
-          </h1>
-          <p className="text-white/90 text-lg font-mono mb-6">
-            Strategic Account Management Dashboard
-          </p>
+          <div className="flex items-start justify-between mb-6">
+            <div>
+              <h1 className="text-4xl font-heading font-bold text-white mb-2">
+                CLIENTS
+              </h1>
+              <p className="text-white/90 text-lg font-mono">
+                Strategic Account Management Dashboard
+              </p>
+            </div>
+            <Button
+              onClick={handleExportCSV}
+              variant="secondary"
+              className="bg-white/10 hover:bg-white/20 text-white border-white/20"
+            >
+              <Download className="w-4 h-4 mr-2" />
+              Export to CSV
+            </Button>
+          </div>
 
           {/* Meta Cards */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
