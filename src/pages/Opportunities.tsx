@@ -15,6 +15,16 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -22,7 +32,10 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useOpportunities } from "@/hooks/useOpportunities";
 import { useClients } from "@/hooks/useClients";
-import { Loader2, MoreVertical, Mail, FileText } from "lucide-react";
+import { Loader2, MoreVertical, Mail, FileText, Trash2 } from "lucide-react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 interface Opportunity {
   id: string;
@@ -697,12 +710,44 @@ const Opportunities = () => {
   const [selectedOppForEmail, setSelectedOppForEmail] = useState<any>(null);
   const [contactName, setContactName] = useState("");
   const [contactEmail, setContactEmail] = useState("");
+  const [opportunityToDelete, setOpportunityToDelete] = useState<string | null>(null);
   const { data: opportunities, isLoading, error } = useOpportunities();
   const { data: clients } = useClients();
+  const queryClient = useQueryClient();
+
+
+  // Delete opportunity mutation
+  const deleteMutation = useMutation({
+    mutationFn: async (opportunityId: string) => {
+      const { error } = await supabase
+        .from("opportunities")
+        .delete()
+        .eq("id", opportunityId);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["opportunities"] });
+      toast.success("Opportunity deleted successfully");
+      setOpportunityToDelete(null);
+    },
+    onError: (error: any) => {
+      toast.error(error.message || "Failed to delete opportunity");
+    },
+  });
 
   const handleGenerateEmail = (opp: any, clientName: string) => {
     setSelectedOppForEmail({ ...opp, clientName });
     setContactDialogOpen(true);
+  };
+
+  const handleDeleteOpportunity = (opportunityId: string) => {
+    setOpportunityToDelete(opportunityId);
+  };
+
+  const confirmDelete = () => {
+    if (opportunityToDelete) {
+      deleteMutation.mutate(opportunityToDelete);
+    }
   };
 
   const handleConfirmContact = () => {
@@ -1032,6 +1077,16 @@ const Opportunities = () => {
                             <FileText className="mr-2 h-4 w-4" />
                             View Client
                           </DropdownMenuItem>
+                          <DropdownMenuItem 
+                            className="font-bold text-destructive"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDeleteOpportunity(opp.id);
+                            }}
+                          >
+                            <Trash2 className="mr-2 h-4 w-4" />
+                            Delete Opportunity
+                          </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </td>
@@ -1097,6 +1152,30 @@ const Opportunities = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <AlertDialog open={!!opportunityToDelete} onOpenChange={(open) => !open && setOpportunityToDelete(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              <Trash2 className="w-5 h-5 text-destructive" />
+              Delete Opportunity
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-base">
+              Are you sure you want to delete this opportunity? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={confirmDelete}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              <Trash2 className="w-4 h-4 mr-2" />
+              Delete Opportunity
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Layout>
   );
 };
