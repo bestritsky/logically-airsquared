@@ -372,6 +372,13 @@ const Emails = () => {
             >
               Exported
             </Button>
+            <Button
+              variant={selectedFilter === "Archived" ? "default" : "outline"}
+              onClick={() => setSelectedFilter("Archived")}
+              size="sm"
+            >
+              Archived
+            </Button>
           </div>
         </div>
 
