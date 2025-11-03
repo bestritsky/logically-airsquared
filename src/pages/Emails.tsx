@@ -421,9 +421,20 @@ const Emails = () => {
                       </Badge>
                     </td>
                     <td className="px-4 py-4">
-                      <Badge className={getStatusBadgeClass(email.status)}>
-                        {email.status}
-                      </Badge>
+                      <Select
+                        value={email.status}
+                        onValueChange={(value: EmailStatus) => updateStatusMutation.mutate({ emailId: email.id, status: value })}
+                      >
+                        <SelectTrigger className={`w-[130px] ${getStatusBadgeClass(email.status)}`}>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Draft">Draft</SelectItem>
+                          <SelectItem value="Ready">Ready</SelectItem>
+                          <SelectItem value="Exported">Exported</SelectItem>
+                          <SelectItem value="Archived">Archived</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </td>
                     <td className="px-4 py-4 text-sm text-muted-foreground">
                       {format(new Date(email.created_at), "MMM d, yyyy")}
