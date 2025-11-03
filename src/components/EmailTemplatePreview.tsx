@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -34,6 +35,7 @@ export const EmailTemplatePreview = ({
   preSelectedOpportunity,
   campaignData,
 }: EmailTemplatePreviewProps) => {
+  const navigate = useNavigate();
   const [variables, setVariables] = useState<Record<string, string>>({});
   const [copied, setCopied] = useState(false);
   const [editedSubject, setEditedSubject] = useState("");
@@ -115,6 +117,7 @@ export const EmailTemplatePreview = ({
     });
     
     onOpenChange(false);
+    navigate('/emails');
   };
 
   return (
