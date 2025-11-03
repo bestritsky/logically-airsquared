@@ -73,22 +73,12 @@ export const EmailTemplatePreview = ({
   };
 
   const handleSaveEmail = async () => {
-    if (!preSelectedClient) {
-      toast.error("Please select a client first");
-      return;
-    }
-
-    if (!variables.contact_name || !variables.contact_email) {
-      toast.error("Contact name and email are required");
-      return;
-    }
-
     await saveEmailMutation.mutateAsync({
-      clientId: preSelectedClient.id,
+      clientId: preSelectedClient?.id || 0,
       opportunityId: preSelectedOpportunity?.id,
       templateId: template.id,
-      contactName: variables.contact_name,
-      contactEmail: variables.contact_email,
+      contactName: variables.contact_name || '',
+      contactEmail: variables.contact_email || '',
       subject: editedSubject,
       body: editedBody,
       influencePrinciple: template.influencePrinciple,
