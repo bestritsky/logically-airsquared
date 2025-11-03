@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { LogOut } from "lucide-react";
+import { useState, useEffect } from "react";
+import { User } from "@supabase/supabase-js";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -13,6 +15,21 @@ export const Layout = ({ children }: LayoutProps) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    // Get current user
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setUser(user);
+    });
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const navItems = [
     { href: "/clients", label: "Clients" },
@@ -70,7 +87,7 @@ export const Layout = ({ children }: LayoutProps) => {
                 className="ml-2"
               >
                 <LogOut className="h-4 w-4 mr-2" />
-                Logout
+                {user?.email || "Logout"}
               </Button>
             </div>
           </div>
