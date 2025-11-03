@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 
 interface Client {
   id: number;
@@ -184,26 +185,40 @@ const clientData: Client[] = [
 const Clients = () => {
   const navigate = useNavigate();
   const [selectedSector, setSelectedSector] = useState<string>("all");
+  const { toast } = useToast();
 
-  const handleDownload = (clientId: number, clientName: string) => {
-    // Map client IDs to their PDF files
+  const handleDownload = async (clientId: number, clientName: string) => {
     const pdfMap: { [key: number]: string } = {
-      1: '/MECKLENBURG COUNTY.pdf',
-      4: '/GASTON COUNTY GOVERNMENT.pdf',
-      2: '/MAPLEWOOD SENIOR LIVING & INSPĪR.pdf',
+      1: 'MECKLENBURG COUNTY.pdf',
+      4: 'GASTON COUNTY GOVERNMENT.pdf',
+      2: 'MAPLEWOOD SENIOR LIVING & INSPĪR.pdf',
     };
 
-    const pdfPath = pdfMap[clientId];
-    if (pdfPath) {
-      // Encode the URL to handle spaces and special characters
-      const encodedPath = encodeURI(pdfPath);
-      const link = document.createElement('a');
-      link.href = encodedPath;
-      link.download = `${clientName}.pdf`;
-      link.target = '_blank';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+    const fileName = pdfMap[clientId];
+    if (fileName) {
+      const href = `${import.meta.env.BASE_URL}${encodeURIComponent(fileName)}`;
+      try {
+        const res = await fetch(href);
+        if (!res.ok) throw new Error('File not found');
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `${clientName}.pdf`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      } catch (error) {
+        console.error('Download failed:', error);
+        // Fallback: open in new tab
+        window.open(href, '_blank');
+        toast?.({
+          variant: 'destructive',
+          title: 'Download failed',
+          description: 'Unable to download file. Opened in a new tab instead.',
+        });
+      }
     }
   };
 
