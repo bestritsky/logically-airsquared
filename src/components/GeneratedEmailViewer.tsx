@@ -262,6 +262,16 @@ export const GeneratedEmailViewer = ({
 
             {/* Right Column - Metadata */}
             <div className="space-y-4">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleCopy}
+                className="w-full"
+              >
+                <Copy className="w-4 h-4 mr-2" />
+                Copy to Clipboard
+              </Button>
+
               <div className="bg-muted/30 p-4 rounded-lg space-y-3">
                 <div>
                   <h4 className="text-sm font-semibold mb-2">Contact Information</h4>
@@ -318,19 +328,6 @@ export const GeneratedEmailViewer = ({
                     <div className="text-muted-foreground">No variables used</div>
                   )}
                 </div>
-              </div>
-
-              <div className="space-y-3">
-                <h4 className="text-sm font-semibold mb-3">Quick Actions</h4>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleCopy}
-                  className="w-full justify-start"
-                >
-                  <Copy className="w-4 h-4 mr-2" />
-                  Copy to Clipboard
-                </Button>
               </div>
             </div>
           </div>
