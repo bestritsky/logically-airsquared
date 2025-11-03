@@ -232,7 +232,7 @@ P.S. All three platforms mentioned you're the team to beat in the {industry} spa
   },
   {
     id: "tmpl-authority-001",
-    name: "Published Research Findings",
+    name: "New Email",
     influencePrinciple: "Authority",
     useCase: "First Contact",
     subject: "[Research] Why {industry} platforms fail at {challenge}",
