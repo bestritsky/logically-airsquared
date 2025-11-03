@@ -202,9 +202,9 @@ export const GeneratedEmailViewer = ({
   if (!email) return null;
 
   const hasUnsavedChanges =
-    editedSubject !== email.subject ||
-    editedBody !== email.body ||
-    editedNotes !== (email.notes || "");
+    editedSubject.trim() !== email.subject.trim() ||
+    editedBody.trim() !== email.body.trim() ||
+    (editedNotes.trim() || null) !== email.notes;
 
   return (
     <>
