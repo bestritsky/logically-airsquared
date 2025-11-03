@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { MoreVertical, Loader2, Mail } from "lucide-react";
+import { MoreVertical, Loader2, Mail, FileText, Target, Download } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -260,9 +260,11 @@ const Clients = () => {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                           <DropdownMenuItem className="font-bold" onClick={() => window.open(`/clients/${client.id}`, '_blank')}>
+                            <FileText className="mr-2 h-4 w-4" />
                             Details
                           </DropdownMenuItem>
                           <DropdownMenuItem className="font-bold" onClick={() => window.open(`/opportunities?client=${client.id}`, '_blank')}>
+                            <Target className="mr-2 h-4 w-4" />
                             Opportunities
                           </DropdownMenuItem>
                           <DropdownMenuItem className="font-bold" onClick={(e) => {
@@ -276,6 +278,7 @@ const Clients = () => {
                             e.stopPropagation();
                             handleDownload(client.id, client.name);
                           }}>
+                            <Download className="mr-2 h-4 w-4" />
                             Download
                           </DropdownMenuItem>
                         </DropdownMenuContent>
