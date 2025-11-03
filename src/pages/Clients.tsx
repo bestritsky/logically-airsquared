@@ -307,7 +307,7 @@ const Clients = () => {
                     onClick={() => navigate(`/clients/${client.id}`)}
                     className={cn(
                       "border-b border-border hover:bg-primary/5 transition-colors cursor-pointer",
-                      hasDetailedData && "border-l-4 border-l-orange-500"
+                      hasDetailedData && "border-l-4 border-l-green-500"
                     )}
                   >
                     <td className="px-4 py-4">
