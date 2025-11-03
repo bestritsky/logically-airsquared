@@ -9,6 +9,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,7 +22,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useOpportunities } from "@/hooks/useOpportunities";
 import { useClients } from "@/hooks/useClients";
-import { Loader2 } from "lucide-react";
+import { Loader2, MoreVertical, Mail, FileText } from "lucide-react";
 
 interface Opportunity {
   id: string;
@@ -911,6 +917,9 @@ const Opportunities = () => {
                 <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">
                   Key Drivers
                 </th>
+                <th className="px-4 py-3 text-right font-heading font-semibold text-sm text-foreground">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -920,17 +929,16 @@ const Opportunities = () => {
                 return (
                   <tr
                     key={opp.id}
-                    onClick={() => handleGenerateEmail(opp, clientName)}
-                    className="border-b border-border hover:bg-primary/5 transition-colors cursor-pointer"
+                    className="border-b border-border hover:bg-primary/5 transition-colors"
                   >
-                    <td className="px-4 py-4">
-                      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                    <td className="px-4 py-4" onClick={() => handleGenerateEmail(opp, clientName)}>
+                      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center cursor-pointer">
                         <span className="font-heading font-bold text-primary text-sm">
                           {index + 1}
                         </span>
                       </div>
                     </td>
-                    <td className="px-4 py-4">
+                    <td className="px-4 py-4 cursor-pointer" onClick={() => handleGenerateEmail(opp, clientName)}>
                       <div className="font-heading font-semibold text-foreground">
                         {opp.name}
                       </div>
@@ -943,7 +951,7 @@ const Opportunities = () => {
                         </div>
                       )}
                     </td>
-                    <td className="px-4 py-4">
+                    <td className="px-4 py-4 cursor-pointer" onClick={() => handleGenerateEmail(opp, clientName)}>
                       <Badge
                         variant="outline"
                         className={cn(
@@ -954,13 +962,13 @@ const Opportunities = () => {
                         {opp.service_type}
                       </Badge>
                     </td>
-                    <td className="px-4 py-4">
+                    <td className="px-4 py-4 cursor-pointer" onClick={() => handleGenerateEmail(opp, clientName)}>
                       <div className="font-mono text-sm font-semibold text-foreground whitespace-nowrap">
                         {formatCurrency(opp.year1_revenue || 0)} → {formatCurrency(opp.year2_revenue || 0)}{" "}
                         → {formatCurrency(opp.year3_revenue || 0)}
                       </div>
                     </td>
-                    <td className="px-4 py-4">
+                    <td className="px-4 py-4 cursor-pointer" onClick={() => handleGenerateEmail(opp, clientName)}>
                       <div className="flex items-center gap-2">
                         <div className="w-24 h-2 bg-muted/30 rounded-full overflow-hidden">
                           <div
@@ -973,12 +981,12 @@ const Opportunities = () => {
                         </span>
                       </div>
                     </td>
-                    <td className="px-4 py-4">
+                    <td className="px-4 py-4 cursor-pointer" onClick={() => handleGenerateEmail(opp, clientName)}>
                       <div className="font-mono text-sm text-foreground whitespace-nowrap">
                         {opp.timeline}
                       </div>
                     </td>
-                    <td className="px-4 py-4">
+                    <td className="px-4 py-4 cursor-pointer" onClick={() => handleGenerateEmail(opp, clientName)}>
                       <ul className="space-y-1">
                         {(opp.drivers || []).slice(0, 4).map((driver, idx) => (
                           <li
@@ -990,6 +998,42 @@ const Opportunities = () => {
                           </li>
                         ))}
                       </ul>
+                    </td>
+                    <td className="px-4 py-4">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button 
+                            variant="ghost" 
+                            size="icon" 
+                            className="h-8 w-8 rounded-full border-2 border-black dark:border-white"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <MoreVertical className="h-6 w-6 font-bold" strokeWidth={3} />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem 
+                            className="font-bold" 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleGenerateEmail(opp, clientName);
+                            }}
+                          >
+                            <Mail className="mr-2 h-4 w-4" />
+                            Generate Email
+                          </DropdownMenuItem>
+                          <DropdownMenuItem 
+                            className="font-bold"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate(`/clients/${opp.client_id}`);
+                            }}
+                          >
+                            <FileText className="mr-2 h-4 w-4" />
+                            View Client
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </td>
                   </tr>
                 );
