@@ -308,52 +308,52 @@ export const GeneratedEmailViewer = ({
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <h4 className="text-sm font-semibold">Quick Actions</h4>
-                <div className="flex flex-col gap-2">
-                  {email.status === "Draft" && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => statusMutation.mutate("Ready")}
-                      disabled={statusMutation.isPending}
-                    >
-                      Mark as Ready
-                    </Button>
-                  )}
-                  {email.status === "Ready" && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => statusMutation.mutate("Exported")}
-                      disabled={statusMutation.isPending}
-                    >
-                      Mark as Exported
-                    </Button>
-                  )}
+              <div className="space-y-3">
+                <h4 className="text-sm font-semibold mb-3">Quick Actions</h4>
+                {email.status === "Draft" && (
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={handleCopy}
+                    onClick={() => statusMutation.mutate("Ready")}
+                    disabled={statusMutation.isPending}
+                    className="w-full justify-start"
                   >
-                    <Copy className="w-4 h-4 mr-2" />
-                    Copy to Clipboard
+                    Mark as Ready
                   </Button>
-                </div>
+                )}
+                {email.status === "Ready" && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => statusMutation.mutate("Exported")}
+                    disabled={statusMutation.isPending}
+                    className="w-full justify-start"
+                  >
+                    Mark as Exported
+                  </Button>
+                )}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleCopy}
+                  className="w-full justify-start"
+                >
+                  <Copy className="w-4 h-4 mr-2" />
+                  Copy to Clipboard
+                </Button>
               </div>
             </div>
           </div>
 
-          <DialogFooter className="flex items-center justify-between">
+          <DialogFooter className="flex-row items-center justify-between gap-3 pt-6 border-t">
             <Button
               variant="destructive"
-              size="sm"
               onClick={() => setShowDeleteDialog(true)}
             >
               <Trash2 className="w-4 h-4 mr-2" />
               Delete
             </Button>
-            <div className="flex gap-2">
+            <div className="flex gap-2 ml-auto">
               <Button variant="outline" onClick={() => onOpenChange(false)}>
                 Close
               </Button>
