@@ -11,7 +11,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
+import mecklenburgPdf from "@/assets/mecklenburg-county.pdf";
+import gastonPdf from "@/assets/gaston-county-government.pdf";
+import maplewoodPdf from "@/assets/maplewood-senior-living-inspir.pdf";
 
 interface Client {
   id: number;
@@ -187,38 +190,27 @@ const Clients = () => {
   const [selectedSector, setSelectedSector] = useState<string>("all");
   const { toast } = useToast();
 
-  const handleDownload = async (clientId: number, clientName: string) => {
+  const handleDownload = (clientId: number, clientName: string) => {
     const pdfMap: { [key: number]: string } = {
-      1: 'MECKLENBURG COUNTY.pdf',
-      4: 'GASTON COUNTY GOVERNMENT.pdf',
-      2: 'MAPLEWOOD SENIOR LIVING & INSPĪR.pdf',
+      1: mecklenburgPdf,
+      4: gastonPdf,
+      2: maplewoodPdf,
     };
 
-    const fileName = pdfMap[clientId];
-    if (fileName) {
-      const href = `${import.meta.env.BASE_URL}${encodeURIComponent(fileName)}`;
-      try {
-        const res = await fetch(href);
-        if (!res.ok) throw new Error('File not found');
-        const blob = await res.blob();
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `${clientName}.pdf`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
-      } catch (error) {
-        console.error('Download failed:', error);
-        // Fallback: open in new tab
-        window.open(href, '_blank');
-        toast?.({
-          variant: 'destructive',
-          title: 'Download failed',
-          description: 'Unable to download file. Opened in a new tab instead.',
-        });
-      }
+    const url = pdfMap[clientId];
+    if (url) {
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${clientName}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else {
+      toast?.({
+        variant: 'destructive',
+        title: 'File not available',
+        description: 'No PDF is configured for this client.',
+      });
     }
   };
 
