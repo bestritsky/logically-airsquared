@@ -185,6 +185,25 @@ const Clients = () => {
   const navigate = useNavigate();
   const [selectedSector, setSelectedSector] = useState<string>("all");
 
+  const handleDownload = (clientId: number, clientName: string) => {
+    // Map client IDs to their PDF files
+    const pdfMap: { [key: number]: string } = {
+      1: '/MECKLENBURG COUNTY.pdf',
+      4: '/GASTON COUNTY GOVERNMENT.pdf',
+      2: '/MAPLEWOOD SENIOR LIVING & INSPĪR.pdf',
+    };
+
+    const pdfPath = pdfMap[clientId];
+    if (pdfPath) {
+      const link = document.createElement('a');
+      link.href = pdfPath;
+      link.download = `${clientName}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  };
+
   const sectors = ["all", "Government", "Healthcare", "Financial", "Other"];
   
   const filteredClients = selectedSector === "all" 
@@ -357,7 +376,10 @@ const Clients = () => {
                         <DropdownMenuItem onClick={() => window.open(`/emails?client=${client.id}`, '_blank')}>
                           Emails
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => console.log('Download', client.id)}>
+                        <DropdownMenuItem onClick={(e) => {
+                          e.stopPropagation();
+                          handleDownload(client.id, client.name);
+                        }}>
                           Download
                         </DropdownMenuItem>
                       </DropdownMenuContent>
