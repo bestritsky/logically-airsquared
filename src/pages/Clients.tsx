@@ -265,9 +265,6 @@ const Clients = () => {
                           <DropdownMenuItem className="font-bold" onClick={() => window.open(`/opportunities?client=${client.id}`, '_blank')}>
                             Opportunities
                           </DropdownMenuItem>
-                          <DropdownMenuItem className="font-bold" onClick={() => window.open(`/emails?client=${client.id}`, '_blank')}>
-                            Emails
-                          </DropdownMenuItem>
                           <DropdownMenuItem className="font-bold" onClick={(e) => {
                             e.stopPropagation();
                             handleGenerateEmail(client);
