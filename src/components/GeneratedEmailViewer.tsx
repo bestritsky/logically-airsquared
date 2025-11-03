@@ -322,28 +322,6 @@ export const GeneratedEmailViewer = ({
 
               <div className="space-y-3">
                 <h4 className="text-sm font-semibold mb-3">Quick Actions</h4>
-                {email.status === "Draft" && (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => statusMutation.mutate("Ready")}
-                    disabled={statusMutation.isPending}
-                    className="w-full justify-start"
-                  >
-                    Mark as Ready
-                  </Button>
-                )}
-                {email.status === "Ready" && (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => statusMutation.mutate("Exported")}
-                    disabled={statusMutation.isPending}
-                    className="w-full justify-start"
-                  >
-                    Mark as Exported
-                  </Button>
-                )}
                 <Button
                   variant="outline"
                   size="sm"
