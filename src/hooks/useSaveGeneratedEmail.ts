@@ -47,7 +47,7 @@ export const useSaveGeneratedEmail = () => {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["generatedEmails"] });
+      queryClient.invalidateQueries({ queryKey: ["generated-emails"] });
       toast.success("Email saved successfully!");
     },
     onError: (error: Error) => {
