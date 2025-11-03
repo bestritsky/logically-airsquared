@@ -29,6 +29,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useClients } from "@/hooks/useClients";
 import { useOpportunities } from "@/hooks/useOpportunities";
+import { getClientIntelligence } from "@/data/clientIntelligenceLoader";
 import mecklenburgPdf from "@/assets/mecklenburg-county.pdf";
 import gastonPdf from "@/assets/gaston-county-government.pdf";
 import maplewoodPdf from "@/assets/maplewood-senior-living-inspir.pdf";
@@ -298,12 +299,16 @@ const Clients = () => {
             <tbody>
               {filteredClients.map((client, index) => {
                 const clientOpportunities = opportunities?.filter(opp => opp.client_id === client.id) || [];
+                const hasDetailedData = getClientIntelligence(client.id) !== null;
                 
                 return (
                   <tr 
                     key={client.id}
                     onClick={() => navigate(`/clients/${client.id}`)}
-                    className="border-b border-border hover:bg-primary/5 transition-colors cursor-pointer"
+                    className={cn(
+                      "border-b border-border hover:bg-primary/5 transition-colors cursor-pointer",
+                      hasDetailedData && "border-l-4 border-l-orange-500"
+                    )}
                   >
                     <td className="px-4 py-4">
                       <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
