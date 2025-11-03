@@ -14,7 +14,119 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      email_templates: {
+        Row: {
+          body_template: string
+          created_at: string
+          id: string
+          influence_principle: Database["public"]["Enums"]["influence_principle"]
+          is_active: boolean
+          name: string
+          psychology_explanation: string
+          subject_template: string
+          success_rate: number | null
+          updated_at: string
+          use_case: string
+          variables_schema: Json
+          when_to_use: string | null
+        }
+        Insert: {
+          body_template: string
+          created_at?: string
+          id?: string
+          influence_principle: Database["public"]["Enums"]["influence_principle"]
+          is_active?: boolean
+          name: string
+          psychology_explanation: string
+          subject_template: string
+          success_rate?: number | null
+          updated_at?: string
+          use_case: string
+          variables_schema?: Json
+          when_to_use?: string | null
+        }
+        Update: {
+          body_template?: string
+          created_at?: string
+          id?: string
+          influence_principle?: Database["public"]["Enums"]["influence_principle"]
+          is_active?: boolean
+          name?: string
+          psychology_explanation?: string
+          subject_template?: string
+          success_rate?: number | null
+          updated_at?: string
+          use_case?: string
+          variables_schema?: Json
+          when_to_use?: string | null
+        }
+        Relationships: []
+      }
+      generated_emails: {
+        Row: {
+          body: string
+          client_id: number
+          contact_email: string
+          contact_name: string
+          created_at: string
+          created_by: string | null
+          exported_at: string | null
+          id: string
+          influence_principle: Database["public"]["Enums"]["influence_principle"]
+          notes: string | null
+          opportunity_id: string | null
+          status: Database["public"]["Enums"]["email_status"]
+          subject: string
+          template_id: string | null
+          template_variables: Json
+          updated_at: string
+        }
+        Insert: {
+          body: string
+          client_id: number
+          contact_email: string
+          contact_name: string
+          created_at?: string
+          created_by?: string | null
+          exported_at?: string | null
+          id?: string
+          influence_principle: Database["public"]["Enums"]["influence_principle"]
+          notes?: string | null
+          opportunity_id?: string | null
+          status?: Database["public"]["Enums"]["email_status"]
+          subject: string
+          template_id?: string | null
+          template_variables?: Json
+          updated_at?: string
+        }
+        Update: {
+          body?: string
+          client_id?: number
+          contact_email?: string
+          contact_name?: string
+          created_at?: string
+          created_by?: string | null
+          exported_at?: string | null
+          id?: string
+          influence_principle?: Database["public"]["Enums"]["influence_principle"]
+          notes?: string | null
+          opportunity_id?: string | null
+          status?: Database["public"]["Enums"]["email_status"]
+          subject?: string
+          template_id?: string | null
+          template_variables?: Json
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "generated_emails_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "email_templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +135,16 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      email_status: "Draft" | "Ready" | "Exported" | "Archived"
+      influence_principle:
+        | "Reciprocation"
+        | "Liking"
+        | "Social Proof"
+        | "Authority"
+        | "Scarcity"
+        | "Commitment/Consistency"
+        | "Unity"
+        | "Instant Influence"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +271,18 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      email_status: ["Draft", "Ready", "Exported", "Archived"],
+      influence_principle: [
+        "Reciprocation",
+        "Liking",
+        "Social Proof",
+        "Authority",
+        "Scarcity",
+        "Commitment/Consistency",
+        "Unity",
+        "Instant Influence",
+      ],
+    },
   },
 } as const
