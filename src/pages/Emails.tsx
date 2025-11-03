@@ -5,6 +5,16 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { cn } from "@/lib/utils";
 import { EmailTemplateLibrary } from "@/components/EmailTemplateLibrary";
 import { FileText, Plus, Copy, Trash2, Eye, Mail } from "lucide-react";
@@ -65,6 +75,7 @@ const Emails = () => {
   const [campaignData, setCampaignData] = useState<any>(null);
   const [selectedEmail, setSelectedEmail] = useState<GeneratedEmail | null>(null);
   const [viewerEmail, setViewerEmail] = useState<GeneratedEmail | null>(null);
+  const [emailToDelete, setEmailToDelete] = useState<string | null>(null);
   const queryClient = useQueryClient();
 
   const preSelectedClientId = searchParams.get("client");
@@ -249,8 +260,13 @@ const Emails = () => {
   };
 
   const handleDelete = (emailId: string) => {
-    if (confirm("Are you sure you want to delete this email?")) {
-      deleteMutation.mutate(emailId);
+    setEmailToDelete(emailId);
+  };
+
+  const confirmDelete = () => {
+    if (emailToDelete) {
+      deleteMutation.mutate(emailToDelete);
+      setEmailToDelete(null);
     }
   };
 
@@ -538,6 +554,30 @@ const Emails = () => {
         open={!!viewerEmail}
         onOpenChange={(open) => !open && setViewerEmail(null)}
       />
+
+      <AlertDialog open={!!emailToDelete} onOpenChange={(open) => !open && setEmailToDelete(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              <Trash2 className="w-5 h-5 text-destructive" />
+              Delete Email
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-base">
+              Are you sure you want to delete this email? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={confirmDelete}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              <Trash2 className="w-4 h-4 mr-2" />
+              Delete Email
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 };
