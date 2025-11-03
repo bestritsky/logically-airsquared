@@ -760,7 +760,7 @@ const Opportunities = () => {
         {/* Header */}
         <header className="bg-gradient-to-br from-primary to-coral-dark rounded-lg p-8 mb-8 shadow-sm">
           <h1 className="text-4xl font-heading font-bold text-white mb-2">
-            OPPORTUNITIES PIPELINE
+            OPPORTUNITIES
           </h1>
           <p className="text-white/90 text-lg font-mono mb-6">
             Strategic MSP Service Opportunities
