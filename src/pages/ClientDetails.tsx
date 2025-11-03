@@ -4,9 +4,12 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Badge } from "@/components/ui/badge";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, AlertTriangle, CheckCircle2, XCircle } from "lucide-react";
+import { ArrowLeft, AlertTriangle, CheckCircle2, XCircle, Download } from "lucide-react";
 import { mecklenburgIntelligence } from "@/data/mecklenburgIntelligence";
 import { maplewoodIntelligence } from "@/data/maplewoodIntelligence";
+import mecklenburgPdf from "@/assets/mecklenburg-county.pdf";
+import gastonPdf from "@/assets/gaston-county-government.pdf";
+import maplewoodPdf from "@/assets/maplewood-senior-living-inspir.pdf";
 
 const ClientDetails = () => {
   const { clientId } = useParams();
@@ -17,10 +20,21 @@ const ClientDetails = () => {
     return (
       <Layout>
         <div className="container mx-auto p-6 max-w-6xl">
-          <Button onClick={() => navigate("/clients")} variant="ghost" className="mb-4">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Clients
-          </Button>
+          <div className="flex justify-between items-center mb-4">
+            <Button onClick={() => navigate("/clients")} variant="ghost">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Clients
+            </Button>
+            <Button onClick={() => {
+              const link = document.createElement('a');
+              link.href = mecklenburgPdf;
+              link.download = 'Mecklenburg County.pdf';
+              link.click();
+            }} variant="outline">
+              <Download className="mr-2 h-4 w-4" />
+              Download PDF
+            </Button>
+          </div>
 
           {/* Hero Section */}
           <header className="bg-gradient-to-br from-primary to-coral-dark rounded-lg p-8 mb-8 shadow-sm">
@@ -55,10 +69,21 @@ const ClientDetails = () => {
     return (
       <Layout>
         <div className="container mx-auto p-6 max-w-6xl">
-          <Button onClick={() => navigate("/clients")} variant="ghost" className="mb-4">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Clients
-          </Button>
+          <div className="flex justify-between items-center mb-4">
+            <Button onClick={() => navigate("/clients")} variant="ghost">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Clients
+            </Button>
+            <Button onClick={() => {
+              const link = document.createElement('a');
+              link.href = maplewoodPdf;
+              link.download = 'Maplewood Senior Living.pdf';
+              link.click();
+            }} variant="outline">
+              <Download className="mr-2 h-4 w-4" />
+              Download PDF
+            </Button>
+          </div>
 
           <header className="bg-gradient-to-br from-primary to-coral-dark rounded-lg p-8 mb-8 shadow-sm">
             <h1 className="text-4xl font-heading font-bold text-white mb-2">
@@ -123,10 +148,21 @@ const ClientDetails = () => {
   return (
     <Layout>
       <div className="container mx-auto p-6 max-w-6xl">
-        <Button onClick={() => navigate("/clients")} variant="ghost" className="mb-4">
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Clients
-        </Button>
+          <div className="flex justify-between items-center mb-4">
+            <Button onClick={() => navigate("/clients")} variant="ghost">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Clients
+            </Button>
+            <Button onClick={() => {
+              const link = document.createElement('a');
+              link.href = gastonPdf;
+              link.download = 'Gaston County Government.pdf';
+              link.click();
+            }} variant="outline">
+              <Download className="mr-2 h-4 w-4" />
+              Download PDF
+            </Button>
+          </div>
 
         {/* Hero Section */}
         <header className="bg-gradient-to-br from-primary to-coral-dark rounded-lg p-8 mb-8 shadow-sm">
