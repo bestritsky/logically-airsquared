@@ -405,7 +405,7 @@ const Emails = () => {
               <tr>
                 <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Contact</th>
                 <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Subject</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Principle</th>
+                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Template</th>
                 <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Status</th>
                 <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Created</th>
                 <th className="px-4 py-3 text-right text-sm font-semibold text-foreground">Actions</th>
