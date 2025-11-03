@@ -1085,7 +1085,7 @@ const Opportunities = () => {
                             }}
                           >
                             <Trash2 className="mr-2 h-4 w-4" />
-                            Delete Opportunity
+                            Delete
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
@@ -1171,7 +1171,7 @@ const Opportunities = () => {
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
               <Trash2 className="w-4 h-4 mr-2" />
-              Delete Opportunity
+              Delete
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
