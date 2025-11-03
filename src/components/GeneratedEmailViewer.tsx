@@ -372,9 +372,12 @@ export const GeneratedEmailViewer = ({
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Email?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This will permanently delete this generated email. This action cannot be undone.
+            <AlertDialogTitle className="flex items-center gap-2">
+              <Trash2 className="w-5 h-5 text-destructive" />
+              Delete Email
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-base">
+              Are you sure you want to delete this email? This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -383,7 +386,8 @@ export const GeneratedEmailViewer = ({
               onClick={() => deleteMutation.mutate()}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              Delete
+              <Trash2 className="w-4 h-4 mr-2" />
+              Delete Email
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
