@@ -62,6 +62,7 @@ const Emails = () => {
   const [showTemplateLibrary, setShowTemplateLibrary] = useState(false);
   const [preSelectedClient, setPreSelectedClient] = useState<{ id: number; name: string } | undefined>();
   const [preSelectedOpportunity, setPreSelectedOpportunity] = useState<{ id: string; name: string } | undefined>();
+  const [campaignData, setCampaignData] = useState<any>(null);
   const [selectedEmail, setSelectedEmail] = useState<GeneratedEmail | null>(null);
   const [viewerEmail, setViewerEmail] = useState<GeneratedEmail | null>(null);
   const queryClient = useQueryClient();
@@ -133,12 +134,24 @@ const Emails = () => {
     const clientName = searchParams.get("clientName");
     const opportunityId = searchParams.get("opportunityId");
     const opportunityName = searchParams.get("opportunityName");
+    const contactName = searchParams.get("contactName");
+    const contactEmail = searchParams.get("contactEmail");
 
     if (generateFor && clientId && clientName) {
       setPreSelectedClient({ id: parseInt(clientId), name: decodeURIComponent(clientName) });
       
       if (opportunityId && opportunityName) {
         setPreSelectedOpportunity({ id: opportunityId, name: decodeURIComponent(opportunityName) });
+      }
+      
+      // Pass contact data to campaign data
+      if (contactName && contactEmail) {
+        setCampaignData({
+          clientName: decodeURIComponent(clientName),
+          opportunityName: opportunityName ? decodeURIComponent(opportunityName) : undefined,
+          contactName: decodeURIComponent(contactName),
+          contactEmail: decodeURIComponent(contactEmail)
+        });
       }
       
       setShowTemplateLibrary(true);
@@ -533,9 +546,11 @@ const Emails = () => {
           if (!open) {
             setPreSelectedClient(undefined);
             setPreSelectedOpportunity(undefined);
+            setCampaignData(null);
           }
         }}
         preSelectedClient={preSelectedClient}
+        campaignData={campaignData}
         preSelectedOpportunity={preSelectedOpportunity}
       />
 

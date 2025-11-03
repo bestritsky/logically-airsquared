@@ -10,6 +10,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { useClients } from "@/hooks/useClients";
@@ -21,9 +24,30 @@ import maplewoodPdf from "@/assets/maplewood-senior-living-inspir.pdf";
 const Clients = () => {
   const navigate = useNavigate();
   const [selectedSector, setSelectedSector] = useState<string>("all");
+  const [contactDialogOpen, setContactDialogOpen] = useState(false);
+  const [selectedClientForEmail, setSelectedClientForEmail] = useState<any>(null);
+  const [contactName, setContactName] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
   const { toast } = useToast();
   const { data: clients, isLoading, error } = useClients();
   const { data: opportunities } = useOpportunities();
+
+  const handleGenerateEmail = (client: any) => {
+    setSelectedClientForEmail(client);
+    setContactDialogOpen(true);
+  };
+
+  const handleConfirmContact = () => {
+    if (!selectedClientForEmail) return;
+    
+    navigate(
+      `/emails?generateFor=client&clientId=${selectedClientForEmail.id}&clientName=${encodeURIComponent(selectedClientForEmail.name)}&contactName=${encodeURIComponent(contactName)}&contactEmail=${encodeURIComponent(contactEmail)}`
+    );
+    
+    setContactDialogOpen(false);
+    setContactName("");
+    setContactEmail("");
+  };
 
   const handleDownload = (clientId: number, clientName: string) => {
     const pdfMap: { [key: number]: string } = {
@@ -246,7 +270,7 @@ const Clients = () => {
                           </DropdownMenuItem>
                           <DropdownMenuItem className="font-bold" onClick={(e) => {
                             e.stopPropagation();
-                            navigate(`/emails?generateFor=client&clientId=${client.id}&clientName=${encodeURIComponent(client.name)}`);
+                            handleGenerateEmail(client);
                           }}>
                             <Mail className="mr-2 h-4 w-4" />
                             Generate Email
@@ -279,6 +303,45 @@ const Clients = () => {
           </div>
         </div>
       </div>
+
+      {/* Contact Dialog */}
+      <Dialog open={contactDialogOpen} onOpenChange={setContactDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Who are you emailing?</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <Label>Contact Name</Label>
+              <Input 
+                value={contactName} 
+                onChange={(e) => setContactName(e.target.value)}
+                placeholder="e.g., John Smith"
+              />
+            </div>
+            <div>
+              <Label>Contact Email</Label>
+              <Input 
+                value={contactEmail} 
+                onChange={(e) => setContactEmail(e.target.value)}
+                placeholder="e.g., john.smith@company.com"
+                type="email"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setContactDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button 
+              onClick={handleConfirmContact}
+              disabled={!contactName || !contactEmail}
+            >
+              Continue to Templates
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Layout>
   );
 };
