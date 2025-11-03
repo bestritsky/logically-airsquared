@@ -288,7 +288,7 @@ const Emails = () => {
             </div>
             <Button onClick={() => setShowTemplateLibrary(true)} size="lg">
               <Mail className="w-4 h-4 mr-2" />
-              Generate New Email
+              New Email
             </Button>
           </div>
         </div>
