@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { cn } from "@/lib/utils";
 import { EmailTemplateLibrary } from "@/components/EmailTemplateLibrary";
-import { FileText, Plus, Copy, Trash2, Pencil, Mail } from "lucide-react";
+import { FileText, Plus, Copy, Trash2, Pencil, Mail, Download } from "lucide-react";
 import { GeneratedEmailViewer } from "@/components/GeneratedEmailViewer";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -278,6 +278,53 @@ const Emails = () => {
     updateStatusMutation.mutate({ emailId, status: "Exported" });
   };
 
+  const exportToCSV = () => {
+    const headers = [
+      "Contact Name",
+      "Contact Email",
+      "Client",
+      "Opportunity",
+      "Subject",
+      "Body",
+      "Influence Principle",
+      "Status",
+      "Created Date",
+      "Updated Date",
+      "Notes"
+    ];
+
+    const rows = filteredEmails.map(email => [
+      email.contact_name,
+      email.contact_email,
+      email.clients?.name || "",
+      email.opportunities?.name || "",
+      email.subject,
+      email.body.replace(/\n/g, " ").replace(/"/g, '""'),
+      email.influence_principle,
+      email.status,
+      format(new Date(email.created_at), "yyyy-MM-dd HH:mm:ss"),
+      format(new Date(email.updated_at), "yyyy-MM-dd HH:mm:ss"),
+      (email.notes || "").replace(/\n/g, " ").replace(/"/g, '""')
+    ]);
+
+    const csvContent = [
+      headers.join(","),
+      ...rows.map(row => row.map(cell => `"${cell}"`).join(","))
+    ].join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", `generated-emails-${format(new Date(), "yyyy-MM-dd")}.csv`);
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    toast.success("Emails exported to CSV!");
+  };
+
   if (isLoading) {
     return (
       <Layout>
@@ -330,7 +377,12 @@ const Emails = () => {
         </div>
 
         {/* Filters */}
-        <div className="flex gap-3 mb-6">
+        <div className="flex gap-3 mb-6 items-center">
+          <Button onClick={exportToCSV} variant="outline" size="sm">
+            <Download className="w-4 h-4 mr-2" />
+            Export to CSV
+          </Button>
+          
           <Select value={selectedClient} onValueChange={setSelectedClient}>
             <SelectTrigger className="w-[200px]">
               <SelectValue placeholder="All Clients" />
