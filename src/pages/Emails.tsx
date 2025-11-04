@@ -279,6 +279,11 @@ const Emails = () => {
   };
 
   const exportToCSV = () => {
+    if (!filteredEmails || filteredEmails.length === 0) {
+      toast.error("No emails to export");
+      return;
+    }
+
     const headers = [
       "Contact Name",
       "Contact Email",
