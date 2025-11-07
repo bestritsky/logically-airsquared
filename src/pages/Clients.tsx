@@ -319,9 +319,8 @@ const Clients = () => {
           <div className="min-w-full inline-block align-middle">
             <Table>
               <TableHeader className="bg-muted/20">
-                <TableRow>
-                  <TableHead className="w-16">#</TableHead>
-                  <TableHead className="min-w-[180px]">Client Name</TableHead>
+        <TableRow>
+          <TableHead className="min-w-[180px]">Client Name</TableHead>
                   <TableHead className="w-20">Tier</TableHead>
                   <TableHead className="w-28">Sector</TableHead>
                   <TableHead className="w-24 hidden lg:table-cell">Deal Size</TableHead>
@@ -346,11 +345,6 @@ const Clients = () => {
                       hasDetailedData && "border-l-4 border-l-green-500"
                     )}
                   >
-                    <TableCell className="w-16">
-                      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                        <span className="font-heading font-bold text-primary text-sm">{index + 1}</span>
-                      </div>
-                    </TableCell>
                     <TableCell className="min-w-[180px]">
                       <div className="font-heading font-semibold text-foreground">{client.name}</div>
                       <div className="text-sm font-mono text-muted-foreground">📍 {client.location}</div>
