@@ -315,22 +315,23 @@ const Clients = () => {
         </div>
 
         {/* Client Table - Desktop View */}
-        <div className="hidden md:block bg-card rounded-lg shadow-sm border border-border overflow-hidden">
-          <Table>
-            <TableHeader className="bg-muted/20">
-              <TableRow>
-                <TableHead className="w-12">#</TableHead>
-                <TableHead>Client Name</TableHead>
-                <TableHead className="w-24">Tier</TableHead>
-                <TableHead className="w-28">Sector</TableHead>
-                <TableHead className="w-28 hidden lg:table-cell">Deal Size</TableHead>
-                <TableHead className="w-32">Status</TableHead>
-                <TableHead className="w-28 hidden lg:table-cell">Timeline</TableHead>
-                <TableHead className="w-44 hidden xl:table-cell">Assigned</TableHead>
-                <TableHead className="hidden xl:table-cell">Key Opportunities</TableHead>
-                <TableHead className="w-12"></TableHead>
-              </TableRow>
-            </TableHeader>
+        <div className="hidden md:block bg-card rounded-lg shadow-sm border border-border overflow-x-auto">
+          <div className="min-w-full inline-block align-middle">
+            <Table>
+              <TableHeader className="bg-muted/20">
+                <TableRow>
+                  <TableHead className="w-16">#</TableHead>
+                  <TableHead className="min-w-[180px]">Client Name</TableHead>
+                  <TableHead className="w-20">Tier</TableHead>
+                  <TableHead className="w-28">Sector</TableHead>
+                  <TableHead className="w-24 hidden lg:table-cell">Deal Size</TableHead>
+                  <TableHead className="w-32">Status</TableHead>
+                  <TableHead className="w-28 hidden lg:table-cell">Timeline</TableHead>
+                  <TableHead className="w-36 hidden xl:table-cell">Assigned</TableHead>
+                  <TableHead className="hidden xl:table-cell">Key Opportunities</TableHead>
+                  <TableHead className="w-12"></TableHead>
+                </TableRow>
+              </TableHeader>
             <TableBody>
               {filteredClients.map((client, index) => {
                 const clientOpportunities = opportunities?.filter(opp => opp.client_id === client.id) || [];
@@ -345,26 +346,26 @@ const Clients = () => {
                       hasDetailedData && "border-l-4 border-l-green-500"
                     )}
                   >
-                    <TableCell>
+                    <TableCell className="w-16">
                       <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
                         <span className="font-heading font-bold text-primary text-sm">{index + 1}</span>
                       </div>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="min-w-[180px]">
                       <div className="font-heading font-semibold text-foreground">{client.name}</div>
                       <div className="text-sm font-mono text-muted-foreground">📍 {client.location}</div>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="w-20">
                       <Badge className={cn("font-mono text-xs", getTierBadgeClass(client.tier))}>
                         Tier {client.tier}
                       </Badge>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="w-28">
                       <Badge variant="outline" className="font-mono text-xs bg-primary/10 text-primary border-primary/20">
                         {client.sector}
                       </Badge>
                     </TableCell>
-                    <TableCell className="hidden lg:table-cell">
+                    <TableCell className="w-24 hidden lg:table-cell">
                       <div className="font-mono text-sm font-semibold text-foreground">{client.deal_size || "N/A"}</div>
                     </TableCell>
                     <TableCell>
@@ -387,10 +388,10 @@ const Clients = () => {
                         </div>
                       )}
                     </TableCell>
-                    <TableCell className="hidden lg:table-cell">
+                    <TableCell className="w-28 hidden lg:table-cell">
                       <div className="font-mono text-sm text-foreground">{client.timeline}</div>
                     </TableCell>
-                    <TableCell className="hidden xl:table-cell" onClick={(e) => e.stopPropagation()}>
+                    <TableCell className="w-36 hidden xl:table-cell" onClick={(e) => e.stopPropagation()}>
                       <Select
                         value={client.assigned_to || "unassigned"}
                         onValueChange={(value) => {
@@ -398,7 +399,7 @@ const Clients = () => {
                           updateAssignedUser.mutate({ clientId: client.id, userId });
                         }}
                       >
-                        <SelectTrigger className="w-full bg-background">
+                        <SelectTrigger className="w-36 bg-background">
                           <SelectValue placeholder="Unassigned" />
                         </SelectTrigger>
                         <SelectContent className="bg-background z-50">
@@ -421,7 +422,7 @@ const Clients = () => {
                         ))}
                       </ul>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="w-12">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button 
@@ -471,6 +472,7 @@ const Clients = () => {
               })}
             </TableBody>
           </Table>
+          </div>
         </div>
 
         {/* Client Cards - Mobile View */}
