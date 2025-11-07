@@ -29,6 +29,15 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 import { cn } from "@/lib/utils";
 import { useOpportunities } from "@/hooks/useOpportunities";
 import { useClients } from "@/hooks/useClients";
@@ -701,11 +710,14 @@ const opportunityData: Opportunity[] = [
   },
 ];
 
+const ITEMS_PER_PAGE = 10;
+
 const Opportunities = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const clientParam = searchParams.get("client");
   const [selectedClientId, setSelectedClientId] = useState<string>("all");
+  const [currentPage, setCurrentPage] = useState(1);
   const [contactDialogOpen, setContactDialogOpen] = useState(false);
   const [selectedOppForEmail, setSelectedOppForEmail] = useState<any>(null);
   const [contactName, setContactName] = useState("");
@@ -768,19 +780,41 @@ const Opportunities = () => {
     }
   }, [clientParam]);
 
-  const filteredOpportunities = useMemo(() => {
+  // Reset to page 1 when client filter changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedClientId]);
+
+  const allFilteredOpportunities = useMemo(() => {
     if (!opportunities) return [];
     
-    if (selectedClientId === "all") {
-      // Show top 10 opportunities by win rate
-      return [...opportunities]
-        .sort((a, b) => (b.win_rate || 0) - (a.win_rate || 0))
-        .slice(0, 10);
-    }
-    return opportunities
-      .filter((opp) => opp.client_id === parseInt(selectedClientId))
-      .sort((a, b) => (b.win_rate || 0) - (a.win_rate || 0));
+    const filtered = selectedClientId === "all"
+      ? opportunities
+      : opportunities.filter((opp) => opp.client_id === parseInt(selectedClientId));
+    
+    return [...filtered].sort((a, b) => (b.win_rate || 0) - (a.win_rate || 0));
   }, [selectedClientId, opportunities]);
+
+  const paginationMeta = useMemo(() => {
+    const totalItems = allFilteredOpportunities.length;
+    const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, totalItems);
+    
+    return {
+      totalItems,
+      totalPages,
+      startIndex,
+      endIndex,
+      hasNextPage: currentPage < totalPages,
+      hasPrevPage: currentPage > 1,
+    };
+  }, [allFilteredOpportunities.length, currentPage]);
+
+  const filteredOpportunities = useMemo(() => {
+    const { startIndex, endIndex } = paginationMeta;
+    return allFilteredOpportunities.slice(startIndex, endIndex);
+  }, [allFilteredOpportunities, paginationMeta]);
 
   const stats = useMemo(() => {
     if (!opportunities) return { totalOpps: 0, totalPipeline: "$0K", avgWinRate: 0, expectedRevenue: "$0K" };
@@ -847,7 +881,7 @@ const Opportunities = () => {
   };
 
   const exportToCSV = () => {
-    if (!filteredOpportunities.length) {
+    if (!allFilteredOpportunities.length) {
       toast.error("No opportunities to export");
       return;
     }
@@ -866,8 +900,8 @@ const Opportunities = () => {
       "Key Drivers"
     ];
 
-    // Convert opportunities to CSV rows
-    const rows = filteredOpportunities.map(opp => {
+    // Convert opportunities to CSV rows (export ALL filtered opportunities, not just current page)
+    const rows = allFilteredOpportunities.map(opp => {
       const clientName = opp.clients?.name || clients?.find(c => c.id === opp.client_id)?.name || "Unknown Client";
       const drivers = (opp.drivers || []).join("; ");
       
@@ -904,7 +938,7 @@ const Opportunities = () => {
     link.click();
     document.body.removeChild(link);
     
-    toast.success(`Exported ${filteredOpportunities.length} opportunities to CSV`);
+    toast.success(`Exported ${allFilteredOpportunities.length} opportunities to CSV`);
   };
 
   return (
@@ -970,9 +1004,6 @@ const Opportunities = () => {
                 <SelectContent className="bg-background z-50">
                   <SelectItem value="all" className="font-heading">
                     <span className="font-semibold">All Clients</span>
-                    <span className="text-muted-foreground ml-2">
-                      (Top 10 Opportunities)
-                    </span>
                   </SelectItem>
                   {clients.map((client) => (
                     <SelectItem
@@ -1046,16 +1077,16 @@ const Opportunities = () => {
                 
                 return (
                   <tr
-                    key={opp.id}
-                    className="border-b border-border hover:bg-primary/5 transition-colors"
-                  >
-                    <td className="px-4 py-4" onClick={() => handleGenerateEmail(opp, clientName)}>
-                      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center cursor-pointer">
-                        <span className="font-heading font-bold text-primary text-sm">
-                          {index + 1}
-                        </span>
-                      </div>
-                    </td>
+                     key={opp.id}
+                     className="border-b border-border hover:bg-primary/5 transition-colors"
+                   >
+                     <td className="px-4 py-4" onClick={() => handleGenerateEmail(opp, clientName)}>
+                       <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center cursor-pointer">
+                         <span className="font-heading font-bold text-primary text-sm">
+                           {paginationMeta.startIndex + index + 1}
+                         </span>
+                       </div>
+                     </td>
                     <td className="px-4 py-4 cursor-pointer" onClick={() => handleGenerateEmail(opp, clientName)}>
                       <div className="font-heading font-semibold text-foreground">
                         {opp.name}
@@ -1170,11 +1201,68 @@ const Opportunities = () => {
           </table>
         </div>
 
+        {/* Pagination Controls */}
+        {paginationMeta.totalPages > 1 && (
+          <div className="mt-6">
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious 
+                    onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                    className={cn(
+                      "cursor-pointer",
+                      !paginationMeta.hasPrevPage && "pointer-events-none opacity-50"
+                    )}
+                  />
+                </PaginationItem>
+                
+                {Array.from({ length: paginationMeta.totalPages }, (_, i) => i + 1).map((page) => {
+                  const isCurrentPage = page === currentPage;
+                  const isFirstPage = page === 1;
+                  const isLastPage = page === paginationMeta.totalPages;
+                  const isNearCurrent = Math.abs(page - currentPage) <= 1;
+                  
+                  if (isFirstPage || isLastPage || isNearCurrent) {
+                    return (
+                      <PaginationItem key={page}>
+                        <PaginationLink
+                          onClick={() => setCurrentPage(page)}
+                          isActive={isCurrentPage}
+                          className="cursor-pointer"
+                        >
+                          {page}
+                        </PaginationLink>
+                      </PaginationItem>
+                    );
+                  } else if (page === currentPage - 2 || page === currentPage + 2) {
+                    return (
+                      <PaginationItem key={page}>
+                        <PaginationEllipsis />
+                      </PaginationItem>
+                    );
+                  }
+                  return null;
+                })}
+                
+                <PaginationItem>
+                  <PaginationNext 
+                    onClick={() => setCurrentPage(p => Math.min(paginationMeta.totalPages, p + 1))}
+                    className={cn(
+                      "cursor-pointer",
+                      !paginationMeta.hasNextPage && "pointer-events-none opacity-50"
+                    )}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        )}
+
         {/* Summary Footer */}
         <div className="mt-6 p-4 bg-card rounded-lg border border-border">
           <div className="flex items-center justify-between">
             <div className="font-mono text-sm text-muted-foreground">
-              Showing {filteredOpportunities.length} opportunities
+              Showing {paginationMeta.startIndex + 1}-{paginationMeta.endIndex} of {paginationMeta.totalItems} opportunities
               {selectedClientId !== "all" && ` for selected client`}
             </div>
             <div className="font-mono text-sm text-foreground">
