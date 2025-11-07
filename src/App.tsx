@@ -9,6 +9,7 @@ import type { User, Session } from "@supabase/supabase-js";
 import Clients from "./pages/Clients";
 import ClientDetails from "./pages/ClientDetails";
 import Opportunities from "./pages/Opportunities";
+import Strategize from "./pages/Strategize";
 import Emails from "./pages/Emails";
 import UserManagement from "./pages/UserManagement";
 import Auth from "./pages/Auth";
@@ -69,6 +70,7 @@ const App = () => (
           <Route path="/clients" element={<ProtectedRoute><Clients /></ProtectedRoute>} />
           <Route path="/clients/:clientId" element={<ProtectedRoute><ClientDetails /></ProtectedRoute>} />
           <Route path="/opportunities" element={<ProtectedRoute><Opportunities /></ProtectedRoute>} />
+          <Route path="/strategize" element={<ProtectedRoute><Strategize /></ProtectedRoute>} />
           <Route path="/emails" element={<ProtectedRoute><Emails /></ProtectedRoute>} />
           <Route path="/users" element={<ProtectedRoute><UserManagement /></ProtectedRoute>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
