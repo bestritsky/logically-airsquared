@@ -14,6 +14,7 @@ export interface Client {
   status: "Existing" | "Prospect";
   win_rate: number | null;
   timeline: string | null;
+  assigned_to: string | null;
   created_at: string;
   updated_at: string;
 }

@@ -29,7 +29,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useClients } from "@/hooks/useClients";
 import { useOpportunities } from "@/hooks/useOpportunities";
+import { useUsers } from "@/hooks/useUsers";
 import { getClientIntelligence } from "@/data/clientIntelligenceLoader";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import mecklenburgPdf from "@/assets/mecklenburg-county.pdf";
 import gastonPdf from "@/assets/gaston-county-government.pdf";
 import maplewoodPdf from "@/assets/maplewood-senior-living-inspir.pdf";
@@ -47,6 +49,7 @@ const Clients = () => {
   const queryClient = useQueryClient();
   const { data: clients, isLoading, error } = useClients();
   const { data: opportunities } = useOpportunities();
+  const { data: users } = useUsers();
 
   const handleGenerateEmail = (client: any) => {
     setSelectedClientForEmail(client);
@@ -128,6 +131,31 @@ const Clients = () => {
     }
   };
 
+  const updateAssignedUser = useMutation({
+    mutationFn: async ({ clientId, userId }: { clientId: number; userId: string | null }) => {
+      const { error } = await supabase
+        .from("clients")
+        .update({ assigned_to: userId })
+        .eq("id", clientId);
+      
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["clients"] });
+      toast({
+        title: "Assignment updated",
+        description: "User has been assigned to the client.",
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: `Failed to update assignment: ${error.message}`,
+      });
+    },
+  });
+
   const handleExportCSV = () => {
     if (!clients || clients.length === 0) {
       toast({
@@ -139,19 +167,23 @@ const Clients = () => {
     }
 
     // CSV headers
-    const headers = ["Client Name", "Tier", "Sector", "Deal Size", "Status", "Timeline", "Location", "Win Rate"];
+    const headers = ["Client Name", "Tier", "Sector", "Deal Size", "Status", "Timeline", "Location", "Win Rate", "Assigned To"];
     
     // CSV rows
-    const rows = filteredClients.map(client => [
-      client.name,
-      `Tier ${client.tier}`,
-      client.sector,
-      client.deal_size || "N/A",
-      client.status,
-      client.timeline,
-      client.location,
-      client.status === "Existing" ? "N/A" : `${client.win_rate || 0}%`
-    ]);
+    const rows = filteredClients.map(client => {
+      const assignedUser = users?.find(u => u.id === client.assigned_to);
+      return [
+        client.name,
+        `Tier ${client.tier}`,
+        client.sector,
+        client.deal_size || "N/A",
+        client.status,
+        client.timeline,
+        client.location,
+        client.status === "Existing" ? "N/A" : `${client.win_rate || 0}%`,
+        assignedUser?.email || "Unassigned"
+      ];
+    });
 
     // Create CSV content
     const csvContent = [
@@ -292,6 +324,7 @@ const Clients = () => {
                 <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">Deal Size</th>
                 <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">Status</th>
                 <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">Timeline</th>
+                <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">Assigned</th>
                 <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">Key Opportunities</th>
                 <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground w-12"></th>
               </tr>
@@ -354,6 +387,27 @@ const Clients = () => {
                     </td>
                     <td className="px-4 py-4">
                       <div className="font-mono text-sm text-foreground">{client.timeline}</div>
+                    </td>
+                    <td className="px-4 py-4" onClick={(e) => e.stopPropagation()}>
+                      <Select
+                        value={client.assigned_to || "unassigned"}
+                        onValueChange={(value) => {
+                          const userId = value === "unassigned" ? null : value;
+                          updateAssignedUser.mutate({ clientId: client.id, userId });
+                        }}
+                      >
+                        <SelectTrigger className="w-[180px] bg-background">
+                          <SelectValue placeholder="Unassigned" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-background z-50">
+                          <SelectItem value="unassigned">Unassigned</SelectItem>
+                          {users?.map((user) => (
+                            <SelectItem key={user.id} value={user.id}>
+                              {user.email}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </td>
                     <td className="px-4 py-4">
                       <ul className="space-y-1">

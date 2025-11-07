@@ -45,6 +45,7 @@ export type Database = {
       }
       clients: {
         Row: {
+          assigned_to: string | null
           created_at: string
           deal_size: string | null
           domain: string | null
@@ -61,6 +62,7 @@ export type Database = {
           win_rate: number | null
         }
         Insert: {
+          assigned_to?: string | null
           created_at?: string
           deal_size?: string | null
           domain?: string | null
@@ -77,6 +79,7 @@ export type Database = {
           win_rate?: number | null
         }
         Update: {
+          assigned_to?: string | null
           created_at?: string
           deal_size?: string | null
           domain?: string | null
