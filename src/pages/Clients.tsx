@@ -4,6 +4,8 @@ import { Layout } from "@/components/Layout";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { MoreVertical, Loader2, Mail, FileText, Target, Download, Trash2 } from "lucide-react";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -312,60 +314,60 @@ const Clients = () => {
           ))}
         </div>
 
-        {/* Client Table */}
-        <div className="bg-card rounded-lg shadow-sm border border-border overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-muted/20 border-b border-border">
-              <tr>
-                <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">#</th>
-                <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">Client Name</th>
-                <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">Tier</th>
-                <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">Sector</th>
-                <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">Deal Size</th>
-                <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">Status</th>
-                <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">Timeline</th>
-                <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">Assigned</th>
-                <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">Key Opportunities</th>
-                <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground w-12"></th>
-              </tr>
-            </thead>
-            <tbody>
+        {/* Client Table - Desktop View */}
+        <div className="hidden md:block bg-card rounded-lg shadow-sm border border-border overflow-hidden">
+          <Table>
+            <TableHeader className="bg-muted/20">
+              <TableRow>
+                <TableHead className="w-12">#</TableHead>
+                <TableHead>Client Name</TableHead>
+                <TableHead className="w-24">Tier</TableHead>
+                <TableHead className="w-28">Sector</TableHead>
+                <TableHead className="w-28 hidden lg:table-cell">Deal Size</TableHead>
+                <TableHead className="w-32">Status</TableHead>
+                <TableHead className="w-28 hidden lg:table-cell">Timeline</TableHead>
+                <TableHead className="w-44 hidden xl:table-cell">Assigned</TableHead>
+                <TableHead className="hidden xl:table-cell">Key Opportunities</TableHead>
+                <TableHead className="w-12"></TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {filteredClients.map((client, index) => {
                 const clientOpportunities = opportunities?.filter(opp => opp.client_id === client.id) || [];
                 const hasDetailedData = getClientIntelligence(client.id) !== null;
                 
                 return (
-                  <tr 
+                  <TableRow 
                     key={client.id}
                     onClick={() => navigate(`/clients/${client.id}`)}
                     className={cn(
-                      "border-b border-border hover:bg-primary/5 transition-colors cursor-pointer",
+                      "cursor-pointer",
                       hasDetailedData && "border-l-4 border-l-green-500"
                     )}
                   >
-                    <td className="px-4 py-4">
+                    <TableCell>
                       <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
                         <span className="font-heading font-bold text-primary text-sm">{index + 1}</span>
                       </div>
-                    </td>
-                    <td className="px-4 py-4">
+                    </TableCell>
+                    <TableCell>
                       <div className="font-heading font-semibold text-foreground">{client.name}</div>
                       <div className="text-sm font-mono text-muted-foreground">📍 {client.location}</div>
-                    </td>
-                    <td className="px-4 py-4">
+                    </TableCell>
+                    <TableCell>
                       <Badge className={cn("font-mono text-xs", getTierBadgeClass(client.tier))}>
                         Tier {client.tier}
                       </Badge>
-                    </td>
-                    <td className="px-4 py-4">
+                    </TableCell>
+                    <TableCell>
                       <Badge variant="outline" className="font-mono text-xs bg-primary/10 text-primary border-primary/20">
                         {client.sector}
                       </Badge>
-                    </td>
-                    <td className="px-4 py-4">
+                    </TableCell>
+                    <TableCell className="hidden lg:table-cell">
                       <div className="font-mono text-sm font-semibold text-foreground">{client.deal_size || "N/A"}</div>
-                    </td>
-                    <td className="px-4 py-4">
+                    </TableCell>
+                    <TableCell>
                       {client.status === "Existing" ? (
                         <Badge className="bg-status-green/10 text-status-green border-0 font-mono text-xs">
                           ✓ EXISTING
@@ -384,11 +386,11 @@ const Clients = () => {
                           </div>
                         </div>
                       )}
-                    </td>
-                    <td className="px-4 py-4">
+                    </TableCell>
+                    <TableCell className="hidden lg:table-cell">
                       <div className="font-mono text-sm text-foreground">{client.timeline}</div>
-                    </td>
-                    <td className="px-4 py-4" onClick={(e) => e.stopPropagation()}>
+                    </TableCell>
+                    <TableCell className="hidden xl:table-cell" onClick={(e) => e.stopPropagation()}>
                       <Select
                         value={client.assigned_to || "unassigned"}
                         onValueChange={(value) => {
@@ -396,7 +398,7 @@ const Clients = () => {
                           updateAssignedUser.mutate({ clientId: client.id, userId });
                         }}
                       >
-                        <SelectTrigger className="w-[180px] bg-background">
+                        <SelectTrigger className="w-full bg-background">
                           <SelectValue placeholder="Unassigned" />
                         </SelectTrigger>
                         <SelectContent className="bg-background z-50">
@@ -408,8 +410,8 @@ const Clients = () => {
                           ))}
                         </SelectContent>
                       </Select>
-                    </td>
-                    <td className="px-4 py-4">
+                    </TableCell>
+                    <TableCell className="hidden xl:table-cell">
                       <ul className="space-y-1">
                         {clientOpportunities.slice(0, 3).map((opp, idx) => (
                           <li key={idx} className="text-xs font-mono text-muted-foreground flex items-start">
@@ -418,8 +420,8 @@ const Clients = () => {
                           </li>
                         ))}
                       </ul>
-                    </td>
-                    <td className="px-4 py-4">
+                    </TableCell>
+                    <TableCell>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button 
@@ -463,12 +465,166 @@ const Clients = () => {
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
-                    </td>
-                  </tr>
+                    </TableCell>
+                  </TableRow>
                 );
               })}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
+        </div>
+
+        {/* Client Cards - Mobile View */}
+        <div className="md:hidden space-y-4">
+          {filteredClients.map((client, index) => {
+            const clientOpportunities = opportunities?.filter(opp => opp.client_id === client.id) || [];
+            const hasDetailedData = getClientIntelligence(client.id) !== null;
+            const assignedUser = users?.find(u => u.id === client.assigned_to);
+            
+            return (
+              <Card 
+                key={client.id}
+                onClick={() => navigate(`/clients/${client.id}`)}
+                className={cn(
+                  "cursor-pointer hover:shadow-md transition-shadow",
+                  hasDetailedData && "border-l-4 border-l-green-500"
+                )}
+              >
+                <CardContent className="p-4 space-y-3">
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <span className="font-heading font-bold text-primary text-sm">{index + 1}</span>
+                      </div>
+                      <div>
+                        <div className="font-heading font-semibold text-foreground">{client.name}</div>
+                        <div className="text-sm font-mono text-muted-foreground">📍 {client.location}</div>
+                      </div>
+                    </div>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button 
+                          variant="ghost" 
+                          size="icon" 
+                          className="h-8 w-8 rounded-full border-2 border-black dark:border-white"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <MoreVertical className="h-6 w-6 font-bold" strokeWidth={3} />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem className="font-bold" onClick={() => window.open(`/clients/${client.id}`, '_blank')}>
+                          <FileText className="mr-2 h-4 w-4" />
+                          Details
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="font-bold" onClick={() => window.open(`/opportunities?client=${client.id}`, '_blank')}>
+                          <Target className="mr-2 h-4 w-4" />
+                          Opportunities
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="font-bold" onClick={(e) => {
+                          e.stopPropagation();
+                          handleGenerateEmail(client);
+                        }}>
+                          <Mail className="mr-2 h-4 w-4" />
+                          Generate Email
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="font-bold" onClick={(e) => {
+                          e.stopPropagation();
+                          handleDownload(client.id, client.name);
+                        }}>
+                          <Download className="mr-2 h-4 w-4" />
+                          Download
+                        </DropdownMenuItem>
+                        <DropdownMenuItem 
+                          className="font-bold text-destructive focus:text-destructive" 
+                          onClick={(e) => handleDeleteClick(client, e)}
+                        >
+                          <Trash2 className="mr-2 h-4 w-4" />
+                          Delete
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2">
+                    <Badge className={cn("font-mono text-xs", getTierBadgeClass(client.tier))}>
+                      Tier {client.tier}
+                    </Badge>
+                    <Badge variant="outline" className="font-mono text-xs bg-primary/10 text-primary border-primary/20">
+                      {client.sector}
+                    </Badge>
+                    {client.status === "Existing" ? (
+                      <Badge className="bg-status-green/10 text-status-green border-0 font-mono text-xs">
+                        ✓ EXISTING
+                      </Badge>
+                    ) : null}
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3 text-sm">
+                    <div>
+                      <div className="text-xs font-mono text-muted-foreground mb-1">Deal Size</div>
+                      <div className="font-mono font-semibold text-foreground">{client.deal_size || "N/A"}</div>
+                    </div>
+                    <div>
+                      <div className="text-xs font-mono text-muted-foreground mb-1">Timeline</div>
+                      <div className="font-mono text-foreground">{client.timeline}</div>
+                    </div>
+                  </div>
+
+                  {client.status !== "Existing" && (
+                    <div>
+                      <div className="text-xs font-mono text-muted-foreground mb-1">Win Rate</div>
+                      <div className="flex items-center gap-2">
+                        <div className="flex-1 h-2 bg-muted/30 rounded-full overflow-hidden">
+                          <div 
+                            className="h-full bg-primary rounded-full transition-all"
+                            style={{ width: `${client.win_rate || 0}%` }}
+                          />
+                        </div>
+                        <span className="text-xs font-mono font-semibold text-primary">{client.win_rate || 0}%</span>
+                      </div>
+                    </div>
+                  )}
+
+                  <div onClick={(e) => e.stopPropagation()}>
+                    <div className="text-xs font-mono text-muted-foreground mb-1">Assigned To</div>
+                    <Select
+                      value={client.assigned_to || "unassigned"}
+                      onValueChange={(value) => {
+                        const userId = value === "unassigned" ? null : value;
+                        updateAssignedUser.mutate({ clientId: client.id, userId });
+                      }}
+                    >
+                      <SelectTrigger className="w-full bg-background">
+                        <SelectValue placeholder="Unassigned" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-background z-50">
+                        <SelectItem value="unassigned">Unassigned</SelectItem>
+                        {users?.map((user) => (
+                          <SelectItem key={user.id} value={user.id}>
+                            {user.email}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {clientOpportunities.length > 0 && (
+                    <div>
+                      <div className="text-xs font-mono text-muted-foreground mb-1">Key Opportunities</div>
+                      <ul className="space-y-1">
+                        {clientOpportunities.slice(0, 3).map((opp, idx) => (
+                          <li key={idx} className="text-xs font-mono text-muted-foreground flex items-start">
+                            <span className="text-primary mr-2">•</span>
+                            <span>{opp.name}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
 
         {/* Summary Footer */}
