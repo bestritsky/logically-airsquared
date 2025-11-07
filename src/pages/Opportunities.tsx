@@ -712,6 +712,16 @@ const opportunityData: Opportunity[] = [
 
 const ITEMS_PER_PAGE = 10;
 
+const formatCurrency = (value: number): string => {
+  if (value >= 1000000) {
+    return `$${(value / 1000000).toFixed(2)}M`;
+  } else if (value >= 1000) {
+    return `$${(value / 1000).toFixed(1)}K`;
+  } else {
+    return `$${value.toFixed(0)}`;
+  }
+};
+
 const Opportunities = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -830,9 +840,9 @@ const Opportunities = () => {
 
     return {
       totalOpps,
-      totalPipeline: `$${(totalPipeline / 1000).toFixed(1)}K`,
+      totalPipeline: formatCurrency(totalPipeline),
       avgWinRate: Math.round(avgWinRate),
-      expectedRevenue: `$${(expectedRevenue / 1000).toFixed(1)}K`,
+      expectedRevenue: formatCurrency(expectedRevenue),
     };
   }, [selectedClientId, opportunities]);
 
