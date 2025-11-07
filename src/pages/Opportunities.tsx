@@ -712,16 +712,6 @@ const opportunityData: Opportunity[] = [
 
 const ITEMS_PER_PAGE = 10;
 
-const formatCurrency = (value: number): string => {
-  if (value >= 1000000) {
-    return `$${(value / 1000000).toFixed(2)}M`;
-  } else if (value >= 1000) {
-    return `$${(value / 1000).toFixed(1)}K`;
-  } else {
-    return `$${value.toFixed(0)}`;
-  }
-};
-
 const Opportunities = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -794,6 +784,16 @@ const Opportunities = () => {
   useEffect(() => {
     setCurrentPage(1);
   }, [selectedClientId]);
+
+  const formatCurrency = (value: number): string => {
+    if (value >= 1000000) {
+      return `$${(value / 1000000).toFixed(2)}M`;
+    } else if (value >= 1000) {
+      return `$${(value / 1000).toFixed(1)}K`;
+    } else {
+      return `$${value.toFixed(0)}`;
+    }
+  };
 
   const allFilteredOpportunities = useMemo(() => {
     if (!opportunities) return [];
@@ -883,11 +883,6 @@ const Opportunities = () => {
       default:
         return "bg-muted/10 text-muted-foreground border-muted/20";
     }
-  };
-
-  const formatCurrency = (amount: number) => {
-    if (amount >= 1000000) return `$${(amount / 1000000).toFixed(1)}M`;
-    return `$${(amount / 1000).toFixed(0)}K`;
   };
 
   const exportToCSV = () => {
