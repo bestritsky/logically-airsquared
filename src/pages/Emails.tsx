@@ -495,7 +495,7 @@ const Emails = () => {
                 <TableHeader className="bg-muted/20">
                   <TableRow>
                     <TableHead className="min-w-[200px]">Contact</TableHead>
-                    <TableHead className="min-w-[250px]">Subject</TableHead>
+                    <TableHead className="min-w-[190px]">Subject</TableHead>
                     <TableHead className="w-40">Template</TableHead>
                     <TableHead className="w-32">Status</TableHead>
                     <TableHead className="w-32">Created</TableHead>
@@ -526,7 +526,7 @@ const Emails = () => {
                             </div>
                           )}
                         </TableCell>
-                        <TableCell className="min-w-[250px]">
+                        <TableCell className="min-w-[190px]">
                           <div className="max-w-md truncate text-foreground">{email.subject}</div>
                         </TableCell>
                         <TableCell className="w-40">
