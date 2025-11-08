@@ -499,7 +499,7 @@ const Emails = () => {
                     <TableHead className="w-40">Template</TableHead>
                     <TableHead className="w-32">Status</TableHead>
                     <TableHead className="w-32">Created</TableHead>
-                    <TableHead className="w-20 text-right">Actions</TableHead>
+                    <TableHead className="w-20 text-right"></TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
