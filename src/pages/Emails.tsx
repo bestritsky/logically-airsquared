@@ -4,7 +4,8 @@ import { Layout } from "@/components/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,7 +18,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { cn } from "@/lib/utils";
 import { EmailTemplateLibrary } from "@/components/EmailTemplateLibrary";
-import { FileText, Plus, Copy, Trash2, Pencil, Mail, Download } from "lucide-react";
+import { Copy, Trash2, Pencil, Mail, Download, MoreVertical } from "lucide-react";
 import { GeneratedEmailViewer } from "@/components/GeneratedEmailViewer";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -333,8 +334,10 @@ const Emails = () => {
   if (isLoading) {
     return (
       <Layout>
-        <div className="flex items-center justify-center h-96">
-          <p className="text-muted-foreground">Loading emails...</p>
+        <div className="container mx-auto px-4 py-8 max-w-6xl">
+          <div className="flex items-center justify-center h-96">
+            <p className="text-muted-foreground">Loading emails...</p>
+          </div>
         </div>
       </Layout>
     );
@@ -343,245 +346,259 @@ const Emails = () => {
   return (
     <>
       <Layout>
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-4xl font-heading font-bold tracking-tight text-foreground">
-                Generated Emails
-              </h1>
-              <p className="text-lg text-muted-foreground mt-1">
-                Create persuasive emails using psychological principles
-              </p>
+        <div className="container mx-auto px-4 py-8 max-w-6xl">
+          <header className="bg-gradient-to-br from-primary to-coral-dark rounded-lg p-8 mb-8 shadow-sm">
+            <div className="flex items-start justify-between mb-6">
+              <div>
+                <h1 className="text-4xl font-heading font-bold text-white mb-2">
+                  GENERATED EMAILS
+                </h1>
+                <p className="text-white/90 text-lg font-mono">
+                  Psychologically-Optimized Email Campaigns
+                </p>
+              </div>
+              <div className="flex gap-3">
+                <Button
+                  onClick={exportToCSV}
+                  variant="secondary"
+                  className="bg-white/10 hover:bg-white/20 text-white border-white/20"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  Export to CSV
+                </Button>
+                <Button
+                  onClick={() => setShowTemplateLibrary(true)}
+                  variant="secondary"
+                  className="bg-white/10 hover:bg-white/20 text-white border-white/20"
+                >
+                  <Mail className="w-4 h-4 mr-2" />
+                  New Email
+                </Button>
+              </div>
             </div>
-            <Button onClick={() => setShowTemplateLibrary(true)} size="lg">
-              <Mail className="w-4 h-4 mr-2" />
-              New Email
-            </Button>
-          </div>
-        </div>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-4 gap-4 mb-6">
-          <div className="bg-card border rounded-lg p-4">
-            <div className="text-sm text-muted-foreground mb-1">Total Generated</div>
-            <div className="text-3xl font-bold text-foreground">{stats.total}</div>
-          </div>
-          <div className="bg-card border rounded-lg p-4">
-            <div className="text-sm text-muted-foreground mb-1">Ready to Export</div>
-            <div className="text-3xl font-bold text-green-600">{stats.ready}</div>
-          </div>
-          <div className="bg-card border rounded-lg p-4">
-            <div className="text-sm text-muted-foreground mb-1">Drafts</div>
-            <div className="text-3xl font-bold text-gray-600">{stats.draft}</div>
-          </div>
-          <div className="bg-card border rounded-lg p-4">
-            <div className="text-sm text-muted-foreground mb-1">Exported</div>
-            <div className="text-3xl font-bold text-blue-600">{stats.exported}</div>
-          </div>
-        </div>
+            {/* Stats Cards integrated into header */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                <div className="text-white/80 text-sm font-mono mb-1">Total Generated</div>
+                <div className="text-3xl font-heading font-bold text-white">{stats.total}</div>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                <div className="text-white/80 text-sm font-mono mb-1">Ready to Export</div>
+                <div className="text-3xl font-heading font-bold text-white">{stats.ready}</div>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                <div className="text-white/80 text-sm font-mono mb-1">Drafts</div>
+                <div className="text-3xl font-heading font-bold text-white">{stats.draft}</div>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                <div className="text-white/80 text-sm font-mono mb-1">Exported</div>
+                <div className="text-3xl font-heading font-bold text-white">{stats.exported}</div>
+              </div>
+            </div>
+          </header>
 
-        {/* Filters */}
-        <div className="flex gap-3 mb-6 items-center">
-          <Button onClick={exportToCSV} variant="outline" size="sm">
-            <Download className="w-4 h-4 mr-2" />
-            Export to CSV
-          </Button>
-          
-          <Select value={selectedClient} onValueChange={setSelectedClient}>
-            <SelectTrigger className="w-[200px]">
-              <SelectValue placeholder="All Clients" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Clients</SelectItem>
-              {clients.map(client => (
-                <SelectItem key={client.id} value={client.id.toString()}>
-                  {client.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-
-          <Select value={selectedOpportunity} onValueChange={setSelectedOpportunity}>
-            <SelectTrigger className="w-[250px]">
-              <SelectValue placeholder="All Opportunities" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Opportunities</SelectItem>
-              {opportunities.map(opp => (
-                <SelectItem key={opp.id} value={opp.id}>
-                  {opp.name} ({opp.clientName})
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-
-          <div className="flex gap-2">
-            <Button
-              variant={selectedFilter === "All" ? "default" : "outline"}
+          {/* Filter Tabs */}
+          <div className="flex gap-2 mb-6 flex-wrap">
+            <button
               onClick={() => setSelectedFilter("All")}
-              size="sm"
+              className={cn(
+                "px-4 py-2 rounded-lg font-heading font-medium transition-all",
+                selectedFilter === "All"
+                  ? "bg-primary text-white shadow-md"
+                  : "bg-card text-foreground hover:bg-primary/10 border border-border"
+              )}
             >
-              All
-            </Button>
-            <Button
-              variant={selectedFilter === "Draft" ? "default" : "outline"}
+              All ({stats.total})
+            </button>
+            <button
               onClick={() => setSelectedFilter("Draft")}
-              size="sm"
+              className={cn(
+                "px-4 py-2 rounded-lg font-heading font-medium transition-all",
+                selectedFilter === "Draft"
+                  ? "bg-primary text-white shadow-md"
+                  : "bg-card text-foreground hover:bg-primary/10 border border-border"
+              )}
             >
-              Drafts
-            </Button>
-            <Button
-              variant={selectedFilter === "Ready" ? "default" : "outline"}
+              Drafts ({stats.draft})
+            </button>
+            <button
               onClick={() => setSelectedFilter("Ready")}
-              size="sm"
+              className={cn(
+                "px-4 py-2 rounded-lg font-heading font-medium transition-all",
+                selectedFilter === "Ready"
+                  ? "bg-primary text-white shadow-md"
+                  : "bg-card text-foreground hover:bg-primary/10 border border-border"
+              )}
             >
-              Ready
-            </Button>
-            <Button
-              variant={selectedFilter === "Exported" ? "default" : "outline"}
+              Ready ({stats.ready})
+            </button>
+            <button
               onClick={() => setSelectedFilter("Exported")}
-              size="sm"
+              className={cn(
+                "px-4 py-2 rounded-lg font-heading font-medium transition-all",
+                selectedFilter === "Exported"
+                  ? "bg-primary text-white shadow-md"
+                  : "bg-card text-foreground hover:bg-primary/10 border border-border"
+              )}
             >
-              Exported
-            </Button>
-            <Button
-              variant={selectedFilter === "Archived" ? "default" : "outline"}
+              Exported ({stats.exported})
+            </button>
+            <button
               onClick={() => setSelectedFilter("Archived")}
-              size="sm"
+              className={cn(
+                "px-4 py-2 rounded-lg font-heading font-medium transition-all",
+                selectedFilter === "Archived"
+                  ? "bg-primary text-white shadow-md"
+                  : "bg-card text-foreground hover:bg-primary/10 border border-border"
+              )}
             >
               Archived
-            </Button>
+            </button>
           </div>
-        </div>
 
-        {/* Emails Table */}
-        <div className="border rounded-lg overflow-hidden bg-card">
-          <table className="w-full">
-            <thead className="bg-muted/50 border-b">
-              <tr>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Contact</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Subject</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Template</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Status</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Created</th>
-                <th className="px-4 py-3 text-right text-sm font-semibold text-foreground">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border">
-              {filteredEmails.length === 0 ? (
-                <tr>
-                  <td colSpan={6} className="px-4 py-12 text-center text-muted-foreground">
-                    No generated emails yet. Click "Browse Templates" to create your first email.
-                  </td>
-                </tr>
-              ) : (
-                filteredEmails.map((email) => (
-                  <tr key={email.id} className="hover:bg-muted/30 transition-colors">
-                   <td className="px-4 py-4">
-                     <div className="font-semibold text-foreground">{email.contact_name}</div>
-                     <div className="text-sm text-muted-foreground">{email.contact_email}</div>
-                     {email.clients && (
-                       <div className="text-xs text-muted-foreground mt-0.5">
-                         {email.clients.name}
-                       </div>
-                     )}
-                     {email.opportunities && (
-                       <div className="text-xs text-purple-600 dark:text-purple-400 mt-0.5 font-medium">
-                         📋 {email.opportunities.name}
-                       </div>
-                     )}
-                   </td>
-                    <td className="px-4 py-4">
-                      <div className="max-w-md truncate text-foreground">{email.subject}</div>
-                    </td>
-                    <td className="px-4 py-4">
-                      <Badge className={getPrincipleBadgeClass(email.influence_principle)}>
-                        {email.influence_principle}
-                      </Badge>
-                    </td>
-                    <td className="px-4 py-4">
-                      <Select
-                        value={email.status}
-                        onValueChange={(value: EmailStatus) => updateStatusMutation.mutate({ emailId: email.id, status: value })}
-                      >
-                        <SelectTrigger className={`w-[130px] ${getStatusBadgeClass(email.status)}`}>
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Draft">Draft</SelectItem>
-                          <SelectItem value="Ready">Ready</SelectItem>
-                          <SelectItem value="Exported">Exported</SelectItem>
-                          <SelectItem value="Archived">Archived</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </td>
-                    <td className="px-4 py-4 text-sm text-muted-foreground">
-                      {format(new Date(email.created_at), "MMM d, yyyy")}
-                    </td>
-                    <td className="px-4 py-4">
-                      <div className="flex justify-end gap-2">
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => setViewerEmail(email)}
-                              >
-                                <Pencil className="w-4 h-4" />
-                              </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>View & Edit Email</TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
+          {/* Secondary Filters - Client & Opportunity */}
+          <div className="flex gap-3 mb-6 items-center">
+            <Select value={selectedClient} onValueChange={setSelectedClient}>
+              <SelectTrigger className="w-[200px]">
+                <SelectValue placeholder="All Clients" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Clients</SelectItem>
+                {clients.map(client => (
+                  <SelectItem key={client.id} value={client.id.toString()}>
+                    {client.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
 
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => handleCopyEmail(email)}
-                              >
-                                <Copy className="w-4 h-4" />
-                              </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>Copy Email</TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-
-
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => handleDelete(email.id)}
-                              >
-                                <Trash2 className="w-4 h-4" />
-                              </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>Delete Email</TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-
-        {/* Summary Footer */}
-        <div className="mt-4 flex items-center justify-between text-sm text-muted-foreground">
-          <div>
-            Showing {filteredEmails.length} of {generatedEmails.length} generated emails
+            <Select value={selectedOpportunity} onValueChange={setSelectedOpportunity}>
+              <SelectTrigger className="w-[250px]">
+                <SelectValue placeholder="All Opportunities" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Opportunities</SelectItem>
+                {opportunities.map(opp => (
+                  <SelectItem key={opp.id} value={opp.id}>
+                    {opp.name} ({opp.clientName})
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
-          <div>
-            {stats.ready} ready to export
+
+          {/* Emails Table */}
+          <div className="bg-card rounded-lg shadow-sm border border-border overflow-x-auto">
+            <div className="min-w-full inline-block align-middle">
+              <Table>
+                <TableHeader className="bg-muted/20">
+                  <TableRow>
+                    <TableHead className="min-w-[200px]">Contact</TableHead>
+                    <TableHead className="min-w-[250px]">Subject</TableHead>
+                    <TableHead className="w-40">Template</TableHead>
+                    <TableHead className="w-32">Status</TableHead>
+                    <TableHead className="w-32">Created</TableHead>
+                    <TableHead className="w-20 text-right">Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {filteredEmails.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={6} className="text-center py-12 text-muted-foreground">
+                        No generated emails yet. Click "New Email" to create your first email.
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    filteredEmails.map((email) => (
+                      <TableRow key={email.id} className="hover:bg-muted/30 transition-colors">
+                        <TableCell className="min-w-[200px]">
+                          <div className="font-heading font-semibold text-foreground">{email.contact_name}</div>
+                          <div className="text-sm font-mono text-muted-foreground">{email.contact_email}</div>
+                          {email.clients && (
+                            <div className="text-xs text-muted-foreground mt-0.5">
+                              {email.clients.name}
+                            </div>
+                          )}
+                          {email.opportunities && (
+                            <div className="text-xs text-purple-600 dark:text-purple-400 mt-0.5 font-medium">
+                              📋 {email.opportunities.name}
+                            </div>
+                          )}
+                        </TableCell>
+                        <TableCell className="min-w-[250px]">
+                          <div className="max-w-md truncate text-foreground">{email.subject}</div>
+                        </TableCell>
+                        <TableCell className="w-40">
+                          <Badge className={cn("font-mono text-xs", getPrincipleBadgeClass(email.influence_principle))}>
+                            {email.influence_principle}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="w-32">
+                          <Select
+                            value={email.status}
+                            onValueChange={(value: EmailStatus) => updateStatusMutation.mutate({ emailId: email.id, status: value })}
+                          >
+                            <SelectTrigger className={cn("w-[130px]", getStatusBadgeClass(email.status))}>
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="Draft">Draft</SelectItem>
+                              <SelectItem value="Ready">Ready</SelectItem>
+                              <SelectItem value="Exported">Exported</SelectItem>
+                              <SelectItem value="Archived">Archived</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </TableCell>
+                        <TableCell className="w-32 text-sm font-mono text-muted-foreground">
+                          {format(new Date(email.created_at), "MMM d, yyyy")}
+                        </TableCell>
+                        <TableCell className="w-20">
+                          <div className="flex justify-end">
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="h-8 w-8 rounded-full border-2 border-black dark:border-white"
+                                  onClick={(e) => e.stopPropagation()}
+                                >
+                                  <MoreVertical className="h-6 w-6 font-bold" strokeWidth={3} />
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end">
+                                <DropdownMenuItem onClick={() => setViewerEmail(email)}>
+                                  <Pencil className="mr-2 h-4 w-4" />
+                                  View/Edit
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => handleCopyEmail(email)}>
+                                  <Copy className="mr-2 h-4 w-4" />
+                                  Copy Email
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => handleDelete(email.id)}>
+                                  <Trash2 className="mr-2 h-4 w-4" />
+                                  Delete
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            </div>
+          </div>
+
+          {/* Summary Footer */}
+          <div className="mt-4 flex items-center justify-between text-sm font-mono text-muted-foreground">
+            <div>
+              Showing {filteredEmails.length} of {generatedEmails.length} generated emails
+            </div>
+            <div>
+              {stats.ready} ready to export
+            </div>
           </div>
         </div>
       </Layout>
