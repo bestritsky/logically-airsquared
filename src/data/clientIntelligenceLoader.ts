@@ -59,6 +59,21 @@ export const getClientIntelligence = (clientId: number): ClientIntelligence | nu
         decisionMakers: ["County Manager", "Board Chairman", "IT Director"]
       };
     
+    case 11: // Abba Technologies
+      return {
+        id: 11,
+        name: "Abba Technologies",
+        summary: "Employee-owned MSP with explosive growth and federal compliance expertise",
+        psychologicalProfile: "Visionary founder, anxious-avoidant attachment, operational chaos",
+        valuesHierarchy: ["Client Success (30%)", "Employee Ownership (25%)", "Technical Excellence (20%)"],
+        currentState: "Explosive growth outpacing organizational maturity",
+        engagementStrategy: "Lead with federal compliance opportunity, emphasize ROI and competitive advantage",
+        suggestedContactTitle: "CEO",
+        industry: "IT Managed Services",
+        keyPainPoints: ["Federal Compliance (CMMC/FedRAMP/FISMA)", "Organizational Scalability", "Process Maturity"],
+        decisionMakers: ["CEO Andrew Baca", "CFO/COO Judie Youngman", "VP Sales Ed Peña"]
+      };
+    
     default:
       return null;
   }
@@ -128,6 +143,51 @@ export const getOpportunityIntelligence = (opportunityId: string) => {
       timeline: "Q2 2024",
       estimatedValue: "$65,000",
       decisionTimeline: "60-90 days"
+    },
+    "abba-1": {
+      id: "abba-1",
+      name: "Federal Compliance Automation (CMMC/FedRAMP/FISMA)",
+      serviceType: "Compliance",
+      keyDrivers: ["CEO identifies as existential priority", "CMMC 2.0 mandate", "Revenue enabler"],
+      timeline: "6-9 months",
+      estimatedValue: "$600,000",
+      decisionTimeline: "60-90 days"
+    },
+    "abba-2": {
+      id: "abba-2",
+      name: "Managed SOC for Federal/SLED Contractors",
+      serviceType: "Managed Security",
+      keyDrivers: ["Revenue diversification", "Recurring revenue model", "Federal compliance requirements"],
+      timeline: "9-12 months",
+      estimatedValue: "$840,000",
+      decisionTimeline: "90-120 days"
+    },
+    "abba-3": {
+      id: "abba-3",
+      name: "Executive Leadership & Organizational Development",
+      serviceType: "Strategic",
+      keyDrivers: ["Growth outpacing maturity", "Leadership development needs", "Operational scalability"],
+      timeline: "12-18 months",
+      estimatedValue: "$260,000",
+      decisionTimeline: "120-180 days"
+    },
+    "abba-4": {
+      id: "abba-4",
+      name: "Healthcare Sector Expansion - HIPAA Compliance",
+      serviceType: "Compliance",
+      keyDrivers: ["Market expansion", "Technical overlap with federal", "Revenue diversification"],
+      timeline: "15-18 months",
+      estimatedValue: "$450,000",
+      decisionTimeline: "180-240 days"
+    },
+    "abba-5": {
+      id: "abba-5",
+      name: "Azure Government Cloud Migration Services",
+      serviceType: "Cloud Services",
+      keyDrivers: ["Federal modernization mandate", "Complements compliance offering", "Recurring revenue"],
+      timeline: "10-14 months",
+      estimatedValue: "$530,000",
+      decisionTimeline: "90-120 days"
     }
   };
   

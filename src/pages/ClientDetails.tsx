@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { ArrowLeft, AlertTriangle, CheckCircle2, XCircle, Download, Mail } from "lucide-react";
 import { mecklenburgIntelligence } from "@/data/mecklenburgIntelligence";
 import { maplewoodIntelligence } from "@/data/maplewoodIntelligence";
+import { abbaIntelligence } from "@/data/abbaIntelligence";
 import mecklenburgPdf from "@/assets/mecklenburg-county.pdf";
 import gastonPdf from "@/assets/gaston-county-government.pdf";
 import maplewoodPdf from "@/assets/maplewood-senior-living-inspir.pdf";
@@ -155,6 +156,38 @@ const ClientDetails = () => {
           </header>
 
           {maplewoodIntelligence}
+        </div>
+      </Layout>
+    );
+  }
+
+  // Abba Technologies (ID 11)
+  if (clientId === "11") {
+    return (
+      <Layout>
+        <div className="container mx-auto p-6 max-w-6xl">
+          <div className="flex justify-between items-center mb-4">
+            <Button onClick={() => navigate("/clients")} variant="ghost">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Clients
+            </Button>
+            <div className="flex gap-2">
+              <Button onClick={() => {
+                const link = document.createElement('a');
+                link.href = "/abba-technologies-intelligence.pdf";
+                link.download = "Abba Technologies Intelligence.pdf";
+                link.click();
+              }}>
+                <Download className="mr-2 h-4 w-4" />
+                Download Intelligence
+              </Button>
+              <Button onClick={() => handleGenerateEmail("11", "Abba Technologies")}>
+                <Mail className="mr-2 h-4 w-4" />
+                Generate Email
+              </Button>
+            </div>
+          </div>
+          {abbaIntelligence}
         </div>
       </Layout>
     );
