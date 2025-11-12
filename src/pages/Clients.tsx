@@ -328,7 +328,7 @@ const Clients = () => {
                   <TableHead className="w-24 hidden lg:table-cell">Deal Size</TableHead>
                   <TableHead className="w-32">Status</TableHead>
                   <TableHead className="w-28 hidden lg:table-cell">Timeline</TableHead>
-                  <TableHead className="w-36 hidden xl:table-cell">Assigned</TableHead>
+                  <TableHead className="w-28 hidden xl:table-cell">Assigned</TableHead>
                   <TableHead className="hidden xl:table-cell">Key Opportunities</TableHead>
                 </TableRow>
               </TableHeader>
@@ -431,7 +431,7 @@ const Clients = () => {
                     <TableCell className="w-28 hidden lg:table-cell">
                       <div className="font-mono text-sm text-foreground">{client.timeline}</div>
                     </TableCell>
-                    <TableCell className="w-36 hidden xl:table-cell" onClick={(e) => e.stopPropagation()}>
+                    <TableCell className="w-28 hidden xl:table-cell" onClick={(e) => e.stopPropagation()}>
                       <Select
                         value={client.assigned_to || "unassigned"}
                         onValueChange={(value) => {
@@ -439,7 +439,7 @@ const Clients = () => {
                           updateAssignedUser.mutate({ clientId: client.id, userId });
                         }}
                       >
-                        <SelectTrigger className="w-36 bg-background">
+                        <SelectTrigger className="w-28 bg-background">
                           <SelectValue placeholder="Unassigned" />
                         </SelectTrigger>
                         <SelectContent className="bg-background z-50">
