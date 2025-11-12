@@ -1050,6 +1050,8 @@ const Opportunities = () => {
           <table className="w-full">
             <thead className="bg-muted/20 border-b border-border">
               <tr>
+                <th className="px-4 py-3 text-right font-heading font-semibold text-sm text-foreground">
+                </th>
                 <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">
                   Opportunity Name
                 </th>
@@ -1068,8 +1070,6 @@ const Opportunities = () => {
                 <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">
                   Key Drivers
                 </th>
-                <th className="px-4 py-3 text-right font-heading font-semibold text-sm text-foreground">
-                </th>
               </tr>
             </thead>
             <tbody>
@@ -1081,114 +1081,114 @@ const Opportunities = () => {
                      key={opp.id}
                      className="border-b border-border hover:bg-primary/5 transition-colors"
                    >
+                     <td className="px-4 py-4">
+                       <DropdownMenu>
+                         <DropdownMenuTrigger asChild>
+                           <Button 
+                             variant="ghost" 
+                             size="icon" 
+                             className="h-8 w-8 rounded-full border-2 border-black dark:border-white"
+                             onClick={(e) => e.stopPropagation()}
+                           >
+                             <MoreVertical className="h-6 w-6 font-bold" strokeWidth={3} />
+                           </Button>
+                         </DropdownMenuTrigger>
+                         <DropdownMenuContent align="end">
+                           <DropdownMenuItem 
+                             className="font-bold" 
+                             onClick={(e) => {
+                               e.stopPropagation();
+                               handleGenerateEmail(opp, clientName);
+                             }}
+                           >
+                             <Mail className="mr-2 h-4 w-4" />
+                             Generate Email
+                           </DropdownMenuItem>
+                           <DropdownMenuItem 
+                             className="font-bold"
+                             onClick={(e) => {
+                               e.stopPropagation();
+                               navigate(`/clients/${opp.client_id}`);
+                             }}
+                           >
+                             <FileText className="mr-2 h-4 w-4" />
+                             View Client
+                           </DropdownMenuItem>
+                           <DropdownMenuItem 
+                             className="font-bold text-destructive"
+                             onClick={(e) => {
+                               e.stopPropagation();
+                               handleDeleteOpportunity(opp.id);
+                             }}
+                           >
+                             <Trash2 className="mr-2 h-4 w-4" />
+                             Delete
+                           </DropdownMenuItem>
+                         </DropdownMenuContent>
+                       </DropdownMenu>
+                     </td>
                      <td className="px-4 py-4 cursor-pointer" onClick={() => handleGenerateEmail(opp, clientName)}>
-                      <div className="font-heading font-semibold text-foreground">
-                        {opp.name}
-                      </div>
-                      <div className="text-sm font-mono text-muted-foreground">
-                        {opp.description}
-                      </div>
-                      {selectedClientId === "all" && (
-                        <div className="text-xs font-mono text-primary mt-1">
-                          📍 {clientName}
-                        </div>
-                      )}
-                    </td>
-                    <td className="px-4 py-4 cursor-pointer" onClick={() => handleGenerateEmail(opp, clientName)}>
-                      <Badge
-                        variant="outline"
-                        className={cn(
-                          "font-mono text-xs whitespace-nowrap",
-                          getServiceTypeBadgeClass(opp.service_type)
-                        )}
-                      >
-                        {opp.service_type}
-                      </Badge>
-                    </td>
-                    <td className="px-4 py-4 cursor-pointer" onClick={() => handleGenerateEmail(opp, clientName)}>
-                      <div className="font-mono text-sm font-semibold text-foreground whitespace-nowrap">
-                        {formatCurrency(opp.year1_revenue || 0)} → {formatCurrency(opp.year2_revenue || 0)}{" "}
-                        → {formatCurrency(opp.year3_revenue || 0)}
-                      </div>
-                    </td>
-                    <td className="px-4 py-4 cursor-pointer" onClick={() => handleGenerateEmail(opp, clientName)}>
-                      <div className="flex items-center gap-2">
-                        <div className="w-24 h-2 bg-muted/30 rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-primary rounded-full transition-all"
-                            style={{ width: `${opp.win_rate || 0}%` }}
-                          />
-                        </div>
-                        <span className="text-sm font-mono font-semibold text-primary whitespace-nowrap">
-                          {opp.win_rate || 0}%
-                        </span>
-                      </div>
-                    </td>
-                    <td className="px-4 py-4 cursor-pointer" onClick={() => handleGenerateEmail(opp, clientName)}>
-                      <div className="font-mono text-sm text-foreground whitespace-nowrap">
-                        {opp.timeline}
-                      </div>
-                    </td>
-                    <td className="px-4 py-4 cursor-pointer" onClick={() => handleGenerateEmail(opp, clientName)}>
-                      <ul className="space-y-1">
-                        {(opp.drivers || []).slice(0, 4).map((driver, idx) => (
-                          <li
-                            key={idx}
-                            className="text-xs font-mono text-muted-foreground flex items-start"
-                          >
-                            <span className="text-primary mr-2">•</span>
-                            <span>{driver}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </td>
-                    <td className="px-4 py-4">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button 
-                            variant="ghost" 
-                            size="icon" 
-                            className="h-8 w-8 rounded-full border-2 border-black dark:border-white"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <MoreVertical className="h-6 w-6 font-bold" strokeWidth={3} />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuItem 
-                            className="font-bold" 
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleGenerateEmail(opp, clientName);
-                            }}
-                          >
-                            <Mail className="mr-2 h-4 w-4" />
-                            Generate Email
-                          </DropdownMenuItem>
-                          <DropdownMenuItem 
-                            className="font-bold"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              navigate(`/clients/${opp.client_id}`);
-                            }}
-                          >
-                            <FileText className="mr-2 h-4 w-4" />
-                            View Client
-                          </DropdownMenuItem>
-                          <DropdownMenuItem 
-                            className="font-bold text-destructive"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleDeleteOpportunity(opp.id);
-                            }}
-                          >
-                            <Trash2 className="mr-2 h-4 w-4" />
-                            Delete
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </td>
-                  </tr>
+                       <div className="font-heading font-semibold text-foreground">
+                         {opp.name}
+                       </div>
+                       <div className="text-sm font-mono text-muted-foreground">
+                         {opp.description}
+                       </div>
+                       {selectedClientId === "all" && (
+                         <div className="text-xs font-mono text-primary mt-1">
+                           📍 {clientName}
+                         </div>
+                       )}
+                     </td>
+                     <td className="px-4 py-4 cursor-pointer" onClick={() => handleGenerateEmail(opp, clientName)}>
+                       <Badge
+                         variant="outline"
+                         className={cn(
+                           "font-mono text-xs whitespace-nowrap",
+                           getServiceTypeBadgeClass(opp.service_type)
+                         )}
+                       >
+                         {opp.service_type}
+                       </Badge>
+                     </td>
+                     <td className="px-4 py-4 cursor-pointer" onClick={() => handleGenerateEmail(opp, clientName)}>
+                       <div className="font-mono text-sm font-semibold text-foreground whitespace-nowrap">
+                         {formatCurrency(opp.year1_revenue || 0)} → {formatCurrency(opp.year2_revenue || 0)}{" "}
+                         → {formatCurrency(opp.year3_revenue || 0)}
+                       </div>
+                     </td>
+                     <td className="px-4 py-4 cursor-pointer" onClick={() => handleGenerateEmail(opp, clientName)}>
+                       <div className="flex items-center gap-2">
+                         <div className="w-24 h-2 bg-muted/30 rounded-full overflow-hidden">
+                           <div
+                             className="h-full bg-primary rounded-full transition-all"
+                             style={{ width: `${opp.win_rate || 0}%` }}
+                           />
+                         </div>
+                         <span className="text-sm font-mono font-semibold text-primary whitespace-nowrap">
+                           {opp.win_rate || 0}%
+                         </span>
+                       </div>
+                     </td>
+                     <td className="px-4 py-4 cursor-pointer" onClick={() => handleGenerateEmail(opp, clientName)}>
+                       <div className="font-mono text-sm text-foreground whitespace-nowrap">
+                         {opp.timeline}
+                       </div>
+                     </td>
+                     <td className="px-4 py-4 cursor-pointer" onClick={() => handleGenerateEmail(opp, clientName)}>
+                       <ul className="space-y-1">
+                         {(opp.drivers || []).slice(0, 4).map((driver, idx) => (
+                           <li
+                             key={idx}
+                             className="text-xs font-mono text-muted-foreground flex items-start"
+                           >
+                             <span className="text-primary mr-2">•</span>
+                             <span>{driver}</span>
+                           </li>
+                         ))}
+                       </ul>
+                     </td>
+                   </tr>
                 );
               })}
             </tbody>
