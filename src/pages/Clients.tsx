@@ -321,6 +321,7 @@ const Clients = () => {
             <Table>
               <TableHeader className="bg-muted/20">
         <TableRow>
+          <TableHead className="w-12"></TableHead>
           <TableHead className="min-w-[180px]">Client Name</TableHead>
                   <TableHead className="w-20">Tier</TableHead>
                   <TableHead className="w-28">Sector</TableHead>
@@ -329,7 +330,6 @@ const Clients = () => {
                   <TableHead className="w-28 hidden lg:table-cell">Timeline</TableHead>
                   <TableHead className="w-36 hidden xl:table-cell">Assigned</TableHead>
                   <TableHead className="hidden xl:table-cell">Key Opportunities</TableHead>
-                  <TableHead className="w-12"></TableHead>
                 </TableRow>
               </TableHeader>
             <TableBody>
@@ -346,6 +346,51 @@ const Clients = () => {
                       hasDetailedData && "border-l-4 border-l-green-500"
                     )}
                   >
+                    <TableCell className="w-12">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button 
+                            variant="ghost" 
+                            size="icon" 
+                            className="h-8 w-8 rounded-full border-2 border-black dark:border-white"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <MoreVertical className="h-6 w-6 font-bold" strokeWidth={3} />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem className="font-bold" onClick={() => window.open(`/clients/${client.id}`, '_blank')}>
+                            <FileText className="mr-2 h-4 w-4" />
+                            Details
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="font-bold" onClick={() => window.open(`/opportunities?client=${client.id}`, '_blank')}>
+                            <Target className="mr-2 h-4 w-4" />
+                            Opportunities
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="font-bold" onClick={(e) => {
+                            e.stopPropagation();
+                            handleGenerateEmail(client);
+                          }}>
+                            <Mail className="mr-2 h-4 w-4" />
+                            Generate Email
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="font-bold" onClick={(e) => {
+                            e.stopPropagation();
+                            handleDownload(client.id, client.name);
+                          }}>
+                            <Download className="mr-2 h-4 w-4" />
+                            Download
+                          </DropdownMenuItem>
+                          <DropdownMenuItem 
+                            className="font-bold text-destructive focus:text-destructive" 
+                            onClick={(e) => handleDeleteClick(client, e)}
+                          >
+                            <Trash2 className="mr-2 h-4 w-4" />
+                            Delete
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
                     <TableCell className="min-w-[180px]">
                       <div className="font-heading font-semibold text-foreground">{client.name}</div>
                       <div className="text-sm font-mono text-muted-foreground">📍 {client.location}</div>
@@ -416,51 +461,6 @@ const Clients = () => {
                           </li>
                         ))}
                       </ul>
-                    </TableCell>
-                    <TableCell className="w-12">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button 
-                            variant="ghost" 
-                            size="icon" 
-                            className="h-8 w-8 rounded-full border-2 border-black dark:border-white"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <MoreVertical className="h-6 w-6 font-bold" strokeWidth={3} />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuItem className="font-bold" onClick={() => window.open(`/clients/${client.id}`, '_blank')}>
-                            <FileText className="mr-2 h-4 w-4" />
-                            Details
-                          </DropdownMenuItem>
-                          <DropdownMenuItem className="font-bold" onClick={() => window.open(`/opportunities?client=${client.id}`, '_blank')}>
-                            <Target className="mr-2 h-4 w-4" />
-                            Opportunities
-                          </DropdownMenuItem>
-                          <DropdownMenuItem className="font-bold" onClick={(e) => {
-                            e.stopPropagation();
-                            handleGenerateEmail(client);
-                          }}>
-                            <Mail className="mr-2 h-4 w-4" />
-                            Generate Email
-                          </DropdownMenuItem>
-                          <DropdownMenuItem className="font-bold" onClick={(e) => {
-                            e.stopPropagation();
-                            handleDownload(client.id, client.name);
-                          }}>
-                            <Download className="mr-2 h-4 w-4" />
-                            Download
-                          </DropdownMenuItem>
-                          <DropdownMenuItem 
-                            className="font-bold text-destructive focus:text-destructive" 
-                            onClick={(e) => handleDeleteClick(client, e)}
-                          >
-                            <Trash2 className="mr-2 h-4 w-4" />
-                            Delete
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
                     </TableCell>
                   </TableRow>
                 );
