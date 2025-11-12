@@ -1072,7 +1072,6 @@ const Opportunities = () => {
                   Key Drivers
                 </th>
                 <th className="px-4 py-3 text-right font-heading font-semibold text-sm text-foreground">
-                  Actions
                 </th>
               </tr>
             </thead>
