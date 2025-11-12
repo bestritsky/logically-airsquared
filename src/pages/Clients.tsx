@@ -369,13 +369,6 @@ const Clients = () => {
                           </DropdownMenuItem>
                           <DropdownMenuItem className="font-bold" onClick={(e) => {
                             e.stopPropagation();
-                            handleGenerateEmail(client);
-                          }}>
-                            <Mail className="mr-2 h-4 w-4" />
-                            Generate Email
-                          </DropdownMenuItem>
-                          <DropdownMenuItem className="font-bold" onClick={(e) => {
-                            e.stopPropagation();
                             handleDownload(client.id, client.name);
                           }}>
                             <Download className="mr-2 h-4 w-4" />
