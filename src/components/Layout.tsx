@@ -35,7 +35,6 @@ export const Layout = ({ children }: LayoutProps) => {
     { href: "/clients", label: "Clients" },
     { href: "/opportunities", label: "Opportunities" },
     { href: "/strategize", label: "Strategize" },
-    { href: "/emails", label: "Emails" },
     { href: "/users", label: "Admin" },
   ];
 
