@@ -1051,9 +1051,6 @@ const Opportunities = () => {
             <thead className="bg-muted/20 border-b border-border">
               <tr>
                 <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">
-                  #
-                </th>
-                <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">
                   Opportunity Name
                 </th>
                 <th className="px-4 py-3 text-left font-heading font-semibold text-sm text-foreground">
@@ -1084,14 +1081,7 @@ const Opportunities = () => {
                      key={opp.id}
                      className="border-b border-border hover:bg-primary/5 transition-colors"
                    >
-                     <td className="px-4 py-4" onClick={() => handleGenerateEmail(opp, clientName)}>
-                       <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center cursor-pointer">
-                         <span className="font-heading font-bold text-primary text-sm">
-                           {paginationMeta.startIndex + index + 1}
-                         </span>
-                       </div>
-                     </td>
-                    <td className="px-4 py-4 cursor-pointer" onClick={() => handleGenerateEmail(opp, clientName)}>
+                     <td className="px-4 py-4 cursor-pointer" onClick={() => handleGenerateEmail(opp, clientName)}>
                       <div className="font-heading font-semibold text-foreground">
                         {opp.name}
                       </div>
