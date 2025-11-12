@@ -31,11 +31,14 @@ export const Layout = ({ children }: LayoutProps) => {
     return () => subscription.unsubscribe();
   }, []);
 
+  const allowedAdminEmails = ['henryb@binaryadvisers.com', 'hmc@howardmcohen.com'];
+  const isAdmin = user?.email && allowedAdminEmails.includes(user.email);
+
   const navItems = [
     { href: "/clients", label: "Clients" },
     { href: "/opportunities", label: "Opportunities" },
     { href: "/strategize", label: "Strategize" },
-    { href: "/users", label: "Admin" },
+    ...(isAdmin ? [{ href: "/users", label: "Admin" }] : []),
   ];
 
   const handleLogout = async () => {
