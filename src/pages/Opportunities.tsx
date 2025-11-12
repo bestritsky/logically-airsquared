@@ -1095,16 +1095,6 @@ const Opportunities = () => {
                          </DropdownMenuTrigger>
                          <DropdownMenuContent align="end">
                            <DropdownMenuItem 
-                             className="font-bold" 
-                             onClick={(e) => {
-                               e.stopPropagation();
-                               handleGenerateEmail(opp, clientName);
-                             }}
-                           >
-                             <Mail className="mr-2 h-4 w-4" />
-                             Generate Email
-                           </DropdownMenuItem>
-                           <DropdownMenuItem 
                              className="font-bold"
                              onClick={(e) => {
                                e.stopPropagation();
