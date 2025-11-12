@@ -1079,7 +1079,7 @@ const Opportunities = () => {
                 return (
                   <tr
                      key={opp.id}
-                     className="border-b border-border hover:bg-primary/5 transition-colors"
+                     className="border-b border-border"
                    >
                      <td className="px-4 py-4">
                        <DropdownMenu>
@@ -1117,7 +1117,7 @@ const Opportunities = () => {
                          </DropdownMenuContent>
                        </DropdownMenu>
                      </td>
-                     <td className="px-4 py-4 cursor-pointer" onClick={() => handleGenerateEmail(opp, clientName)}>
+                     <td className="px-4 py-4">
                        <div className="font-heading font-semibold text-foreground">
                          {opp.name}
                        </div>
@@ -1130,7 +1130,7 @@ const Opportunities = () => {
                          </div>
                        )}
                      </td>
-                     <td className="px-4 py-4 cursor-pointer" onClick={() => handleGenerateEmail(opp, clientName)}>
+                     <td className="px-4 py-4">
                        <Badge
                          variant="outline"
                          className={cn(
@@ -1141,13 +1141,13 @@ const Opportunities = () => {
                          {opp.service_type}
                        </Badge>
                      </td>
-                     <td className="px-4 py-4 cursor-pointer" onClick={() => handleGenerateEmail(opp, clientName)}>
+                     <td className="px-4 py-4">
                        <div className="font-mono text-sm font-semibold text-foreground whitespace-nowrap">
                          {formatCurrency(opp.year1_revenue || 0)} → {formatCurrency(opp.year2_revenue || 0)}{" "}
                          → {formatCurrency(opp.year3_revenue || 0)}
                        </div>
                      </td>
-                     <td className="px-4 py-4 cursor-pointer" onClick={() => handleGenerateEmail(opp, clientName)}>
+                     <td className="px-4 py-4">
                        <div className="flex items-center gap-2">
                          <div className="w-24 h-2 bg-muted/30 rounded-full overflow-hidden">
                            <div
@@ -1160,12 +1160,12 @@ const Opportunities = () => {
                          </span>
                        </div>
                      </td>
-                     <td className="px-4 py-4 cursor-pointer" onClick={() => handleGenerateEmail(opp, clientName)}>
+                     <td className="px-4 py-4">
                        <div className="font-mono text-sm text-foreground whitespace-nowrap">
                          {opp.timeline}
                        </div>
                      </td>
-                     <td className="px-4 py-4 cursor-pointer" onClick={() => handleGenerateEmail(opp, clientName)}>
+                     <td className="px-4 py-4">
                        <ul className="space-y-1">
                          {(opp.drivers || []).slice(0, 4).map((driver, idx) => (
                            <li
