@@ -37,7 +37,7 @@ export const Layout = ({ children }: LayoutProps) => {
   const navItems = [
     { href: "/clients", label: "Clients" },
     { href: "/opportunities", label: "Opportunities" },
-    { href: "/strategize", label: "Strategize/Influence" },
+    { href: "/strategize", label: "Strategize" },
     ...(isAdmin ? [{ href: "/users", label: "Admin" }] : []),
   ];
 
