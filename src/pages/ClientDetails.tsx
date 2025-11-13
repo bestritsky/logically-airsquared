@@ -5,9 +5,6 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Badge } from "@/components/ui/badge";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { ArrowLeft, AlertTriangle, CheckCircle2, XCircle, Download } from "lucide-react";
 import { mecklenburgIntelligence } from "@/data/mecklenburgIntelligence";
 import { maplewoodIntelligence } from "@/data/maplewoodIntelligence";
