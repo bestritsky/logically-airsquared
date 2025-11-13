@@ -718,10 +718,6 @@ const Opportunities = () => {
   const clientParam = searchParams.get("client");
   const [selectedClientId, setSelectedClientId] = useState<string>("all");
   const [currentPage, setCurrentPage] = useState(1);
-  const [contactDialogOpen, setContactDialogOpen] = useState(false);
-  const [selectedOppForEmail, setSelectedOppForEmail] = useState<any>(null);
-  const [contactName, setContactName] = useState("");
-  const [contactEmail, setContactEmail] = useState("");
   const [opportunityToDelete, setOpportunityToDelete] = useState<string | null>(null);
   const { data: opportunities, isLoading, error } = useOpportunities();
   const { data: clients } = useClients();
@@ -747,11 +743,6 @@ const Opportunities = () => {
     },
   });
 
-  const handleGenerateEmail = (opp: any, clientName: string) => {
-    setSelectedOppForEmail({ ...opp, clientName });
-    setContactDialogOpen(true);
-  };
-
   const handleDeleteOpportunity = (opportunityId: string) => {
     setOpportunityToDelete(opportunityId);
   };
@@ -760,18 +751,6 @@ const Opportunities = () => {
     if (opportunityToDelete) {
       deleteMutation.mutate(opportunityToDelete);
     }
-  };
-
-  const handleConfirmContact = () => {
-    if (!selectedOppForEmail) return;
-    
-    navigate(
-      `/emails?generateFor=opportunity&clientId=${selectedOppForEmail.client_id}&clientName=${encodeURIComponent(selectedOppForEmail.clientName)}&opportunityId=${selectedOppForEmail.id}&opportunityName=${encodeURIComponent(selectedOppForEmail.name)}&contactName=${encodeURIComponent(contactName)}&contactEmail=${encodeURIComponent(contactEmail)}`
-    );
-    
-    setContactDialogOpen(false);
-    setContactName("");
-    setContactEmail("");
   };
 
   useEffect(() => {
@@ -1259,44 +1238,6 @@ const Opportunities = () => {
         </div>
       </div>
 
-      {/* Contact Dialog */}
-      <Dialog open={contactDialogOpen} onOpenChange={setContactDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Who are you emailing?</DialogTitle>
-          </DialogHeader>
-          <div className="space-y-4">
-            <div>
-              <Label>Contact Name</Label>
-              <Input 
-                value={contactName} 
-                onChange={(e) => setContactName(e.target.value)}
-                placeholder="e.g., John Smith"
-              />
-            </div>
-            <div>
-              <Label>Contact Email</Label>
-              <Input 
-                value={contactEmail} 
-                onChange={(e) => setContactEmail(e.target.value)}
-                placeholder="e.g., john.smith@company.com"
-                type="email"
-              />
-            </div>
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setContactDialogOpen(false)}>
-              Cancel
-            </Button>
-            <Button 
-              onClick={handleConfirmContact}
-              disabled={!contactName || !contactEmail}
-            >
-              Continue to Templates
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
 
       <AlertDialog open={!!opportunityToDelete} onOpenChange={(open) => !open && setOpportunityToDelete(null)}>
         <AlertDialogContent>
