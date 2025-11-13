@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowLeft, AlertTriangle, CheckCircle2, XCircle, Download, Mail } from "lucide-react";
+import { ArrowLeft, AlertTriangle, CheckCircle2, XCircle, Download } from "lucide-react";
 import { mecklenburgIntelligence } from "@/data/mecklenburgIntelligence";
 import { maplewoodIntelligence } from "@/data/maplewoodIntelligence";
 import { abbaIntelligence } from "@/data/abbaIntelligence";
@@ -19,27 +19,6 @@ import maplewoodPdf from "@/assets/maplewood-senior-living-inspir.pdf";
 const ClientDetails = () => {
   const { clientId } = useParams();
   const navigate = useNavigate();
-  const [contactDialogOpen, setContactDialogOpen] = useState(false);
-  const [contactName, setContactName] = useState("");
-  const [contactEmail, setContactEmail] = useState("");
-  const [currentClientId, setCurrentClientId] = useState("");
-  const [currentClientName, setCurrentClientName] = useState("");
-
-  const handleGenerateEmail = (id: string, name: string) => {
-    setCurrentClientId(id);
-    setCurrentClientName(name);
-    setContactDialogOpen(true);
-  };
-
-  const handleConfirmContact = () => {
-    navigate(
-      `/emails?generateFor=client&clientId=${currentClientId}&clientName=${encodeURIComponent(currentClientName)}&contactName=${encodeURIComponent(contactName)}&contactEmail=${encodeURIComponent(contactEmail)}`
-    );
-    
-    setContactDialogOpen(false);
-    setContactName("");
-    setContactEmail("");
-  };
 
   // Mecklenburg County (ID 1)
   if (clientId === "1") {
@@ -52,10 +31,6 @@ const ClientDetails = () => {
               Back to Clients
             </Button>
             <div className="flex gap-2">
-              <Button onClick={() => handleGenerateEmail('1', 'Mecklenburg County')} variant="default">
-                <Mail className="mr-2 h-4 w-4" />
-                Generate Email
-              </Button>
               <Button onClick={() => {
                 const link = document.createElement('a');
                 link.href = mecklenburgPdf;
@@ -107,10 +82,6 @@ const ClientDetails = () => {
               Back to Clients
             </Button>
             <div className="flex gap-2">
-              <Button onClick={() => handleGenerateEmail('2', 'Maplewood Senior Living')} variant="default">
-                <Mail className="mr-2 h-4 w-4" />
-                Generate Email
-              </Button>
               <Button onClick={() => {
                 const link = document.createElement('a');
                 link.href = maplewoodPdf;
@@ -181,10 +152,6 @@ const ClientDetails = () => {
                 <Download className="mr-2 h-4 w-4" />
                 Download Intelligence
               </Button>
-              <Button onClick={() => handleGenerateEmail("11", "Abba Technologies")}>
-                <Mail className="mr-2 h-4 w-4" />
-                Generate Email
-              </Button>
             </div>
           </div>
           {abbaIntelligence}
@@ -224,10 +191,6 @@ const ClientDetails = () => {
               Back to Clients
             </Button>
             <div className="flex gap-2">
-              <Button onClick={() => handleGenerateEmail('4', 'Gaston County Government')} variant="default">
-                <Mail className="mr-2 h-4 w-4" />
-                Generate Email
-              </Button>
               <Button onClick={() => {
                 const link = document.createElement('a');
                 link.href = gastonPdf;
@@ -1770,44 +1733,6 @@ const ClientDetails = () => {
         </Accordion>
       </div>
 
-      {/* Contact Dialog */}
-      <Dialog open={contactDialogOpen} onOpenChange={setContactDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Who are you emailing?</DialogTitle>
-          </DialogHeader>
-          <div className="space-y-4">
-            <div>
-              <Label>Contact Name</Label>
-              <Input 
-                value={contactName} 
-                onChange={(e) => setContactName(e.target.value)}
-                placeholder="e.g., John Smith"
-              />
-            </div>
-            <div>
-              <Label>Contact Email</Label>
-              <Input 
-                value={contactEmail} 
-                onChange={(e) => setContactEmail(e.target.value)}
-                placeholder="e.g., john.smith@company.com"
-                type="email"
-              />
-            </div>
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setContactDialogOpen(false)}>
-              Cancel
-            </Button>
-            <Button 
-              onClick={handleConfirmContact}
-              disabled={!contactName || !contactEmail}
-            >
-              Continue to Templates
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </Layout>
   );
 };
